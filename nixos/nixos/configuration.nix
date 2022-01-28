@@ -149,6 +149,7 @@
       mako 
       pamixer
       polkit_gnome
+      swaybg
       swayidle
       swaylock
       waybar

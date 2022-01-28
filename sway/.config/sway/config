@@ -147,6 +147,9 @@ bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
 # start gnome auth agent
 exec --no-startup-id /run/current-system/sw/libexec/polkit-gnome-authentication-agent-1
 
+# set bg 
+exec --no-startup-id swaybg -i ~/.wallpaper.jpg
+
 #
 # Colors
 #
