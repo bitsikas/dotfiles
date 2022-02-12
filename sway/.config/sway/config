@@ -154,20 +154,27 @@ exec --no-startup-id swaybg -i ~/.wallpaper.jpg
 # Colors
 #
 
-set $bg #353C4A
-set $fg #D8DEE9 
-set $accent #4C5763
-set $blue #81A1C1
+set $blue #46536A
 set $red #BF616A
+set $green #A3BE8C
 
+default_border pixel 0 
 ## class                 border  backgr. text    indicator child_border
-client.focused          $accent $accent #ffffff $red  	$red 
-client.focused_inactive $bg 	$bg 	$fg 	$red  $blue 
-client.unfocused        $bg 	$bg 	$fg 	$red  $blue 
-client.urgent           $bg 	$bg 	$fg 	$red  $blue 
-client.placeholder      $bg 	$bg 	$fg 	$red  $blue 
+client.focused            $green $green #ffffff $red  	$red 
+client.unfocused          $blue  $blue  #ffffff $red  	$red 
+client.focused_inactive   $blue  $blue  #ffffff $red  	$red 
+# client.urgent           $bg 	 $bg 	$fg 	$red    $blue 
+# client.placeholder      $bg 	 $bg 	$fg 	$red    $blue 
 
 client.background       #ffffff
 
 output HDMI-A-1 pos 0 0 mode 1920x1080@60Hz 
 output eDP-1 pos 0 1080 mode 1920x1080
+
+gaps top 0
+gaps bottom 0
+gaps left 0
+gaps right 0
+gaps inner 0
+
+font pango:Hack:8
