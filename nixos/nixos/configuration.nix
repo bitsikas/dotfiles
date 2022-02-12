@@ -64,7 +64,7 @@
     uid = 1000;
     home = "/home/kostas";
     description = "Kostas Papakonstantinou";
-    extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth"];
+    extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth" "libvirtd" "vboxusers"];
     shell = pkgs.fish;
   };
 
@@ -74,9 +74,10 @@
     bat
     chromium
     cifs-utils
+    direnv
     exa
     fd
-    firefox
+    firefox-wayland
     fzf
     gcc
     gh
@@ -92,16 +93,21 @@
     kitty
     lastpass-cli
     lazygit
+    lxappearance
     neovim 
     nodejs
+    nordic
+    papirus-icon-theme
     pavucontrol
     pipenv
     python39
+    python39Packages.poetry
     ranger
     ripgrep
     rq
     stow
     tmux
+    unrar
     vlc
     vscode
     wget
@@ -109,6 +115,15 @@
 
   environment.variables.EDITOR = "nvim";
   environment.pathsToLink = [ "/libexec" ];
+environment.sessionVariables = {
+   MOZ_ENABLE_WAYLAND = "1";
+   XDG_CURRENT_DESKTOP = "sway"; 
+};
+  environment.etc = {
+     "xdg/gtk-2.0".source = ./gtk-2.0;
+     "xdg/gtk-3.0".source = ./gtk-3.0;
+
+  };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -181,6 +196,8 @@
   #};
 
   virtualisation.docker.enable = true;
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.libvirtd.enable = true;
 
   networking.networkmanager.enable = true;
 
@@ -192,7 +209,7 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
 
-  # nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
+  nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
   # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
   # 
   services.gvfs.enable = true;
