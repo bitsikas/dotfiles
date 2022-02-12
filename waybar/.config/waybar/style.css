@@ -37,6 +37,7 @@
 @define-color workspaces @bg;
 @define-color workspacesfocused #434C5E;
 @define-color tray @workspacesfocused;
+@define-color highlight #46536A;
 @define-color sound #46536A;
 @define-color network #5D7096;
 @define-color memory #546484;
@@ -47,6 +48,7 @@
 @define-color date #2e3440;
 @define-color time #3A4253;
 @define-color backlight #3F495D;
+@define-color green #A3BE8C;
 
 /* Reset all styles */
 * {
@@ -55,20 +57,23 @@
     min-height: 0;
     margin: 0;
     padding: 0;
-    padding-left:10px;
-    padding-right:10px;
+    padding-left: 5px;
+    padding-right:5px;
+    background: @highlight;
 }
 
 /* The whole bar */
 #waybar {
-    background: @bg;
     color: @light;
-    font-family: Noto Sans;
+    font-family: Hack;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: normal;
+    padding-left:0;
+    padding-right:0;
 }
 
 /* Each module */
+#idle_inhibitor,
 #battery,
 #clock,
 #cpu,
@@ -80,9 +85,11 @@
 #temperature,
 #custom-alsa,
 #tray,
+#language,
 #backlight {
     padding-left: 10px;
     padding-right: 10px;
+    background:@highlight;
 }
 
 /* Each module that should blink */
@@ -138,19 +145,21 @@
 
 #workspaces {
     margin-right: 10px;
+    margin-left: 0;
 }
 
 
 #workspaces button {
-	font-weight: bold; /* Somewhy the bar-wide setting is ignored*/
-	padding-left: 5px;
-	padding-right: 5px;
+	font-weight: normal; /* Somewhy the bar-wide setting is ignored*/
+	padding-left: 2px;
+	padding-right: 2px;
 	color: @light;
-	background: @workspaces;
+	background: @highlight;
 }
 
 #workspaces button.focused {
-    background: @workspacesfocused;
+    color: @green;
+    font-weight:bold
 }
 
 #workspaces button.urgent {
@@ -163,54 +172,3 @@
 	margin-left: 40px;
 }
 
-#custom-alsa {
-	background: @sound;
-}
-
-#network {
-    background: @network;
-}
-
-#memory {
-    background: @memory;
-}
-
-#cpu {
-    background: @cpu;
-}
-
-#temperature {
-    background: @temp;
-}
-
-#custom-layout {
-    background: @layout;
-}
-
-#battery {
-    background: @battery;
-}
-
-#backlight {
-	background: @backlight;
-}
-
-#clock.date {
-    background: @date;
-}
-
-#clock.time {
-    background: @time;
-}
-
-#pulseaudio { /* Unsused but kept for those who needs it */
-    background: @sound;
-}
-
-#pulseaudio.muted {
-    /* No styles */
-}
-
-#tray {
-	background: @tray;
-}
