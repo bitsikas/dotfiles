@@ -7,6 +7,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'pwntester/octo.nvim',
+Plug 'kyazdani42/nvim-web-devicons',
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-lua/plenary.nvim'
