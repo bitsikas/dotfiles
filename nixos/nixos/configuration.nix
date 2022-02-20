@@ -10,35 +10,17 @@
       /etc/nixos/hardware-configuration.nix
     ];
 
+
+  nixpkgs.overlays = [
+    (import ../../nixpkgs/.config/nixpkgs/overlays/neovim.nix)
+  ];
   networking.hostName = "nixos"; # Define your hostname.
+  networking.networkmanager.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
   time.timeZone = "Europe/Bucharest";
-
-
   i18n.defaultLocale = "en_US.UTF-8";
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.printing.enable = true;
-  services.avahi.enable = true;
-  # Important to resolve .local domains of printers, otherwise you get an error
-  # like  "Impossible to connect to XXX.local: Name or service not known"
-  services.avahi.nssmdns = true;
-
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.wayland = true;
-  # services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  # services.xserver.desktopManager.default = lib.mkForce "sway";
-  services.xserver.displayManager.defaultSession = "sway";
-
-  # Configure keymap in X11
-  services.xserver.layout = "us,gr";
-  # services.xserver.xkbOptions = "eurosign:e";
 
   hardware.pulseaudio.enable = true;
   hardware.bluetooth.enable = true;
@@ -49,24 +31,42 @@
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      #vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
       vaapiVdpau
       libvdpau-va-gl
     ];
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.mutableUsers = true;
   users.users.kostas = {
     isNormalUser = true;
     uid = 1000;
     home = "/home/kostas";
+    createHome=true;
     description = "Kostas Papakonstantinou";
     extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth" "libvirtd" "vboxusers"];
     shell = pkgs.fish;
   };
+
+
+  environment.variables.EDITOR = "nvim";
+  environment.pathsToLink = [ "/libexec" ];
+  environment.sessionVariables = {
+     MOZ_ENABLE_WAYLAND = "1";
+     XDG_CURRENT_DESKTOP = "sway"; 
+  };
+  environment.etc = {
+     #"xdg/gtk-2.0".source = ./gtk-2.0;
+     #"xdg/gtk-3.0".source = ./gtk-3.0;
+  };
+  environment.loginShellInit = ''
+    if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+      dbus-run-session sway
+    fi
+  '';
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -89,10 +89,12 @@
     gparted
     htop
     httpie
+    imv
     inkscape
     kitty
     lastpass-cli
     lazygit
+    libinput-gestures
     lxappearance
     neovim 
     nodejs
@@ -111,40 +113,30 @@
     vlc
     vscode
     wget
+    zathura
   ];
 
-  environment.variables.EDITOR = "nvim";
-  environment.pathsToLink = [ "/libexec" ];
-environment.sessionVariables = {
-   MOZ_ENABLE_WAYLAND = "1";
-   XDG_CURRENT_DESKTOP = "sway"; 
-};
-  environment.etc = {
-     "xdg/gtk-2.0".source = ./gtk-2.0;
-     "xdg/gtk-3.0".source = ./gtk-3.0;
-
-  };
 
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.overlays = [(self: super: {
-	  neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (oldAttrs: {
-
-	    version = "0.6.0";
-
-	    src = pkgs.fetchFromGitHub {
-	      owner = "neovim";
-	      repo = "neovim";
-	      rev = "v0.6.0";
-	      sha256 = "sha256-mVVZiDjAsAs4PgC8lHf0Ro1uKJ4OKonoPtF59eUd888=";
-	    };
-
-            nativeBuildInputs = super.neovim-unwrapped.nativeBuildInputs ++ [ super.tree-sitter ];
-	  });
-	})];
+  #nixpkgs.overlays = [(self: super: {
+#	  neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (oldAttrs: {
+#
+#	    version = "0.6.0";
+#
+#	    src = pkgs.fetchFromGitHub {
+#	      owner = "neovim";
+#	      repo = "neovim";
+#	      rev = "v0.6.0";
+#	      sha256 = "sha256-mVVZiDjAsAs4PgC8lHf0Ro1uKJ4OKonoPtF59eUd888=";
+#	    };
+#
+#            nativeBuildInputs = super.neovim-unwrapped.nativeBuildInputs ++ [ super.tree-sitter ];
+#	  });
+#	})];
 
   programs.fish.enable = true ;
-
+  programs.kdeconnect.enable = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -152,7 +144,6 @@ environment.sessionVariables = {
   };
 
   programs.steam.enable = true;
-
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
@@ -186,6 +177,14 @@ environment.sessionVariables = {
   # List services that you want to enable:
 
   services.blueman.enable = true;
+  services.gvfs.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  services.printing.enable = true;
+  services.avahi.enable = true;
+  # Important to resolve .local domains of printers, otherwise you get an error
+  # like  "Impossible to connect to XXX.local: Name or service not known"
+  services.avahi.nssmdns = true;
+
   security.rtkit.enable = true;
 
   #services.pipewire = {
@@ -199,7 +198,6 @@ environment.sessionVariables = {
   virtualisation.virtualbox.host.enable = true;
   virtualisation.libvirtd.enable = true;
 
-  networking.networkmanager.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -207,13 +205,9 @@ environment.sessionVariables = {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.05"; # Did you read the comment?
+  system.stateVersion = "21.11"; # Did you read the comment?
 
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
   # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
-  # 
-  services.gvfs.enable = true;
-
-  services.gnome.gnome-keyring.enable = true;
 }
 
