@@ -10,4 +10,7 @@ stow --no-folding -t ~/  ssh
 stow --no-folding -t ~/  sway
 stow --no-folding -t ~/  tmux
 stow --no-folding -t ~/  waybar
+stow --no-folding -t ~/  ranger
+stow --no-folding -t ~/  mako
+stow --no-folding -t ~/  nixpkgs
 

@@ -1,4 +1,4 @@
-# use win key
+#dbus-launch  use win key
 set $mod Mod4
 floating_modifier $mod
 
@@ -120,8 +120,10 @@ bindsym $mod+Pause mode "$mode_system"
 # start notifications
 exec --no-startup-id mako
 
+exec --no-startup-id kdeconnect-cli -l; kdeconnect-indicator
 # start panel
 exec --no-startup-id waybar
+exec --no-startup-id blueman-applet
 
 # set keyboard layout
 #input "1:1:AT_Translated_Set_2_keyboard" {
@@ -168,8 +170,9 @@ client.focused_inactive   $blue  $blue  #ffffff $red  	$red
 
 client.background       #ffffff
 
-output HDMI-A-1 pos 0 0 mode 1920x1080@60Hz 
-output eDP-1 pos 0 1080 mode 1920x1080
+#output HDMI-A-2 pos 0 0 mode 1920x1080@60Hz 
+#output eDP-1 pos 0 1080 mode 1920x1080
+output eDP-1 pos 0 0 mode 1920x1080
 
 gaps top 0
 gaps bottom 0
@@ -178,3 +181,4 @@ gaps right 0
 gaps inner 0
 
 font pango:Hack:8
+include /etc/sway/config.d/*

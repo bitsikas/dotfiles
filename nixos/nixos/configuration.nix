@@ -8,7 +8,12 @@
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
+      ../../sway/sway.nix
     ];
+
+    services.xserver.modules = [ pkgs.xf86_input_wacom ];
+    services.xserver.wacom.enable = true;
+
 
 
   nixpkgs.overlays = [
@@ -97,6 +102,7 @@
     libinput-gestures
     lxappearance
     neovim 
+    rnix-lsp
     nodejs
     nordic
     papirus-icon-theme
@@ -114,6 +120,8 @@
     vscode
     wget
     zathura
+    libwacom
+    krita
   ];
 
 
