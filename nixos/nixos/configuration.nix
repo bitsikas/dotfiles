@@ -3,22 +3,32 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
 {
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
+      <home-manager/nixos>
       ../../sway/sway.nix
+      ../../waybar/waybar.nix
+      ../../wofi/wofi.nix
+      ../../kitty/kitty.nix
+      ../../fish/fish.nix
     ];
 
     services.xserver.modules = [ pkgs.xf86_input_wacom ];
     services.xserver.wacom.enable = true;
+    # Enable OpenTabletDriver
+    hardware.opentabletdriver.enable = false;
 
 
 
-  nixpkgs.overlays = [
-    (import ../../nixpkgs/.config/nixpkgs/overlays/neovim.nix)
-  ];
+# nixpkgs.overlays = [
+#   (self: super: {
+#     neovim = unstable.neovim.override { 
+#       vimAlias = true;
+#     };
+#   })
+# ];
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -28,18 +38,32 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   hardware.pulseaudio.enable = true;
+
+  #security.rtkit.enable = true;
+#services.pipewire = {
+#  enable = true;
+#  alsa.enable = true;
+#  alsa.support32Bit = true;
+#  pulse.enable = true;
+#  # If you want to use JACK applications, uncomment this
+#  #jack.enable = true;
+
+#  # use the example session manager (no others are packaged yet so this is enabled by default,
+#  # no need to redefine it in your config for now)
+#  #media-session.enable = true;
+#};
   hardware.bluetooth.enable = true;
-  nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  };
+#  nixpkgs.config.packageOverrides = pkgs: {
+#    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+#  };
   hardware.opengl = {
     enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+#    extraPackages = with pkgs; [
+#      intel-media-driver # LIBVA_DRIVER_NAME=iHD
       #vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
+#      vaapiVdpau
+#      libvdpau-va-gl
+#    ];
   };
 
 
@@ -51,10 +75,10 @@
     home = "/home/kostas";
     createHome=true;
     description = "Kostas Papakonstantinou";
-    extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth" "libvirtd" "vboxusers"];
+    extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth" "libvirtd" "vboxusers" "video"];
     shell = pkgs.fish;
   };
-
+  home-manager.users.kostas = (import ../../nixpkgs/.config/nixpkgs/home.nix);
 
   environment.variables.EDITOR = "nvim";
   environment.pathsToLink = [ "/libexec" ];
@@ -66,11 +90,11 @@
      #"xdg/gtk-2.0".source = ./gtk-2.0;
      #"xdg/gtk-3.0".source = ./gtk-3.0;
   };
-  environment.loginShellInit = ''
-    if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-      dbus-run-session sway
-    fi
-  '';
+  # environment.loginShellInit = ''
+  #   if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+  #     dbus-run-session sway
+  #   fi
+  # '';
 
 
   # List packages installed in system profile. To search, run:
@@ -87,7 +111,6 @@
     gcc
     gh
     gimp
-    git
     gnumake
     go
     gopls
@@ -101,7 +124,7 @@
     lazygit
     libinput-gestures
     lxappearance
-    neovim 
+    #neovim 
     rnix-lsp
     nodejs
     nordic
@@ -143,7 +166,18 @@
 #	  });
 #	})];
 
+ services.xserver = {
+    enable = false;
+    libinput = {
+      enable = true;
+    };
+  };
+  # services.xserver.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
+
   programs.fish.enable = true ;
+  programs.light.enable = true;
   programs.kdeconnect.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -152,25 +186,6 @@
   };
 
   programs.steam.enable = true;
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-    extraPackages = with pkgs; [
-      brightnessctl
-      libappindicator-gtk2
-      libappindicator-gtk3
-      libnotify
-      mako 
-      pamixer
-      polkit_gnome
-      swaybg
-      swayidle
-      swaylock
-      waybar
-      wl-clipboard
-      wofi
-    ];
-  };
 
   fonts.fonts = with pkgs; [
     fira-code
@@ -203,8 +218,8 @@
   #};
 
   virtualisation.docker.enable = true;
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.libvirtd.enable = true;
+#  virtualisation.virtualbox.host.enable = true;
+#  virtualisation.libvirtd.enable = true;
 
 
   # This value determines the NixOS release from which the default
