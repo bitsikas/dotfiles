@@ -1,7 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let 
   unstable = import <nixpkgs-unstable> {};
-in {
+  swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
+  customconfig = {
+    wallpaper = "/home/kostas/.wallpaper.jpg";
+  };
+in rec {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "kostas";
@@ -22,13 +26,12 @@ in {
   programs.neovim = {
     enable = true;
     package = unstable.neovim-unwrapped;
-    extraConfig = ''
-          (builtins.readFile ../../../nvim/.config/nvim/init.vim)
-          (builtins.readFile ../../../nvim/.config/nvim/settings/floatterm.vim)
-          (builtins.readFile ../../../nvim/.config/nvim/settings/styling.vim)
-          (builtins.readFile ../../../nvim/.config/nvim/settings/telescope.vim)
-    '';
-    plugins = [
+    extraConfig = (builtins.concatStringsSep "\n" [
+      (builtins.readFile ../../../nvim/.config/nvim/init.vim)
+      (builtins.readFile ../../../nvim/.config/nvim/settings/floatterm.vim)
+      (builtins.readFile ../../../nvim/.config/nvim/settings/styling.vim)
+      (builtins.readFile ../../../nvim/.config/nvim/settings/telescope.vim)
+    ]);    plugins = [
       unstable.vimPlugins.nord-vim 
       unstable.vimPlugins.editorconfig-vim 
       unstable.vimPlugins.gitgutter
@@ -83,13 +86,116 @@ in {
     };
   };
 
-  programs.fish.enable = true;
-  programs.fzf.enable = true;
-  programs.exa.enable = true;
-  programs.bat.enable = true;
-  programs.gh.enable = true;
-  programs.direnv.enable = true;
+  programs.fish = {
+    enable = true;
+    shellAbbrs = {
+      ls = "exa";
+      cat = "bat";
+    };
+    loginShellInit = lib.mkBefore ''
+      if test (tty) = /dev/tty1
+      #dbus-run-session sway &> /dev/null
+      sway &> /dev/null
+      end
+    '';
+    interactiveShellInit =
+      # Use vim bindings and cursors
+      ''
+        fish_vi_key_bindings
+        set fish_cursor_default     block      blink
+        set fish_cursor_insert      line       blink
+        set fish_cursor_replace_one underscore blink
+        set fish_cursor_visual      block
+      '';
+    };
+    programs.fzf.enable = true;
+    programs.exa.enable = true;
+    programs.bat.enable = true;
+    programs.gh.enable = true;
+    programs.direnv.enable = true;
 
-  home.packages = [pkgs.visidata];
+    wayland.windowManager.sway = {
+      enable = true;
+      systemdIntegration = true;
+      wrapperFeatures.gtk = true;
+      config = rec {
+        modifier = "Mod4";
+        keybindings = lib.mkOptionDefault rec {
+          "${modifier}+Return" = "exec kitty";
+          "${modifier}+Shift + q" = "kill";
+          "${modifier}+d" = "exec wofi";
+          "${modifier}+1" = "workspace number 1 web";
+          "${modifier}+2" = "workspace number 2";
+          "${modifier}+3" = "workspace number 3";
+          "${modifier}+4" = "workspace number 4";
+          "${modifier}+5" = "workspace number 5";
+          "${modifier}+6" = "workspace number 6";
+          "${modifier}+7" = "workspace number 7";
+          "${modifier}+8" = "workspace number 8";
+          "${modifier}+9" = "workspace number 9 teams";
+          "${modifier}+0" = "workspace number 10 slack";
+          "${modifier}+Shift+1" = "move container to workspace number 1 web";
+          "${modifier}+Shift+2" = "move container to workspace number 2";
+          "${modifier}+Shift+3" = "move container to workspace number 3";
+          "${modifier}+Shift+4" = "move container to workspace number 4";
+          "${modifier}+Shift+5" = "move container to workspace number 5";
+          "${modifier}+Shift+6" = "move container to workspace number 6";
+          "${modifier}+Shift+7" = "move container to workspace number 7";
+          "${modifier}+Shift+8" = "move container to workspace number 8";
+          "${modifier}+Shift+9" = "move container to workspace number 9 teams";
+          "${modifier}+Shift+0" = "move container to workspace number 10 slack";
+          "XF86MonBrightnessUp" = "exec \"light -A 5\"";
+          "XF86MonBrightnessDown" = "exec \"light -U 5\"";
+        };
+        bars = [];
 
-}
+        input = { 
+          "type:keyboard"  = {
+            xkb_layout = "us,gr";
+            xkb_options  = grp:alt_shift_toggle;
+          };
+        };
+
+
+        startup = [
+          #{ command = "${swaylock} -i ${customconfig.wallpaper}"; }
+          # { command = "${swaylock} -i ${customconfig.wallpaper}"; }
+          { command = "swaybg -i ${customconfig.wallpaper}"; }
+          { command = "mako" ;}
+          { command = "waybar" ;}
+          { command = "flashfocus" ;}
+          { command = "squeekboard" ;}
+          { command = "blueman-applet" ;}
+
+        ];
+      };
+      extraConfig = (builtins.concatStringsSep "\n" [
+        (builtins.readFile ../../../sway/.config/sway/config)
+        ''
+          exec dbus-update-activation-environment WAYLAND_DISPLAY
+          exec systemctl --user import-environment WAYLAND_DISPLAY
+        ''
+      ]);
+
+    };
+
+
+    home.packages = with pkgs; [
+      flashfocus
+      libnotify
+      light
+      mako 
+      pamixer
+      polkit_gnome
+      squeekboard
+      swaybg
+      swayidle
+      swaylock-effects
+      visidata
+      waybar
+      wl-clipboard
+      wofi
+    ];
+    programs.kitty.enable = true;
+
+  }
