@@ -29,7 +29,7 @@ set t_Co=256
 "let g:solarized_contrast="high"
 let g:gruvbox_contrast_light="hard"
 syntax on
-colo nord
+colo PaperColor
 " Set gutter for CoC-nvim color to none
 highlight SignColumn ctermbg=none
 

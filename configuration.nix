@@ -3,34 +3,46 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-{
+
+let 
+  unstable = import <nixpkgs-unstable> {};
+in {
   imports =
     [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
-      <home-manager/nixos>
-      ../../sway/sway.nix
-      ../../waybar/waybar.nix
-      ../../wofi/wofi.nix
-      ../../kitty/kitty.nix
-      ../../fish/fish.nix
-    ];
+    /etc/nixos/hardware-configuration.nix
+    <home-manager/nixos>
+    # ../../sway/sway.nix
+    # ../../waybar/waybar.nix
+    # ../../wofi/wofi.nix
+    #../../kitty/kitty.nix
+    # ../../fish/fish.nix
+  ];
 
-    services.xserver.modules = [ pkgs.xf86_input_wacom ];
-    services.xserver.wacom.enable = true;
+  services.xserver.modules = [ pkgs.xf86_input_wacom ];
+  services.xserver.wacom.enable = true;
     # Enable OpenTabletDriver
     hardware.opentabletdriver.enable = false;
 
 
 
-# nixpkgs.overlays = [
-#   (self: super: {
-#     neovim = unstable.neovim.override { 
-#       vimAlias = true;
-#     };
-#   })
-# ];
-  networking.hostName = "nixos"; # Define your hostname.
-  networking.networkmanager.enable = true;
+    # nixpkgs.overlays = [
+    #   (self: super: {
+    #     mypaint = super.mypaint.overrideAttrs (oldAttrs: {
+    #       version = "2.0.1";
+    #       src = super.fetchFromGitHub {
+    #         owner = "bitsikas";
+    #         repo = "mypaint";
+    #         rev = "880b08a1afdea935b4f936066eeaefa6f30d2b91";
+    #         sha256 = "1civiyzpisqbvpg3da9qx2043jcnkkg7vqxdi1whdrqbz1dxp58v";
+    #         fetchSubmodules = true;
+    #       };
+    #     }
+    #     );
+    #   }
+    #   )
+    # ];
+    networking.hostName = "nixos"; # Define your hostname.
+    networking.networkmanager.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
@@ -52,12 +64,12 @@
 #  # no need to redefine it in your config for now)
 #  #media-session.enable = true;
 #};
-  hardware.bluetooth.enable = true;
+hardware.bluetooth.enable = true;
 #  nixpkgs.config.packageOverrides = pkgs: {
 #    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
 #  };
-  hardware.opengl = {
-    enable = true;
+hardware.opengl = {
+  enable = true;
 #    extraPackages = with pkgs; [
 #      intel-media-driver # LIBVA_DRIVER_NAME=iHD
       #vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
@@ -78,18 +90,18 @@
     extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth" "libvirtd" "vboxusers" "video"];
     shell = pkgs.fish;
   };
-  home-manager.users.kostas = (import ../../nixpkgs/.config/nixpkgs/home.nix);
+  home-manager.users.kostas = (import ./home.nix);
 
   environment.variables.EDITOR = "nvim";
   environment.pathsToLink = [ "/libexec" ];
   environment.sessionVariables = {
-     MOZ_ENABLE_WAYLAND = "1";
-     XDG_CURRENT_DESKTOP = "sway"; 
+    MOZ_ENABLE_WAYLAND = "1";
+    XDG_CURRENT_DESKTOP = "sway"; 
   };
   environment.etc = {
      #"xdg/gtk-2.0".source = ./gtk-2.0;
      #"xdg/gtk-3.0".source = ./gtk-3.0;
-  };
+   };
   # environment.loginShellInit = ''
   #   if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
   #     dbus-run-session sway
@@ -104,6 +116,7 @@
     chromium
     cifs-utils
     direnv
+    dconf
     exa
     fd
     firefox-wayland
@@ -119,7 +132,7 @@
     httpie
     imv
     inkscape
-    kitty
+    #kitty
     lastpass-cli
     lazygit
     libinput-gestures
@@ -140,15 +153,34 @@
     tmux
     unrar
     vlc
-    vscode
+    #vscode
     wget
     zathura
     libwacom
-    krita
-  ];
+    unstable.krita
+    (
+      pkgs.writeShellApplication {
+        name = "virt-keyboard-toggle";
+        runtimeInputs = [ squeekboard ];
+        text = ''
+          visible=$(busctl get-property --user sm.puri.OSK0 /sm/puri/OSK0 sm.puri.OSK0 Visible);
+          if [ "$visible" == "b true" ]; then
+            busctl call --user sm.puri.OSK0 /sm/puri/OSK0 sm.puri.OSK0 SetVisible b false
+          else
+            busctl call --user sm.puri.OSK0 /sm/puri/OSK0 sm.puri.OSK0 SetVisible b true
+          fi
+
+        '';
+      }
+      )
 
 
-  nixpkgs.config.allowUnfree = true;
+
+
+    ];
+
+
+    nixpkgs.config.allowUnfree = true;
 
   #nixpkgs.overlays = [(self: super: {
 #	  neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (oldAttrs: {
@@ -166,12 +198,12 @@
 #	  });
 #	})];
 
- services.xserver = {
-    enable = false;
-    libinput = {
-      enable = true;
-    };
+services.xserver = {
+  enable = false;
+  libinput = {
+    enable = true;
   };
+};
   # services.xserver.enable = true;
   # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
@@ -229,6 +261,8 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.11"; # Did you read the comment?
+  services.dbus.packages = with pkgs; [ gnome3.dconf ];
+  services.dbus.enable = true;
 
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
   # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
