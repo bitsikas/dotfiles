@@ -13,6 +13,7 @@ in rec {
     nvim/nvim.nix
     kitty/kitty.nix
     git/git.nix
+    wofi/wofi.nix
     waybar/waybar.nix
   ];
   # This value determines the Home Manager release that your
@@ -36,18 +37,6 @@ in rec {
   programs.direnv.enable = true;
 
 
-  xdg.configFile."wofi/config".text = ''
-      image_size=32
-      columns=1
-      allow_images=true
-      insensitive=true
-
-      run-always_parse_args=true
-      run-cache_file=/dev/null
-      run-exec_search=true
-  '';
-
-  xdg.configFile."wofi/style.css".text =(builtins.readFile wofi/.config/wofi/style.css);
 
   home.packages = with pkgs; [
     nordic

@@ -11,38 +11,15 @@ in {
     [ # Include the results of the hardware scan.
     /etc/nixos/hardware-configuration.nix
     <home-manager/nixos>
-    # ../../sway/sway.nix
-    # ../../waybar/waybar.nix
-    # ../../wofi/wofi.nix
-    #../../kitty/kitty.nix
-    # ../../fish/fish.nix
   ];
 
   services.xserver.modules = [ pkgs.xf86_input_wacom ];
   services.xserver.wacom.enable = true;
-    # Enable OpenTabletDriver
-    hardware.opentabletdriver.enable = false;
+  # Enable OpenTabletDriver
+  hardware.opentabletdriver.enable = false;
 
-
-
-    # nixpkgs.overlays = [
-    #   (self: super: {
-    #     mypaint = super.mypaint.overrideAttrs (oldAttrs: {
-    #       version = "2.0.1";
-    #       src = super.fetchFromGitHub {
-    #         owner = "bitsikas";
-    #         repo = "mypaint";
-    #         rev = "880b08a1afdea935b4f936066eeaefa6f30d2b91";
-    #         sha256 = "1civiyzpisqbvpg3da9qx2043jcnkkg7vqxdi1whdrqbz1dxp58v";
-    #         fetchSubmodules = true;
-    #       };
-    #     }
-    #     );
-    #   }
-    #   )
-    # ];
-    networking.hostName = "nixos"; # Define your hostname.
-    networking.networkmanager.enable = true;
+  networking.hostName = "nixos"; # Define your hostname.
+  networking.networkmanager.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
