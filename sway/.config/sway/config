@@ -1,3 +1,6 @@
+set $blue #46536A
+set $green #A3BE8C
+set $red #BF616A
 client.background       #ffffff
 client.focused            $green $green #ffffff $red  	$red 
 client.focused_inactive   $blue  $blue  #ffffff $red  	$red 
@@ -5,6 +8,3 @@ client.unfocused          $blue  $blue  #ffffff $red  	$red
 default_border pixel 0 
 font pango:Hack:8
 for_window [title="Microsoft Teams Notification"] floating enable
-set $blue #46536A
-set $green #A3BE8C
-set $red #BF616A

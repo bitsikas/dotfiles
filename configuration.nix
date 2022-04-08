@@ -26,7 +26,6 @@ in {
   time.timeZone = "Europe/Bucharest";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  hardware.pulseaudio.enable = true;
 
   #security.rtkit.enable = true;
 #services.pipewire = {
@@ -67,7 +66,7 @@ hardware.opengl = {
     extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth" "libvirtd" "vboxusers" "video"];
     shell = pkgs.fish;
   };
-  home-manager.users.kostas = (import ./home.nix);
+  home-manager.users.kostas = (import ./kostas.nix);
 
   environment.variables.EDITOR = "nvim";
   environment.pathsToLink = [ "/libexec" ];
@@ -219,16 +218,14 @@ services.xserver = {
 
   security.rtkit.enable = true;
 
-  #services.pipewire = {
-  #  enable = true;
-  #  alsa.enable = true;
-  #  alsa.support32Bit = true;
-  #  pulse.enable = true;
-  #};
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   virtualisation.docker.enable = true;
-#  virtualisation.virtualbox.host.enable = true;
-#  virtualisation.libvirtd.enable = true;
 
 
   # This value determines the NixOS release from which the default

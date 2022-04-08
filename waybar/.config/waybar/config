@@ -1,8 +1,18 @@
 {
-    "height": 32, // Waybar height (to be removed for auto height)
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "height": 48, // Waybar height (to be removed for auto height)
+    "modules-left": ["custom/virt-key", "sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
     "modules-right": ["idle_inhibitor", "pulseaudio", "network", "sway/language", "battery", "clock", "tray"],
+
+
+    "custom/virt-key": {
+        "format": "",
+        "on-click": "virt-keyboard-toggle",
+    },
+
+
+
+
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
@@ -22,6 +32,8 @@
         "format-alt": "{:%Y-%m-%d}"
     },
     "battery": {
+    	"bat": "BAT0",
+    	"adapter": "BAT0",
         "states": {
             // "good": 95,
             "warning": 30,
