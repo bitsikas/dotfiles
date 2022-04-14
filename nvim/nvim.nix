@@ -42,5 +42,8 @@ in rec
       
     ];
   };
+  home.packages = with pkgs; [
+    pyright
+  ];
 
 }
