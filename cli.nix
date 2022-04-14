@@ -15,6 +15,24 @@
   home.packages = with pkgs; [
     nordic
     visidata
+    imv
+    gnumake
+    httpie
+    htop
+    go
+    gopls
+    rnix-lsp
+    gcc
+    nodejs
+    python39
+    ranger
+    ripgrep
+    rq
+    stow
+    tmux
+    unrar
+    pipenv
+    wget
   ];
 }
 

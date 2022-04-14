@@ -7,6 +7,20 @@ in rec {
     wofi/wofi.nix
     waybar/waybar.nix
   ];
+
+
+
+  nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
+
+  home.packages = [
+    pkgs.firefox-wayland
+    pkgs.chromium
+    pkgs.gimp
+    pkgs.dconf
+    pkgs.inkscape
+    pkgs.zathura
+    unstable.krita
+  ];
   nixpkgs.overlays = [
     (
       self: super: {

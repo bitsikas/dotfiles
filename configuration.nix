@@ -10,6 +10,7 @@ in {
   imports =
     [ # Include the results of the hardware scan.
     /etc/nixos/hardware-configuration.nix
+    #wireguard/wireguard.nix
     <home-manager/nixos>
   ];
 
@@ -27,31 +28,10 @@ in {
   i18n.defaultLocale = "en_US.UTF-8";
 
 
-  #security.rtkit.enable = true;
-#services.pipewire = {
-#  enable = true;
-#  alsa.enable = true;
-#  alsa.support32Bit = true;
-#  pulse.enable = true;
-#  # If you want to use JACK applications, uncomment this
-#  #jack.enable = true;
 
-#  # use the example session manager (no others are packaged yet so this is enabled by default,
-#  # no need to redefine it in your config for now)
-#  #media-session.enable = true;
-#};
-hardware.bluetooth.enable = true;
-#  nixpkgs.config.packageOverrides = pkgs: {
-#    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-#  };
-hardware.opengl = {
-  enable = true;
-#    extraPackages = with pkgs; [
-#      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      #vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-#      vaapiVdpau
-#      libvdpau-va-gl
-#    ];
+  hardware.bluetooth.enable = true;
+  hardware.opengl = {
+    enable = true;
   };
 
 
@@ -68,72 +48,23 @@ hardware.opengl = {
   };
   home-manager.users.kostas = (import ./kostas.nix);
 
-  environment.variables.EDITOR = "nvim";
   environment.pathsToLink = [ "/libexec" ];
-  environment.sessionVariables = {
-    MOZ_ENABLE_WAYLAND = "1";
-    XDG_CURRENT_DESKTOP = "sway"; 
-  };
-  environment.etc = {
-     #"xdg/gtk-2.0".source = ./gtk-2.0;
-     #"xdg/gtk-3.0".source = ./gtk-3.0;
-   };
-  # environment.loginShellInit = ''
-  #   if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-  #     dbus-run-session sway
-  #   fi
-  # '';
+
 
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     bat
-    chromium
     cifs-utils
-    direnv
-    dconf
-    exa
     fd
-    firefox-wayland
-    fzf
-    gcc
-    gh
-    gimp
-    gnumake
-    go
-    gopls
-    gparted
-    htop
-    httpie
-    imv
-    inkscape
-    #kitty
-    lastpass-cli
     lazygit
     libinput-gestures
-    lxappearance
-    #neovim 
-    rnix-lsp
-    nodejs
-    nordic
     papirus-icon-theme
     pavucontrol
-    pipenv
-    python39
-    python39Packages.poetry
-    ranger
-    ripgrep
-    rq
-    stow
-    tmux
-    unrar
-    vlc
+    wireguard
     #vscode
-    wget
-    zathura
     libwacom
-    unstable.krita
     (
       pkgs.writeShellApplication {
         name = "virt-keyboard-toggle";
@@ -149,30 +80,11 @@ hardware.opengl = {
         '';
       }
       )
-
-
-
-
     ];
 
 
     nixpkgs.config.allowUnfree = true;
 
-  #nixpkgs.overlays = [(self: super: {
-#	  neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (oldAttrs: {
-#
-#	    version = "0.6.0";
-#
-#	    src = pkgs.fetchFromGitHub {
-#	      owner = "neovim";
-#	      repo = "neovim";
-#	      rev = "v0.6.0";
-#	      sha256 = "sha256-mVVZiDjAsAs4PgC8lHf0Ro1uKJ4OKonoPtF59eUd888=";
-#	    };
-#
-#            nativeBuildInputs = super.neovim-unwrapped.nativeBuildInputs ++ [ super.tree-sitter ];
-#	  });
-#	})];
 
 services.xserver = {
   enable = false;
@@ -180,12 +92,8 @@ services.xserver = {
     enable = true;
   };
 };
-  # services.xserver.enable = true;
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
 
   programs.fish.enable = true ;
-  programs.light.enable = true;
   programs.kdeconnect.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -193,7 +101,6 @@ services.xserver = {
     pinentryFlavor = "qt";
   };
 
-  programs.steam.enable = true;
 
   fonts.fonts = with pkgs; [
     fira-code
@@ -210,6 +117,7 @@ services.xserver = {
   services.blueman.enable = true;
   services.gvfs.enable = true;
   services.gnome.gnome-keyring.enable = true;
+
   services.printing.enable = true;
   services.avahi.enable = true;
   # Important to resolve .local domains of printers, otherwise you get an error
@@ -238,7 +146,7 @@ services.xserver = {
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
   services.dbus.enable = true;
 
-  nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
-  # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
+  programs.light.enable = true;
+  programs.steam.enable = true;
 }
 

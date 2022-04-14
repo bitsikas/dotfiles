@@ -16,7 +16,7 @@ in rec
       keybindings = lib.mkOptionDefault rec {
         "${modifier}+Return" = "exec kitty";
         "${modifier}+Shift + q" = "kill";
-        "${modifier}+d" = "exec wofi -S drun";
+        "${modifier}+d" = "exec wofi -S run";
         "XF86MonBrightnessUp" = "exec \"light -A 5\"";
         "XF86MonBrightnessDown" = "exec \"light -U 5\"";
       };
