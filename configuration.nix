@@ -86,31 +86,38 @@ in {
     nixpkgs.config.allowUnfree = true;
 
 
-services.xserver = {
-  enable = false;
-  libinput = {
-    enable = true;
-  };
-};
+    services.xserver = {
+      enable = false;
+      libinput = {
+        enable = true;
+      };
+    };
 
-  programs.fish.enable = true ;
-  programs.kdeconnect.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-    pinentryFlavor = "qt";
-  };
+    programs.fish.enable = true ;
+    programs.kdeconnect.enable = true;
+    programs.gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "qt";
+    };
 
 
-  fonts.fonts = with pkgs; [
+    fonts.fonts = with pkgs; [
+    fira-code
+    dina-font
     fira-code
     fira-code-symbols
     font-awesome
     hack-font
-    mplus-outline-fonts
+    liberation_ttf
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    proggyfonts
     roboto
     ubuntu_font_family
   ];
+
 
   # List services that you want to enable:
 

@@ -16,5 +16,9 @@
         set fish_cursor_visual      block
       '';
     };
+    programs.starship = {
+      enable = true;
+      enableFishIntegration = true;
+    };
 }
 

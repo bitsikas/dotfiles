@@ -6,6 +6,7 @@ in rec {
     sway/sway.nix
     wofi/wofi.nix
     waybar/waybar.nix
+    foot/foot.nix
   ];
 
 
