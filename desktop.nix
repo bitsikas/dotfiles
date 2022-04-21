@@ -7,6 +7,7 @@ in rec {
     wofi/wofi.nix
     waybar/waybar.nix
     foot/foot.nix
+    kitty/kitty.nix
   ];
 
 
@@ -21,6 +22,8 @@ in rec {
     pkgs.inkscape
     pkgs.zathura
     unstable.krita
+    pkgs.google-chrome
+    pkgs.imv
   ];
   nixpkgs.overlays = [
     (

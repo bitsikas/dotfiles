@@ -4,7 +4,6 @@
   imports = [
     fish/fish.nix
     nvim/nvim.nix
-    kitty/kitty.nix
     git/git.nix
   ];
   programs.fzf.enable = true;
@@ -13,9 +12,7 @@
   programs.gh.enable = true;
   programs.direnv.enable = true;
   home.packages = with pkgs; [
-    nordic
     visidata
-    imv
     gnumake
     httpie
     htop
@@ -33,6 +30,7 @@
     unrar
     pipenv
     wget
+    imv
   ];
 }
 
