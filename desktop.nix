@@ -5,6 +5,7 @@ in rec {
   imports = [
     sway/sway.nix
     wofi/wofi.nix
+    mako/mako.nix
     waybar/waybar.nix
     foot/foot.nix
     kitty/kitty.nix

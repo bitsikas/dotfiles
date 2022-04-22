@@ -6,9 +6,9 @@ border-size=2
 default-timeout=5000
 ignore-timeout=1
 
-background-color=#e5e9f0dd
-text-color=#2e3440
-border-color=#eceff4
+background-color=#3c3836
+text-color=#d5c4a1
+border-color=#3c3836
 border-radius=7
 max-icon-size=48
 margin=20
