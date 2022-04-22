@@ -24,6 +24,7 @@ endif
 "set background=light
 let &t_ut=''
 set t_Co=256
+colorscheme gruvbox
 "let g:solarized_termcolors=256
 "let g:solarized_termtrans=0
 "let g:solarized_contrast="high"

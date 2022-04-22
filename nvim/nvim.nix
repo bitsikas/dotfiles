@@ -21,6 +21,7 @@ in rec
       (builtins.readFile .config/nvim/settings/styling.vim)
       (builtins.readFile .config/nvim/settings/telescope.vim)
     ]);    plugins = [
+      unstable.vimPlugins.gruvbox 
       unstable.vimPlugins.nord-vim 
       unstable.vimPlugins.papercolor-theme 
       unstable.vimPlugins.editorconfig-vim 
