@@ -71,14 +71,14 @@ gtk = {
     name="Sans";
     size=10;
   };
-  theme.name="Nordic";
-  theme.package=pkgs.nordic;
+  theme.name="gruvbox";
+  theme.package=pkgs.gruvbox-dark-gtk;
 };
 qt = {
   enable=true;
   platformTheme = "gnome";
-  style.name="nordic";
-  style.package=pkgs.nordic;
+  style.name="gruvbox";
+  style.package=pkgs.kde-gruvbox;
 };
 
   programs.fish.loginShellInit = lib.mkBefore ''
