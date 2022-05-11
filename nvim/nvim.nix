@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 let
-  unstable = import <nixpkgs-unstable> {};
+  unstable = import (
+    fetchTarball  https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz 
+    ){ config = { allowUnfree = true; }; };
   copilot-vim = pkgs.vimUtils.buildVimPlugin {
         name = "copilot-vim";
         src = pkgs.fetchFromGitHub {

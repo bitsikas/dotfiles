@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
-let 
-  unstable = import <nixpkgs-unstable> {};
+let
+  unstable = import (
+    fetchTarball  https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz 
+    ){ config = { allowUnfree = true; }; };
 in rec {
   imports = [
     sway/sway.nix
@@ -42,5 +44,5 @@ in rec {
 
     ];
 
-}
+  }
 
