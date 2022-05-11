@@ -30,7 +30,6 @@
     unrar
     pipenv
     wget
-    imv
   ];
 }
 
