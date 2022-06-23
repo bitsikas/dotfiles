@@ -15,7 +15,11 @@ in {
     #wireguard/wireguard.nix
     <home-manager/nixos>
   ];
+  nix.autoOptimiseStore = true;
 
+  programs.adb.enable = true;
+  services.xserver.videoDrivers = [ "modesetting" ];
+  services.xserver.useGlamor = true;
   services.xserver.modules = [ pkgs.xf86_input_wacom ];
   services.xserver.wacom.enable = true;
   # Enable OpenTabletDriver
@@ -28,6 +32,14 @@ in {
   # Set your time zone.
   time.timeZone = "Europe/Bucharest";
   i18n.defaultLocale = "en_US.UTF-8";
+
+  # This is required so that pod can reach the API server (running on port 6443 by default)
+  networking.firewall.allowedTCPPorts = [ 6443 ];
+  services.k3s.enable = true;
+  services.k3s.role = "server";
+  services.k3s.extraFlags = toString [
+    # "--kubelet-arg=v=4" # Optionally add additional args to k3s
+  ];
 
 
 
@@ -45,7 +57,7 @@ in {
     home = "/home/kostas";
     createHome=true;
     description = "Kostas Papakonstantinou";
-    extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth" "libvirtd" "vboxusers" "video"];
+    extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth" "libvirtd" "vboxusers" "video" "adbusers"];
     shell = pkgs.fish;
   };
   home-manager.users.kostas = (import ./kostas.nix);
@@ -57,14 +69,18 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    sof-firmware
     bat
     cifs-utils
     fd
+    k3s
     lazygit
     libinput-gestures
     papirus-icon-theme
     pavucontrol
-    wireguard
+    wireguard-tools
+    gnomeExtensions.pop-shell
+    gnome.gnome-tweaks
     #vscode
     libwacom
     (
@@ -89,7 +105,7 @@ in {
 
 
     services.xserver = {
-      enable = false;
+      enable = true;
       libinput = {
         enable = true;
       };
@@ -102,6 +118,15 @@ in {
       enableSSHSupport = true;
       pinentryFlavor = "qt";
     };
+
+    fonts.fontconfig.enable = true;
+    fonts.enableDefaultFonts = true;
+    fonts.fontconfig.defaultFonts = {
+      serif = [ "Ubuntu" ];
+      sansSerif = [ "Ubuntu" ];
+      monospace = [ "Hack" ];
+    };
+
 
 
     fonts.fonts = with pkgs; [
@@ -118,6 +143,7 @@ in {
     proggyfonts
     roboto
     ubuntu_font_family
+    android-studio
   ];
 
 
@@ -126,6 +152,7 @@ in {
   services.blueman.enable = true;
   services.gvfs.enable = true;
   services.gnome.gnome-keyring.enable = true;
+
 
   services.printing.enable = true;
   services.avahi.enable = true;
@@ -141,8 +168,11 @@ in {
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+  hardware.pulseaudio.enable = false;
 
   virtualisation.docker.enable = true;
+  #virtualisation.virtualbox.host.enable = true;
+  #users.extraGroups.vboxusers.members = ["kostas"];
 
 
   # This value determines the NixOS release from which the default
@@ -152,10 +182,14 @@ in {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.11"; # Did you read the comment?
-  services.dbus.packages = with pkgs; [ gnome3.dconf ];
+  services.dbus.packages = with pkgs; [ pkgs.dconf ];
   services.dbus.enable = true;
 
   programs.light.enable = true;
   programs.steam.enable = true;
+  #
+  services.xserver.displayManager.lightdm.enable = false;
+  #services.xserver.desktopManager.gnome.enable = true;
+
 }
 

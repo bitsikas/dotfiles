@@ -27,6 +27,9 @@ in rec
           xkb_layout = "us,gr";
           xkb_options  = grp:alt_shift_toggle;
         };
+        "type:touchpad" = {
+          tap = "enabled";
+        };
       };
       startup = [
       # { command = "${swaylock} -i ${customconfig.wallpaper}"; }
@@ -64,22 +67,8 @@ home.packages = with pkgs; [
   swaybg
   swayidle
   swaylock-effects
+  libinput-gestures
 ];
-gtk = {
-  enable=true;
-  font = {
-    name="Sans";
-    size=10;
-  };
-  theme.name="gruvbox";
-  theme.package=pkgs.gruvbox-dark-gtk;
-};
-qt = {
-  enable=true;
-  platformTheme = "gnome";
-  style.name="gruvbox";
-  style.package=pkgs.kde-gruvbox;
-};
 
   programs.fish.loginShellInit = lib.mkBefore ''
       if test (tty) = /dev/tty1
