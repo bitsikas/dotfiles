@@ -2,11 +2,34 @@
 {
   programs.fish = {
     enable = true;
-    shellAbbrs = {
-      ls = "exa";
-      cat = "bat";
-    };
-    interactiveShellInit =
+    plugins = [{
+      name="foreign-env";
+      src = pkgs.fetchFromGitHub {
+        owner = "oh-my-fish";
+        repo = "plugin-foreign-env";
+        rev = "dddd9213272a0ab848d474d0cbde12ad034e65bc";
+        sha256 = "00xqlyl3lffc5l0viin1nyp819wf81fncqyz87jx8ljjdhilmgbs";
+      };
+    }];
+
+    shellInit =
+      ''
+    # nix
+       if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon
+        fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daem
+       end
+
+    # home-manager
+       if test -e /etc/bash.bashrc
+        fenv source /etc/bash.bashrc
+       end
+      '';
+
+      shellAbbrs = {
+        ls = "exa";
+        cat = "bat";
+      };
+      interactiveShellInit =
       # Use vim bindings and cursors
       ''
         fish_vi_key_bindings
@@ -20,5 +43,5 @@
       enable = true;
       enableFishIntegration = true;
     };
-}
+  }
 

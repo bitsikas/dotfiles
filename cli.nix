@@ -41,7 +41,6 @@ in {
     unrar
     pipenv
     wget
-    imv
   ];
 }
 
