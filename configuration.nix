@@ -4,11 +4,7 @@
 
 { config, pkgs, ... }:
 
-let
-  unstable = import (
-    fetchTarball  https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz 
-    ){ config = { allowUnfree = true; }; };
-in {
+{
   imports =
     [ # Include the results of the hardware scan.
     /etc/nixos/hardware-configuration.nix
@@ -79,7 +75,7 @@ in {
     papirus-icon-theme
     pavucontrol
     wireguard-tools
-    gnomeExtensions.pop-shell
+    #gnomeExtensions.pop-shell
     gnome.gnome-tweaks
     #vscode
     libwacom
@@ -189,7 +185,8 @@ in {
   programs.steam.enable = true;
   #
   services.xserver.displayManager.lightdm.enable = false;
-  #services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
 }
 
