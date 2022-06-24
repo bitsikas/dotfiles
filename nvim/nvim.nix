@@ -16,32 +16,59 @@ in rec
 {
   programs.neovim = {
     enable = true;
-    package = unstable.neovim-unwrapped;
+    #package = unstable.neovim-unwrapped;
     extraConfig = (builtins.concatStringsSep "\n" [
       (builtins.readFile .config/nvim/init.vim)
       (builtins.readFile .config/nvim/settings/floatterm.vim)
       (builtins.readFile .config/nvim/settings/styling.vim)
-      (builtins.readFile .config/nvim/settings/telescope.vim)
+      (builtins.readFile .config/nvim/settings/telescope_settings.vim)
+      (builtins.readFile .config/nvim/settings/treesitter.vim)
+      (builtins.readFile .config/nvim/settings/lsp.vim)
+      (builtins.readFile .config/nvim/settings/toggleterm.vim)
+      (builtins.readFile .config/nvim/settings/nvimtree.vim)
+      (builtins.readFile .config/nvim/settings/lualine.vim)
     ]);    plugins = [
-      unstable.vimPlugins.gruvbox 
-      unstable.vimPlugins.nord-vim 
-      unstable.vimPlugins.papercolor-theme 
-      unstable.vimPlugins.editorconfig-vim 
-      unstable.vimPlugins.gitgutter
-      unstable.vimPlugins.nvim-compe
-      unstable.vimPlugins.nvim-lspconfig
-      unstable.vimPlugins.nvim-lsputils
-      unstable.vimPlugins.plenary-nvim 
-      unstable.vimPlugins.telescope-nvim 
-      unstable.vimPlugins.vim-airline 
-      unstable.vimPlugins.vim-airline-themes
-      unstable.vimPlugins.vim-commentary
-      unstable.vimPlugins.vim-floaterm
-      unstable.vimPlugins.vim-fugitive
-      unstable.vimPlugins.vim-nix
-      unstable.vimPlugins.vim-surround
-      unstable.vimPlugins.vimspector
+      pkgs.vimPlugins.editorconfig-vim 
+      pkgs.vimPlugins.lualine-nvim
+      pkgs.vimPlugins.gitgutter
+      pkgs.vimPlugins.gruvbox 
+      pkgs.vimPlugins.indentLine
+      pkgs.vimPlugins.neorg
+      #pkgs.vimPlugins.nord-vim 
+      pkgs.vimPlugins.nvim-compe
+      pkgs.vimPlugins.nvim-lspconfig
+      pkgs.vimPlugins.nvim-lsputils
+      pkgs.vimPlugins.toggleterm-nvim
+      pkgs.vimPlugins.nvim-tree-lua
+      #pkgs.vimPlugins.papercolor-theme 
+      pkgs.vimPlugins.plenary-nvim 
+      pkgs.vimPlugins.telescope-nvim 
+      pkgs.vimPlugins.bufferline-nvim
+      pkgs.vimPlugins.vim-commentary
+      #pkgs.vimPlugins.vim-floaterm
+      pkgs.vimPlugins.vim-fugitive
+      pkgs.vimPlugins.vim-nix
+      pkgs.vimPlugins.vim-python-pep8-indent
+      #pkgs.vimPlugins.vim-surround
+      #pkgs.vimPlugins.vimspector
       copilot-vim
+      (pkgs.vimPlugins.nvim-treesitter.withPlugins (
+          plugins: with plugins; [
+            tree-sitter-bash
+            tree-sitter-fish
+            tree-sitter-html
+            tree-sitter-http
+            tree-sitter-go
+            tree-sitter-lua
+            tree-sitter-java
+            tree-sitter-javascript
+            tree-sitter-make
+            tree-sitter-nix
+            tree-sitter-typescript
+            tree-sitter-python
+            #tree-sitter-sql
+          ]
+        ))
       
     ];
   };

@@ -21,17 +21,12 @@ if strftime("%H") < 19
 else
   set background=dark
 endif
-"set background=light
 let &t_ut=''
 set t_Co=256
+let g:gruvbox_contrast_light="hard"
 colorscheme gruvbox
 set termguicolors
-"let g:solarized_termcolors=256
-"let g:solarized_termtrans=0
-"let g:solarized_contrast="high"
-let g:gruvbox_contrast_light="hard"
 syntax on
-" colo PaperColor
 " Set gutter for CoC-nvim color to none
 highlight SignColumn ctermbg=none
 
