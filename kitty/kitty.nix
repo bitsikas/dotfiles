@@ -6,9 +6,10 @@
       #theme = "PaperColor_light";
       extraConfig = (builtins.readFile .config/kitty/theme.conf);
       font = {
-        name = "Hack Nerd Font Mono Regular, Hack Regular, monospace";
-        size = 14;
+        name = "Fira Code, monospace";
+        size = 10;
       };
+      #theme = "Gruvbox_light";
       settings = {
         enable_audio_bell = "no";
         allow_remote_control = "yes";

@@ -22,6 +22,7 @@ in {
 
   programs.direnv.enable = true;
   home.packages = with pkgs; [
+    flutter
     visidata
     gnumake
     httpie

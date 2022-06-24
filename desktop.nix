@@ -9,7 +9,7 @@ in rec {
     wofi/wofi.nix
     mako/mako.nix
     waybar/waybar.nix
-    foot/foot.nix
+#    foot/foot.nix
     kitty/kitty.nix
   ];
 
@@ -27,6 +27,7 @@ in rec {
     unstable.krita
     pkgs.google-chrome
     pkgs.imv
+    pkgs.hack-font
   ];
   nixpkgs.overlays = [
     (
@@ -43,6 +44,22 @@ in rec {
       )
 
     ];
+    gtk = {
+      enable=true;
+      font = {
+        name="Ubuntu";
+        size=10;
+      };
+      theme.name="gruvbox";
+      theme.package=pkgs.gruvbox-dark-gtk;
+    };
+    qt = {
+      enable=true;
+      platformTheme = "gnome";
+      style.name="gruvbox";
+      style.package=pkgs.kde-gruvbox;
+    };
 
   }
+
 
