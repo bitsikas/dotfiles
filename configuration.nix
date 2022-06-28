@@ -76,6 +76,7 @@
     pavucontrol
     wireguard-tools
     #gnomeExtensions.pop-shell
+    gnomeExtensions.gsconnect
     gnome.gnome-tweaks
     #vscode
     libwacom
@@ -108,7 +109,7 @@
     };
 
     programs.fish.enable = true ;
-    programs.kdeconnect.enable = true;
+    #programs.kdeconnect.enable = true;
     programs.gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
