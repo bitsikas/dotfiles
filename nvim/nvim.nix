@@ -25,8 +25,9 @@ in rec
       (builtins.readFile .config/nvim/settings/treesitter.vim)
       (builtins.readFile .config/nvim/settings/lsp.vim)
       (builtins.readFile .config/nvim/settings/toggleterm.vim)
-      (builtins.readFile .config/nvim/settings/nvimtree.vim)
+      # (builtins.readFile .config/nvim/settings/nvimtree.vim)
       (builtins.readFile .config/nvim/settings/lualine.vim)
+      (builtins.readFile .config/nvim/settings/neorg.vim)
     ]);    plugins = [
       pkgs.vimPlugins.editorconfig-vim 
       pkgs.vimPlugins.lualine-nvim
@@ -39,7 +40,7 @@ in rec
       pkgs.vimPlugins.nvim-lspconfig
       pkgs.vimPlugins.nvim-lsputils
       pkgs.vimPlugins.toggleterm-nvim
-      pkgs.vimPlugins.nvim-tree-lua
+      # pkgs.vimPlugins.nvim-tree-lua
       #pkgs.vimPlugins.papercolor-theme 
       pkgs.vimPlugins.plenary-nvim 
       pkgs.vimPlugins.telescope-nvim 
