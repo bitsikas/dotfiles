@@ -1,9 +1,5 @@
 { config, pkgs, lib, ... }:
-let
-  unstable = import (
-    fetchTarball  https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz 
-    ){ config = { allowUnfree = true; }; };
-in rec {
+{
   imports = [
     sway/sway.nix
     wofi/wofi.nix
@@ -24,7 +20,7 @@ in rec {
     pkgs.dconf
     pkgs.inkscape
     pkgs.zathura
-    unstable.krita
+    pkgs.krita
     pkgs.google-chrome
     pkgs.imv
     pkgs.hack-font

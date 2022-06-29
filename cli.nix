@@ -1,10 +1,6 @@
 
 { config, pkgs, lib, ... }:
-let
-  unstable = import (
-    fetchTarball  https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz 
-    ){ config = { allowUnfree = true; }; };
-in {
+{
   imports = [
     fish/fish.nix
     nvim/nvim.nix
@@ -18,7 +14,6 @@ in {
     git_protocol = "ssh";
     prompt = "enabled";
   };
-  programs.gh.package = unstable.gh;
 
   programs.direnv.enable = true;
   home.packages = with pkgs; [

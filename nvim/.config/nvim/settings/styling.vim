@@ -23,7 +23,7 @@ else
 endif
 let &t_ut=''
 set t_Co=256
-let g:gruvbox_contrast_light="hard"
+"let g:gruvbox_contrast_light="hard"
 colorscheme gruvbox
 set termguicolors
 syntax on
