@@ -20,6 +20,9 @@
         color = {
           ui = "auto";
         };
+        feature = {
+          manyFiles = true;
+        };
         core = {
           fsmonitor = true;
         };
