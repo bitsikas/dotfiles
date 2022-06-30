@@ -13,7 +13,6 @@ in rec
 {
   programs.neovim = {
     enable = true;
-    #package = unstable.neovim-unwrapped;
     extraConfig = (builtins.concatStringsSep "\n" [
       (builtins.readFile .config/nvim/init.vim)
       (builtins.readFile .config/nvim/settings/floatterm.vim)
@@ -22,7 +21,6 @@ in rec
       (builtins.readFile .config/nvim/settings/treesitter.vim)
       (builtins.readFile .config/nvim/settings/lsp.vim)
       (builtins.readFile .config/nvim/settings/toggleterm.vim)
-      # (builtins.readFile .config/nvim/settings/nvimtree.vim)
       (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/neorg.vim)
     ]);    plugins = [
@@ -62,6 +60,7 @@ in rec
             tree-sitter-javascript
             tree-sitter-make
             tree-sitter-nix
+            tree-sitter-norg
             tree-sitter-typescript
             tree-sitter-python
             #tree-sitter-sql
