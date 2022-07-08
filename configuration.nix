@@ -11,6 +11,13 @@
     #wireguard/wireguard.nix
     <home-manager/nixos>
   ];
+
+  nix = {
+    package = pkgs.nixFlakes; # or versioned attributes like nixVersions.nix_2_8
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+   };
   nix.autoOptimiseStore = true;
 
   programs.adb.enable = true;
@@ -65,6 +72,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    flutter
+    flutterPackages.stable
     sof-firmware
     bat
     cifs-utils
@@ -140,7 +149,7 @@
     proggyfonts
     roboto
     ubuntu_font_family
-    android-studio
+    android-tools
   ];
 
 

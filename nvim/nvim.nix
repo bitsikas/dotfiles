@@ -35,6 +35,7 @@ in rec
       pkgs.vimPlugins.nvim-lspconfig
       pkgs.vimPlugins.nvim-lsputils
       pkgs.vimPlugins.toggleterm-nvim
+      pkgs.vimPlugins.flutter-tools-nvim
       # pkgs.vimPlugins.nvim-tree-lua
       #pkgs.vimPlugins.papercolor-theme 
       pkgs.vimPlugins.plenary-nvim 
