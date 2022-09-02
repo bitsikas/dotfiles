@@ -7,9 +7,11 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-    /etc/nixos/hardware-configuration.nix
-    #wireguard/wireguard.nix
-    <home-manager/nixos>
+    #/etc/nixos/hardware-configuration.nix
+    #./hardware/hpspectre.nix
+    ./hardware/spectre.nix
+    # wireguard/wireguard.nix
+    # <home-manager/nixos>
   ];
 
   nix = {
@@ -28,7 +30,7 @@
   # Enable OpenTabletDriver
   hardware.opentabletdriver.enable = false;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "spectre"; # Define your hostname.
   networking.networkmanager.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -37,12 +39,12 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # This is required so that pod can reach the API server (running on port 6443 by default)
-  networking.firewall.allowedTCPPorts = [ 6443 ];
-  services.k3s.enable = true;
-  services.k3s.role = "server";
-  services.k3s.extraFlags = toString [
+  # networking.firewall.allowedTCPPorts = [ 6443 ];
+  # services.k3s.enable = true;
+  # services.k3s.role = "server";
+  # services.k3s.extraFlags = toString [
     # "--kubelet-arg=v=4" # Optionally add additional args to k3s
-  ];
+  # ];
 
 
 
@@ -63,7 +65,7 @@
     extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth" "libvirtd" "vboxusers" "video" "adbusers"];
     shell = pkgs.fish;
   };
-  home-manager.users.kostas = (import ./kostas.nix);
+  # home-manager.users.kostas = (import ./kostas.nix);
 
   environment.pathsToLink = [ "/libexec" ];
 
