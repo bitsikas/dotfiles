@@ -10,6 +10,13 @@
   };
   
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
+    homeConfigurations = {
+      "kostas.papakon@PKOSTAS-MB" = home-manager.lib.homeManagerConfiguration {
+        configuration = import ./kostas.nix;
+        system = "x86_64-darwin";
+      };
+    };
+
     nixosConfigurations = {
       spectre = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
