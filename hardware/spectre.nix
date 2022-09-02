@@ -9,35 +9,22 @@
   ];
 
 
-  #hardware.enableAllFirmware = true;
-
-
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
 
-  #boot.blacklistedKernelModules = ["snd-hda-intel" "snd_soc_skl"];
-  # boot.blacklistedKernelModules = ["snd-hda-intel"];
   boot.kernelModules = [ "kvm-intel" "coretemp"];
   boot.extraModulePackages = [ ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "i8042.nopnp=1" "i8042.dumbkbd=1" ];
-  #boot.kernelParams = [ "i8042.nopnp=1" ];
   boot.loader.systemd-boot.enable = true;
   hardware.opengl.extraPackages = [
     pkgs.intel-compute-runtime
   ];
 
-    # Confirmed necessary to get audio working as of 2020-11-13:
-   # https://bbs.archlinux.org/viewtopic.php?pid=1933643#p1933643
-   # boot.extraModprobeConfig = ''
-   #   options snd-hda-intel
-   # '';
    boot.extraModprobeConfig = ''
-     options snd-intel-dspcfg dsp_driver=1
+   options snd-intel-dspcfg dsp_driver=1
    '';
-   #boot.extraModprobeConfig = ''
-   #  options snd-intel-dspcfg dsp_driver=1
-   #'';
+
    fileSystems."/" =
      { device = "/dev/disk/by-uuid/4ba27507-ce64-4b3d-8039-4371fdd680a3";
      fsType = "ext4";
@@ -56,9 +43,16 @@
    swapDevices = [ ];
 
    powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  #powerManagement.powertop.enable = true;
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  hardware.steam-hardware.enable = true;
+   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+   hardware.steam-hardware.enable = true;
 
-}
+   hardware.opentabletdriver.enable = false;
+   hardware.bluetooth.enable = true;
+   hardware.opengl = {
+     enable = true;
+   };
+
+   hardware.pulseaudio.enable = false;
+
+ }
