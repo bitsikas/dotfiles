@@ -23,6 +23,7 @@ in rec
       (builtins.readFile .config/nvim/settings/toggleterm.vim)
       (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/neorg.vim)
+      (builtins.readFile .config/nvim/settings/trouble.vim)
     ]);    plugins = [
       pkgs.vimPlugins.editorconfig-vim 
       pkgs.vimPlugins.lualine-nvim
@@ -35,6 +36,7 @@ in rec
       pkgs.vimPlugins.nvim-lspconfig
       pkgs.vimPlugins.nvim-lsputils
       pkgs.vimPlugins.toggleterm-nvim
+      pkgs.vimPlugins.trouble-nvim
       # pkgs.vimPlugins.nvim-tree-lua
       #pkgs.vimPlugins.papercolor-theme 
       pkgs.vimPlugins.plenary-nvim 
