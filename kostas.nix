@@ -3,7 +3,7 @@
 
   home.username = "kostas";
   home.homeDirectory = "/home/kostas";
-  nixpkgs.config.allowUnfree = true;
+  #nixpkgs.config.allowUnfree = true;
 
   imports = [
     ./desktop.nix

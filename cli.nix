@@ -7,6 +7,7 @@
     git/git.nix
     bat/bat.nix
   ];
+  programs.home-manager.enable = true;
   programs.fzf.enable = true;
   programs.exa.enable = true;
   programs.gh.enable = true;
