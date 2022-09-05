@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     command = "normal zx zR",
 })
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "norg" },
+  ensure_installed = { "norg", "norg_meta"},
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,

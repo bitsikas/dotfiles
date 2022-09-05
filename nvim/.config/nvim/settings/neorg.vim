@@ -4,5 +4,4 @@ require('neorg').setup {
         ["core.defaults"] = {}
     }
 }
-
 EOF
