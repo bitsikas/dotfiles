@@ -16,6 +16,15 @@
     prompt = "enabled";
   };
 
+  programs.ssh = {
+    enable = true;
+    controlMaster = "yes";
+    controlPersist = "yes";
+    forwardAgent = true;
+    compression = true;
+    includes = [ "config.d/*" ];
+  };
+
   programs.direnv.enable = true;
   home.packages = with pkgs; [
     visidata
