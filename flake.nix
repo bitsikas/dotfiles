@@ -13,7 +13,15 @@
   outputs = { self, nixpkgs, home-manager, flake-utils, ... }: flake-utils.lib.eachDefaultSystem (system: let 
     pkgs = import nixpkgs  { inherit system; } ;
   in {
-    devShells.default = import ./shell.nix { inherit pkgs; };
+    # devShells.default = import ./shell.nix { inherit pkgs; };
+    devShell = pkgs.mkShell {
+      buildInputs = [ 
+        pkgs.openssh
+        pkgs.rsync  # Included by default on NixOS
+        pkgs.nixFlakes
+        pkgs.git 
+      ];
+    };
   }) // {
     homeConfigurations = {
       "kostas.papakon@PKOSTAS-MB" = home-manager.lib.homeManagerConfiguration {
