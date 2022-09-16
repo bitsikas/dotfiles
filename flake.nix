@@ -9,20 +9,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  
+
   outputs = inputs@{ self, nixpkgs, home-manager, flake-utils, ... }: 
 
-     flake-utils.lib.eachDefaultSystem
-      (system:
-        let pkgs = nixpkgs.legacyPackages.${system}; in
-        {
-          devShells.default = import ./shell.nix { inherit pkgs; };
-          homeConfigurations = {
-            "kostas.papakon@PKOSTAS-MB" = home-manager.lib.homeManagerConfiguration {
-              configuration = import ./kostas.nix;
-              system = "x86_64-darwin";
-            };
-          };
+  {
+          # devShells.default = import ./shell.nix { inherit pkgs; };
+          # homeConfigurations = {
+          #   "kostas.papakon@PKOSTAS-MB" = home-manager.lib.homeManagerConfiguration {
+          #     configuration = import ./kostas.nix;
+          #     system = "x86_64-darwin";
+          #   };
+          # };
 
           nixosConfigurations = {
             spectre = nixpkgs.lib.nixosSystem {
@@ -51,6 +48,5 @@
               # specialArgs = { hostname = "spectre"; };
             }; 
           };
+        };
         }
-    );
-}

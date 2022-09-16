@@ -15,7 +15,7 @@
   boot.kernelModules = [ "kvm-intel" "coretemp"];
   boot.extraModulePackages = [ ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  #boot.kernelParams = [ "i8042.nopnp=1" "i8042.dumbkbd=1" ];
+  boot.kernelParams = [ "i8042.nopnp=1" "i8042.dumbkbd=1" ];
   boot.loader.systemd-boot.enable = true;
   hardware.opengl.extraPackages = [
     pkgs.intel-compute-runtime
