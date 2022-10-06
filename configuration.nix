@@ -42,6 +42,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    busybox
     bat
     cifs-utils
     fd
@@ -54,6 +55,7 @@
     pavucontrol
     sof-firmware
     wireguard-tools
+    docker-compose
   ];
 
 
@@ -90,11 +92,14 @@
     proggyfonts
     roboto
     ubuntu_font_family
+    google-fonts
   ];
 
   security.rtkit.enable = true;
 
   # List services that you want to enable:
+
+  services.mullvad-vpn.enable = true;
 
   services.avahi = {
     enable = true;

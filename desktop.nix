@@ -5,7 +5,6 @@
     wofi/wofi.nix
     mako/mako.nix
     waybar/waybar.nix
-#    foot/foot.nix
     kitty/kitty.nix
   ];
 
@@ -55,7 +54,10 @@
       style.name="gruvbox";
       style.package=pkgs.kde-gruvbox;
     };
-
+    programs.vscode = {
+      enable = true;
+      package = pkgs.vscode.fhs;
+    };
   }
 
 
