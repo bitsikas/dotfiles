@@ -10,7 +10,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, ... }: flake-utils.lib.eachDefaultSystem (system: let 
+  outputs = { self, nixpkgs, home-manager, flake-utils, ... }@inputs: flake-utils.lib.eachDefaultSystem (system: let 
     pkgs = import nixpkgs  { inherit system; } ;
   in {
     # devShells.default = import ./shell.nix { inherit pkgs; };
@@ -54,7 +54,7 @@
                 }
                 ];
               # Example how to pass an arg to configuration.nix:
-              # specialArgs = { hostname = "spectre"; };
+              specialArgs = inputs;
               }; 
               };
               };
