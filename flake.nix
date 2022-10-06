@@ -24,8 +24,11 @@
     };
   }) // {
     homeConfigurations = {
-      "kostas.papakon@PKOSTAS-MB" = home-manager.lib.homeManagerConfiguration {
-        configuration = import ./kostas.nix;
+      "Kostas.Papakon@PKOSTAS-MB" = home-manager.lib.homeManagerConfiguration {
+        username = "Kostas.Papakon";
+        homeDirectory = "/Users/Kostas.Papakon";
+        configuration = import ./kostas.papakon.nix;
+        # modules = [ ./cli.nix ./home.nix ] ;
         system = "x86_64-darwin";
       };
     };

@@ -42,7 +42,7 @@
     rq
     stow
     tmux
-    unrar
+    # unrar
     pipenv
     wget
   ];
