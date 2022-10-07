@@ -1,5 +1,4 @@
-{ config, pkgs, lib, ... }:
-{
+{ config, pkgs, lib, ... }: {
   imports = [
     sway/sway.nix
     wofi/wofi.nix
@@ -8,9 +7,8 @@
     kitty/kitty.nix
   ];
 
-
-
-  nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
+  nixpkgs.config.chromium.commandLineArgs =
+    "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
   home.packages = [
     pkgs.firefox-wayland
@@ -39,25 +37,24 @@
   #     )
 
   #   ];
-    gtk = {
-      enable=true;
-      font = {
-        name="Ubuntu";
-        size=10;
-      };
-      theme.name="gruvbox";
-      theme.package=pkgs.gruvbox-dark-gtk;
+  gtk = {
+    enable = true;
+    font = {
+      name = "Ubuntu";
+      size = 10;
     };
-    qt = {
-      enable=true;
-      platformTheme = "gnome";
-      style.name="gruvbox";
-      style.package=pkgs.kde-gruvbox;
-    };
-    programs.vscode = {
-      enable = true;
-      package = pkgs.vscode.fhs;
-    };
-  }
-
+    theme.name = "gruvbox";
+    theme.package = pkgs.gruvbox-dark-gtk;
+  };
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style.name = "gruvbox";
+    style.package = pkgs.kde-gruvbox;
+  };
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode.fhs;
+  };
+}
 

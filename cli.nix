@@ -1,17 +1,10 @@
-
-{ config, pkgs, lib, ... }:
-{
-  imports = [
-    fish/fish.nix
-    nvim/nvim.nix
-    git/git.nix
-    bat/bat.nix
-  ];
+{ config, pkgs, lib, ... }: {
+  imports = [ fish/fish.nix nvim/nvim.nix git/git.nix bat/bat.nix ];
   programs.home-manager.enable = true;
   programs.fzf.enable = true;
   programs.exa.enable = true;
   programs.gh.enable = true;
-  programs.gh.settings =  {
+  programs.gh.settings = {
     git_protocol = "ssh";
     prompt = "enabled";
   };
@@ -42,6 +35,7 @@
     rq
     stow
     tmux
+    nixfmt
     # unrar
     pipenv
     wget

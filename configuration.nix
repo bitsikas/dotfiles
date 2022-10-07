@@ -12,10 +12,9 @@
     autoOptimiseStore = true;
     package = pkgs.nixFlakes; # or versioned attributes like nixVersions.nix_2_8
     extraOptions = ''
-    experimental-features = nix-command flakes
+      experimental-features = nix-command flakes
     '';
   };
-
 
   networking.hostName = "spectre"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -24,16 +23,25 @@
   time.timeZone = "Europe/Bucharest";
   i18n.defaultLocale = "en_US.UTF-8";
 
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = true;
   users.users.kostas = {
     isNormalUser = true;
     uid = 1000;
     home = "/home/kostas";
-    createHome=true;
+    createHome = true;
     description = "Kostas Papakonstantinou";
-    extraGroups = [ "wheel" "networkmanager" "docker" "audio" "bluetooth" "libvirtd" "vboxusers" "video" "adbusers"];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+      "audio"
+      "bluetooth"
+      "libvirtd"
+      "vboxusers"
+      "video"
+      "adbusers"
+    ];
     shell = pkgs.fish;
   };
 
@@ -58,10 +66,8 @@
     docker-compose
   ];
 
-
-
   programs.adb.enable = true;
-  programs.fish.enable = true ;
+  programs.fish.enable = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -128,27 +134,22 @@
 
   services.xserver = {
     enable = true;
-    libinput = {
-      enable = true;
-    };
+    libinput = { enable = true; };
     displayManager = {
       lightdm.enable = false;
       gdm.enable = true;
     };
-    desktopManager = {
-      gnome.enable = true;
-    };
+    desktopManager = { gnome.enable = true; };
     modules = [ pkgs.xf86_input_wacom ];
     useGlamor = true;
     videoDrivers = [ "modesetting" ];
     wacom.enable = true;
   };
 
-
   #
   virtualisation.virtualbox.host.enable = true;
   virtualisation.docker.enable = true;
-  system.stateVersion = "21.11"; 
+  system.stateVersion = "21.11";
 
 }
 
