@@ -57,7 +57,7 @@
 
   hardware.pulseaudio.enable = false;
   networking.hostName = "spectre"; # Define your hostname.
-
-  services.spice-vdagentd.enable = true;
+  hardware.sensor.iio.enable = true;
+  hardware.enableAllFirmware = true;
 
 }
