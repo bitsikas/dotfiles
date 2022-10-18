@@ -49,7 +49,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    spice-vdagent
     busybox
     bat
     cifs-utils
@@ -106,7 +105,6 @@
   # List services that you want to enable:
 
   services.mullvad-vpn.enable = true;
-  services.spice-vdagentd.enable = true;
 
   services.avahi = {
     enable = true;
