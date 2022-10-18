@@ -46,6 +46,27 @@
         });
 
         nixosConfigurations = {
+          qemu = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./configuration.nix
+              ./hardware/qemu.nix
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.kostas = {
+                  home.username = "kostas";
+                  home.homeDirectory = "/home/kostas";
+                  home.stateVersion = "22.05";
+                  home.sessionVariables = { "EDITOR" = "nvim"; };
+                  imports = [ ./desktop.nix ./cli.nix ];
+                };
+              }
+            ];
+            # Example how to pass an arg to configuration.nix:
+            specialArgs = inputs;
+          };
           spectre = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [

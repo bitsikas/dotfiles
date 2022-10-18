@@ -56,5 +56,8 @@
   hardware.opengl = { enable = true; };
 
   hardware.pulseaudio.enable = false;
+  networking.hostName = "spectre"; # Define your hostname.
+
+  services.spice-vdagentd.enable = true;
 
 }

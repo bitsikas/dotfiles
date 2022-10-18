@@ -16,7 +16,6 @@
     '';
   };
 
-  networking.hostName = "spectre"; # Define your hostname.
   networking.networkmanager.enable = true;
 
   # Set your time zone.
@@ -50,6 +49,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    spice-vdagent
     busybox
     bat
     cifs-utils
@@ -106,6 +106,7 @@
   # List services that you want to enable:
 
   services.mullvad-vpn.enable = true;
+  services.spice-vdagentd.enable = true;
 
   services.avahi = {
     enable = true;
@@ -149,7 +150,7 @@
   #
   virtualisation.virtualbox.host.enable = true;
   virtualisation.docker.enable = true;
-  system.stateVersion = "21.11";
+  system.stateVersion = "22.05";
 
 }
 
