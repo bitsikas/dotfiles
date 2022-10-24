@@ -3,7 +3,6 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
     home-manager = {
       url = "github:nix-community/home-manager/release-22.05";
@@ -12,7 +11,7 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, flake-utils, nixpkgs-unstable, ... }@inputs:
+    { self, nixpkgs, home-manager, flake-utils, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = import nixpkgs { inherit system; };
       in {
@@ -35,12 +34,6 @@
               homeDirectory = "/Users/Kostas.Papakon";
               configuration = import ./kostas.papakon.nix;
               # modules = [ ./cli.nix ./home.nix ] ;
-              extraModules = [
-                ({ pkgs, ... }: rec {
-                  _module.args.nixpkgs-unstable =
-                    import nixpkgs-unstable { inherit system; };
-                })
-              ];
 
             };
         });
