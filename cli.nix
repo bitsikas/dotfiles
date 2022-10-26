@@ -20,24 +20,25 @@
 
   programs.direnv.enable = true;
   home.packages = with pkgs; [
-    visidata
+    # unrar
+    docker
+    gcc
     gnumake
-    httpie
-    htop
     go
     gopls
-    rnix-lsp
-    gcc
+    htop
+    httpie
+    nixfmt
     nodejs
+    pipenv
     python39
     ranger
     ripgrep
+    rnix-lsp
     rq
     stow
     tmux
-    nixfmt
-    # unrar
-    pipenv
+    visidata
     wget
   ];
 }

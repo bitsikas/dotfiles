@@ -26,7 +26,7 @@
         };
       }) // {
         homeConfigurations = (let system = "x86_64-darwin";
-        in rec {
+        in {
           "Kostas.Papakon@PKOSTAS-MB" =
             home-manager.lib.homeManagerConfiguration {
               username = "Kostas.Papakon";
