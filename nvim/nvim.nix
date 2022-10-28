@@ -21,16 +21,33 @@ in rec {
       (builtins.readFile .config/nvim/settings/lsp.vim)
       (builtins.readFile .config/nvim/settings/toggleterm.vim)
       (builtins.readFile .config/nvim/settings/lualine.vim)
-      (builtins.readFile .config/nvim/settings/neorg.vim)
       (builtins.readFile .config/nvim/settings/trouble.vim)
+      (builtins.readFile .config/nvim/settings/nvim-compe.vim)
+      (builtins.readFile .config/nvim/settings/neorg.vim)
     ]);
     plugins = [
+      (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
+        with plugins; [
+          tree-sitter-bash
+          tree-sitter-fish
+          tree-sitter-html
+          tree-sitter-http
+          tree-sitter-go
+          tree-sitter-lua
+          tree-sitter-java
+          tree-sitter-javascript
+          tree-sitter-make
+          tree-sitter-nix
+          tree-sitter-norg
+          tree-sitter-typescript
+          tree-sitter-python
+          #tree-sitter-sql
+        ]))
       pkgs.vimPlugins.editorconfig-vim
       pkgs.vimPlugins.lualine-nvim
       pkgs.vimPlugins.gitgutter
       pkgs.vimPlugins.gruvbox
       pkgs.vimPlugins.indentLine
-      pkgs.vimPlugins.neorg
       #pkgs.vimPlugins.nord-vim 
       pkgs.vimPlugins.nvim-compe
       pkgs.vimPlugins.nvim-lspconfig
@@ -50,23 +67,7 @@ in rec {
       #pkgs.vimPlugins.vim-surround
       #pkgs.vimPlugins.vimspector
       copilot-vim
-      (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
-        with plugins; [
-          tree-sitter-bash
-          tree-sitter-fish
-          tree-sitter-html
-          tree-sitter-http
-          tree-sitter-go
-          tree-sitter-lua
-          tree-sitter-java
-          tree-sitter-javascript
-          tree-sitter-make
-          tree-sitter-nix
-          tree-sitter-norg
-          tree-sitter-typescript
-          tree-sitter-python
-          #tree-sitter-sql
-        ]))
+      pkgs.vimPlugins.neorg
 
     ];
   };
