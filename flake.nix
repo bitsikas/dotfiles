@@ -4,6 +4,7 @@
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager/release-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -11,9 +12,11 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, flake-utils, ... }@inputs:
+    { self, nixpkgs, home-manager, flake-utils, nixpkgs-unstable, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = import nixpkgs { inherit system; };
+      let
+        pkgs = import nixpkgs { inherit system; };
+        unstable-pkgs = import nixpkgs-unstable { inherit system; };
       in {
         # devShells.default = import ./shell.nix { inherit pkgs; };
         devShell = pkgs.mkShell {
@@ -21,7 +24,7 @@
             pkgs.openssh
             pkgs.rsync # Included by default on NixOS
             pkgs.nixFlakes
-            pkgs.git
+            unstable-pkgs.git
           ];
         };
       }) // {
@@ -33,6 +36,14 @@
               system = "x86_64-darwin";
               homeDirectory = "/Users/Kostas.Papakon";
               configuration = import ./kostas.papakon.nix;
+
+              extraModules = [
+                ({ pkgs, ... }: rec {
+                  _module.args.nixpkgs-unstable =
+                    import nixpkgs-unstable { inherit system; };
+                })
+              ];
+
               # modules = [ ./cli.nix ./home.nix ] ;
 
             };

@@ -1,5 +1,11 @@
-{ config, pkgs, lib, ... }: {
-  imports = [ fish/fish.nix nvim/nvim.nix git/git.nix bat/bat.nix ];
+{ config, pkgs, lib, nixpkgs-unstable, ... }: {
+  imports = [
+    fish/fish.nix
+    nvim/nvim.nix
+    git/git.nix
+    bat/bat.nix
+    starship/starship.nix
+  ];
   programs.home-manager.enable = true;
   programs.fzf.enable = true;
   programs.exa.enable = true;
@@ -18,6 +24,7 @@
     includes = [ "config.d/*" ];
   };
 
+  programs.git.package = nixpkgs-unstable.git;
   programs.direnv.enable = true;
   home.packages = with pkgs; [
     # unrar
@@ -38,6 +45,7 @@
     rq
     stow
     tmux
+    taskell
     visidata
     wget
   ];

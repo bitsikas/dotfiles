@@ -1,11 +1,10 @@
 { config, pkgs, ... }: {
   programs.kitty = {
     enable = true;
-    # XXX this will probably work in a later version
-    theme = "Gruvbox Light";
+    theme = "Solarized Dark";
     #extraConfig = (builtins.readFile .config/kitty/theme.conf);
     font = {
-      name = "Fira Code, monospace";
+      name = "FiraCode Nerd Font Mono, Fira Code, monospace";
       size = 10;
     };
     #theme = "Gruvbox_light";

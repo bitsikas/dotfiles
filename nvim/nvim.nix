@@ -11,6 +11,7 @@ let
   };
 in rec {
   programs.neovim = {
+    package = pkgs.neovim-unwrapped;
     enable = true;
     extraConfig = (builtins.concatStringsSep "\n" [
       (builtins.readFile .config/nvim/init.vim)
@@ -19,7 +20,7 @@ in rec {
       (builtins.readFile .config/nvim/settings/telescope_settings.vim)
       (builtins.readFile .config/nvim/settings/treesitter.vim)
       (builtins.readFile .config/nvim/settings/lsp.vim)
-      (builtins.readFile .config/nvim/settings/toggleterm.vim)
+      # (builtins.readFile .config/nvim/settings/toggleterm.vim)
       (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/trouble.vim)
       (builtins.readFile .config/nvim/settings/nvim-compe.vim)
@@ -47,12 +48,13 @@ in rec {
       pkgs.vimPlugins.lualine-nvim
       pkgs.vimPlugins.gitgutter
       pkgs.vimPlugins.gruvbox
+      pkgs.vimPlugins.nvim-solarized-lua
       pkgs.vimPlugins.indentLine
       #pkgs.vimPlugins.nord-vim 
       pkgs.vimPlugins.nvim-compe
       pkgs.vimPlugins.nvim-lspconfig
       pkgs.vimPlugins.nvim-lsputils
-      pkgs.vimPlugins.toggleterm-nvim
+      # pkgs.vimPlugins.toggleterm-nvim
       pkgs.vimPlugins.trouble-nvim
       # pkgs.vimPlugins.nvim-tree-lua
       #pkgs.vimPlugins.papercolor-theme 

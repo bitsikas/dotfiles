@@ -26,6 +26,8 @@
     shellAbbrs = {
       ls = "exa";
       cat = "bat";
+      taskell = "taskell ~/taskell.md";
+      ssh-add-apple = "ssh-add --apple-use-keychain";
     };
     interactiveShellInit =
       # Use vim bindings and cursors
@@ -36,11 +38,6 @@
         set fish_cursor_replace_one underscore blink
         set fish_cursor_visual      block
       '';
-  };
-  programs.starship = {
-    enable = true;
-    settings.add_newline = true;
-    enableFishIntegration = true;
   };
 }
 
