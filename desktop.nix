@@ -17,7 +17,6 @@
     pkgs.dconf
     pkgs.inkscape
     pkgs.zathura
-    pkgs.krita
     pkgs.google-chrome
     pkgs.imv
     pkgs.hack-font

@@ -63,9 +63,39 @@
     sof-firmware
     wireguard-tools
     docker-compose
+
+    (
+      let 
+        pname = "krita";
+        version = "5.1.1";
+        src = fetchurl {
+          url = "https://download.kde.org/stable/krita/5.1.1/krita-5.1.1-x86_64.appimage";
+          sha256 = "29df7d522490fd7a75b0c3a97743458e0f26705085303205c7e489847aab2e7b";
+        };
+        appimageContents = appimageTools.extractType2 { inherit pname version src; };
+      in
+      appimageTools.wrapType2 { # or wrapType1
+      inherit pname version src;
+      extraPkgs = pkgs: with pkgs; [ ];
+      extraInstallCommands = ''
+      mv $out/bin/${pname}-${version} $out/bin/${pname}
+      install -m 444 -D ${appimageContents}/org.kde.krita.desktop $out/share/applications/krita.desktop
+      install -m 444 -D ${appimageContents}/krita.png $out/share/icons/krita.png
+      '';
+      meta = with lib; {
+        platforms = ["x86_64-linux"];
+
+      };
+    }
+    )
+
+
+
+
   ];
 
   programs.adb.enable = true;
+  #programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
   programs.fish.enable = true;
   programs.gnupg.agent = {
     enable = true;
