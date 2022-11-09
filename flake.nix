@@ -71,7 +71,7 @@
             # Example how to pass an arg to configuration.nix:
             specialArgs = inputs;
           };
-          spectre = nixpkgs.lib.nixosSystem {
+          spectre = nixpkgs.lib.nixosSystem rec {
             system = "x86_64-linux";
             modules = [
               ./configuration.nix
@@ -80,6 +80,7 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
+                home-manager.extraSpecialArgs = { nixpkgs-unstable =  import nixpkgs-unstable { inherit system; }; };
                 home-manager.users.kostas = {
                   home.username = "kostas";
                   home.homeDirectory = "/home/kostas";
