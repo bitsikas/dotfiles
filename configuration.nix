@@ -67,10 +67,10 @@
     (
       let 
         pname = "krita";
-        version = "5.1.1";
+        version = "5.1.3";
         src = fetchurl {
-          url = "https://download.kde.org/stable/krita/5.1.1/krita-5.1.1-x86_64.appimage";
-          sha256 = "29df7d522490fd7a75b0c3a97743458e0f26705085303205c7e489847aab2e7b";
+          url = "https://download.kde.org/stable/${pname}/${version}/${pname}-${version}-x86_64.appimage";
+          sha256 = "b421a12fcd21c5ad18d91c917a9bb82e81b8d8c64c7402e4de3e5c3b5c0f7a67";
         };
         appimageContents = appimageTools.extractType2 { inherit pname version src; };
       in
