@@ -5,6 +5,7 @@
     git/git.nix
     bat/bat.nix
     starship/starship.nix
+    tmux/tmux.nix
   ];
   programs.home-manager.enable = true;
   programs.fzf.enable = true;

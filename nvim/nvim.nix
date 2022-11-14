@@ -65,6 +65,7 @@ in rec {
       #pkgs.vimPlugins.vim-floaterm
       pkgs.vimPlugins.vim-fugitive
       pkgs.vimPlugins.vim-nix
+      pkgs.vimPlugins.vim-tmux-navigator
       pkgs.vimPlugins.vim-python-pep8-indent
       #pkgs.vimPlugins.vim-surround
       #pkgs.vimPlugins.vimspector

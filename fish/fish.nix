@@ -28,6 +28,7 @@
       cat = "bat";
       taskell = "taskell ~/taskell.md";
       ssh-add-apple = "ssh-add --apple-use-keychain";
+      kssh = "kitty +kitten ssh";
     };
     interactiveShellInit =
       # Use vim bindings and cursors

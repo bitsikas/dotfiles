@@ -18,3 +18,8 @@ imap jk <Esc>
 let g:vimspector_enable_mappings = 'HUMAN'
 let mapleader = " "
 let g:indentLine_enabled = 1
+
+noremap <silent> <m-h> :TmuxNavigateLeft<cr>
+noremap <silent> <m-j> :TmuxNavigateDown<cr>
+noremap <silent> <m-k> :TmuxNavigateUp<cr>
+noremap <silent> <m-l> :TmuxNavigateRight<cr>
