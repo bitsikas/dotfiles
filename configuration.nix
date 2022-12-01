@@ -9,7 +9,7 @@
   nixpkgs.config.allowUnfree = true;
 
   nix = {
-    autoOptimiseStore = true;
+    settings.auto-optimise-store = true;
     package = pkgs.nixFlakes; # or versioned attributes like nixVersions.nix_2_8
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -22,6 +22,10 @@
   time.timeZone = "Europe/Bucharest";
   i18n.defaultLocale = "en_US.UTF-8";
 
+  environment.sessionVariables = {
+    QT_QPA_PLATFORM = "wayland-egl";
+
+  };
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = true;
   users.users.kostas = {
@@ -53,6 +57,8 @@
     bat
     cifs-utils
     fd
+    _1password
+    #_1password-gui
     gnome.gnome-tweaks
     gnomeExtensions.gsconnect
     lazygit
@@ -63,33 +69,7 @@
     sof-firmware
     wireguard-tools
     docker-compose
-
-    (
-      let 
-        pname = "krita";
-        version = "5.1.3";
-        src = fetchurl {
-          url = "https://download.kde.org/stable/${pname}/${version}/${pname}-${version}-x86_64.appimage";
-          sha256 = "b421a12fcd21c5ad18d91c917a9bb82e81b8d8c64c7402e4de3e5c3b5c0f7a67";
-        };
-        appimageContents = appimageTools.extractType2 { inherit pname version src; };
-      in
-      appimageTools.wrapType2 { # or wrapType1
-      inherit pname version src;
-      extraPkgs = pkgs: with pkgs; [ ];
-      extraInstallCommands = ''
-      mv $out/bin/${pname}-${version} $out/bin/${pname}
-      install -m 444 -D ${appimageContents}/org.kde.krita.desktop $out/share/applications/krita.desktop
-      install -m 444 -D ${appimageContents}/krita.png $out/share/icons/krita.png
-      '';
-      meta = with lib; {
-        platforms = ["x86_64-linux"];
-
-      };
-    }
-    )
-
-
+    qt5.qtwayland
 
 
   ];
@@ -170,7 +150,6 @@
     };
     desktopManager = { gnome.enable = true; };
     modules = [ pkgs.xf86_input_wacom ];
-    useGlamor = true;
     videoDrivers = [ "modesetting" ];
     wacom.enable = true;
   };

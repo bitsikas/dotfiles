@@ -42,6 +42,7 @@ in rec {
           tree-sitter-norg
           tree-sitter-typescript
           tree-sitter-python
+          tree-sitter-hcl
           #tree-sitter-sql
         ]))
       pkgs.vimPlugins.editorconfig-vim
@@ -65,6 +66,7 @@ in rec {
       #pkgs.vimPlugins.vim-floaterm
       pkgs.vimPlugins.vim-fugitive
       pkgs.vimPlugins.vim-nix
+      pkgs.vimPlugins.vim-terraform
       pkgs.vimPlugins.vim-tmux-navigator
       pkgs.vimPlugins.vim-python-pep8-indent
       #pkgs.vimPlugins.vim-surround

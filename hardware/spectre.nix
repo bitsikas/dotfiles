@@ -17,6 +17,9 @@
   ];
   boot.initrd.kernelModules = [ ];
 
+  #boot.blacklistedKernelModules = [ "snd-hda-intel" "snd-soc-skl" ];
+  boot.blacklistedKernelModules = [ "snd-soc-skl" ];
+  #boot.blacklistedKernelModules = [ "snd-hda-intel"];
   boot.kernelModules = [ "kvm-intel" "coretemp" ];
   boot.extraModulePackages = [ ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -24,9 +27,10 @@
   boot.loader.systemd-boot.enable = true;
   hardware.opengl.extraPackages = [ pkgs.intel-compute-runtime ];
 
-  boot.extraModprobeConfig = ''
-    options snd-intel-dspcfg dsp_driver=1
-  '';
+   boot.extraModprobeConfig = ''
+     options snd-intel-dspcfg dsp_driver=1
+     options snd-intel-hda model=alc295-hp-x360
+   '';
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/4ba27507-ce64-4b3d-8039-4371fdd680a3";

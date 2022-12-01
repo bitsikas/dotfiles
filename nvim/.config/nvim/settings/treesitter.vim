@@ -7,10 +7,12 @@ set foldlevel=99
 "     command = "normal zx zR",
 " })
 
+
 lua <<EOF
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
 
 require'nvim-treesitter.configs'.setup {
   highlight = {
