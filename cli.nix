@@ -30,6 +30,7 @@
   home.packages = with pkgs; [
     # unrar
     docker
+    dnsutils
     gcc
     gnumake
     go
