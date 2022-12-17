@@ -16,10 +16,7 @@ else
   set signcolumn=yes
 endif
 " Fix colors
-if strftime("%H") < 19
-  set background=light
-else
-  set background=dark
+set background=dark
 endif
 let &t_ut=''
 set t_Co=256
