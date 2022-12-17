@@ -1,15 +1,5 @@
 { config, pkgs, ... }:
-let
-  copilot-vim = pkgs.vimUtils.buildVimPlugin {
-    name = "copilot-vim";
-    src = pkgs.fetchFromGitHub {
-      owner = "github";
-      repo = "copilot.vim";
-      rev = "47eb231463d3654de1a205c4e30567fbd006965d";
-      sha256 = "06znz1869h7cdh9xc0b54mysslgpf3qdwsj5zvnzrzk6fnfin03q";
-    };
-  };
-in rec {
+{
   programs.neovim = {
     package = pkgs.neovim-unwrapped;
     enable = true;
@@ -71,7 +61,7 @@ in rec {
       pkgs.vimPlugins.vim-python-pep8-indent
       #pkgs.vimPlugins.vim-surround
       #pkgs.vimPlugins.vimspector
-      copilot-vim
+      pkgs.vimPlugins.copilot-vim
       pkgs.vimPlugins.neorg
 
     ];
