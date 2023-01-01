@@ -21,7 +21,7 @@
     imv
     hack-font
     vlc
-    nixpkgs-unstable.krita
+    krita
 
 
     # (

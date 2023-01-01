@@ -17,7 +17,6 @@ else
 endif
 " Fix colors
 set background=dark
-endif
 let &t_ut=''
 set t_Co=256
 "let g:gruvbox_contrast_light="hard"

@@ -26,6 +26,7 @@
             pkgs.nixFlakes
             pkgs.home-manager
             unstable-pkgs.git
+            
           ];
         };
       }) // {

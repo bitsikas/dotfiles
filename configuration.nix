@@ -140,6 +140,12 @@
   };
 
   services.printing.enable = true;
+  services.printing.drivers = [
+    pkgs.cnijfilter2
+    pkgs.gutenprint
+    pkgs.gutenprintBin
+
+  ];
 
   services.xserver = {
     enable = true;
@@ -147,6 +153,7 @@
     displayManager = {
       lightdm.enable = false;
       gdm.enable = true;
+      gdm.wayland = true;
     };
     desktopManager = { gnome.enable = true; };
     modules = [ pkgs.xf86_input_wacom ];

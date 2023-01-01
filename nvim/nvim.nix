@@ -1,5 +1,14 @@
 { config, pkgs, ... }:
-{
+
+let
+  nvim-spell-fr-utf8-dictionary = builtins.fetchurl {
+    url = "http://ftp.vim.org/vim/runtime/spell/ro.utf-8.spl";
+    sha256 = "abc1e405496c6f23dfa50c103ca523b30e92f4fc3d0db2a11054d9ae1d785a01";
+  };
+in {
+
+  home.file."${config.xdg.configHome}/nvim/spell/ro.utf-8.spl".source = nvim-spell-fr-utf8-dictionary;
+
   programs.neovim = {
     package = pkgs.neovim-unwrapped;
     enable = true;
@@ -33,9 +42,11 @@
           tree-sitter-typescript
           tree-sitter-python
           tree-sitter-hcl
+          tree-sitter-markdown
           #tree-sitter-sql
         ]))
       pkgs.vimPlugins.editorconfig-vim
+      pkgs.vimPlugins.bracey-vim
       pkgs.vimPlugins.lualine-nvim
       pkgs.vimPlugins.gitgutter
       pkgs.vimPlugins.gruvbox
@@ -47,6 +58,7 @@
       pkgs.vimPlugins.nvim-lsputils
       # pkgs.vimPlugins.toggleterm-nvim
       pkgs.vimPlugins.trouble-nvim
+      pkgs.vimPlugins.markdown-preview-nvim
       # pkgs.vimPlugins.nvim-tree-lua
       #pkgs.vimPlugins.papercolor-theme 
       pkgs.vimPlugins.plenary-nvim
