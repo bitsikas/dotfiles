@@ -24,6 +24,7 @@
             pkgs.openssh
             pkgs.rsync # Included by default on NixOS
             pkgs.nixFlakes
+            pkgs.home-manager
             unstable-pkgs.git
           ];
         };

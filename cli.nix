@@ -38,7 +38,7 @@
     htop
     httpie
     nixfmt
-    nodejs
+    nodejs-16_x
     pipenv
     python39
     ranger
