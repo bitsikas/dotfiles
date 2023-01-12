@@ -61,6 +61,7 @@
     #_1password-gui
     gnome.gnome-tweaks
     gnomeExtensions.gsconnect
+    gnomeExtensions.media-controls
     lazygit
     libinput-gestures
     libwacom
@@ -149,16 +150,16 @@
 
   services.xserver = {
     enable = true;
-    libinput = { enable = true; };
+    # libinput = { enable = true; };
     displayManager = {
       lightdm.enable = false;
       gdm.enable = true;
       gdm.wayland = true;
     };
     desktopManager = { gnome.enable = true; };
-    modules = [ pkgs.xf86_input_wacom ];
+    # modules = [ pkgs.xf86_input_wacom ];
     videoDrivers = [ "modesetting" ];
-    wacom.enable = true;
+    # wacom.enable = true;
   };
 
   #
@@ -167,4 +168,3 @@
   system.stateVersion = "22.05";
 
 }
-

@@ -25,7 +25,14 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "i8042.nopnp=1" "i8042.dumbkbd=1" ];
   boot.loader.systemd-boot.enable = true;
-  hardware.opengl.extraPackages = [ pkgs.intel-compute-runtime ];
+  hardware.opengl.extraPackages = with pkgs; [ 
+      intel-compute-runtime 
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiVdpau
+      libvdpau-va-gl
+
+  ];
 
    boot.extraModprobeConfig = ''
      options snd-intel-dspcfg dsp_driver=1
