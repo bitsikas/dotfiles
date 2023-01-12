@@ -23,7 +23,7 @@ in {
       (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/trouble.vim)
       (builtins.readFile .config/nvim/settings/nvim-compe.vim)
-      (builtins.readFile .config/nvim/settings/neorg.vim)
+      # (builtins.readFile .config/nvim/settings/neorg.vim)
     ]);
     plugins = [
       (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
@@ -49,7 +49,7 @@ in {
       pkgs.vimPlugins.bracey-vim
       pkgs.vimPlugins.lualine-nvim
       pkgs.vimPlugins.gitgutter
-      pkgs.vimPlugins.gruvbox
+      # pkgs.vimPlugins.gruvbox
       pkgs.vimPlugins.nvim-solarized-lua
       pkgs.vimPlugins.indentLine
       #pkgs.vimPlugins.nord-vim 
@@ -63,7 +63,7 @@ in {
       #pkgs.vimPlugins.papercolor-theme 
       pkgs.vimPlugins.plenary-nvim
       pkgs.vimPlugins.telescope-nvim
-      pkgs.vimPlugins.bufferline-nvim
+      # pkgs.vimPlugins.bufferline-nvim
       pkgs.vimPlugins.vim-commentary
       #pkgs.vimPlugins.vim-floaterm
       pkgs.vimPlugins.vim-fugitive
@@ -74,7 +74,7 @@ in {
       #pkgs.vimPlugins.vim-surround
       #pkgs.vimPlugins.vimspector
       pkgs.vimPlugins.copilot-vim
-      pkgs.vimPlugins.neorg
+      # pkgs.vimPlugins.neorg
 
     ];
   };
