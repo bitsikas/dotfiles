@@ -19,7 +19,7 @@ in {
       (builtins.readFile .config/nvim/settings/telescope_settings.vim)
       (builtins.readFile .config/nvim/settings/treesitter.vim)
       (builtins.readFile .config/nvim/settings/lsp.vim)
-      # (builtins.readFile .config/nvim/settings/toggleterm.vim)
+      (builtins.readFile .config/nvim/settings/toggleterm.vim)
       (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/trouble.vim)
       (builtins.readFile .config/nvim/settings/nvim-compe.vim)
@@ -29,21 +29,22 @@ in {
       (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
         with plugins; [
           tree-sitter-bash
+          tree-sitter-dart
           tree-sitter-fish
+          tree-sitter-go
+          tree-sitter-hcl
           tree-sitter-html
           tree-sitter-http
-          tree-sitter-go
-          tree-sitter-lua
           tree-sitter-java
           tree-sitter-javascript
+          tree-sitter-lua
           tree-sitter-make
+          tree-sitter-markdown
           tree-sitter-nix
           tree-sitter-norg
-          tree-sitter-typescript
           tree-sitter-python
-          tree-sitter-hcl
-          tree-sitter-markdown
-          #tree-sitter-sql
+          tree-sitter-typescript
+          tree-sitter-sql
         ]))
       pkgs.vimPlugins.editorconfig-vim
       pkgs.vimPlugins.bracey-vim
@@ -56,7 +57,7 @@ in {
       pkgs.vimPlugins.nvim-compe
       pkgs.vimPlugins.nvim-lspconfig
       pkgs.vimPlugins.nvim-lsputils
-      # pkgs.vimPlugins.toggleterm-nvim
+      pkgs.vimPlugins.toggleterm-nvim
       pkgs.vimPlugins.trouble-nvim
       pkgs.vimPlugins.markdown-preview-nvim
       # pkgs.vimPlugins.nvim-tree-lua
@@ -74,6 +75,7 @@ in {
       #pkgs.vimPlugins.vim-surround
       #pkgs.vimPlugins.vimspector
       pkgs.vimPlugins.copilot-vim
+      pkgs.vimPlugins.flutter-tools-nvim
       # pkgs.vimPlugins.neorg
 
     ];
