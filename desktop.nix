@@ -22,6 +22,7 @@
     hack-font
     vlc
     krita
+    mypaint
 
 
     # (

@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   programs.kitty = {
     enable = true;
-    theme = "Solarized Dark";
+    theme = "Solarized Dark Higher Contrast";
     #extraConfig = (builtins.readFile .config/kitty/theme.conf);
     font = {
       name = "FiraCode Nerd Font Mono, Fira Code, monospace";

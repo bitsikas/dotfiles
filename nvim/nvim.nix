@@ -1,13 +1,18 @@
 { config, pkgs, ... }:
 
 let
-  nvim-spell-fr-utf8-dictionary = builtins.fetchurl {
+  nvim-spell-ro-utf8-dictionary = builtins.fetchurl {
     url = "http://ftp.vim.org/vim/runtime/spell/ro.utf-8.spl";
     sha256 = "abc1e405496c6f23dfa50c103ca523b30e92f4fc3d0db2a11054d9ae1d785a01";
   };
+  nvim-spell-en-utf8-dictionary = builtins.fetchurl {
+    url = "http://ftp.vim.org/vim/runtime/spell/en.utf-8.spl";
+    sha256 = "fecabdc949b6a39d32c0899fa2545eab25e63f2ed0a33c4ad1511426384d3070";
+  };
 in {
 
-  home.file."${config.xdg.configHome}/nvim/spell/ro.utf-8.spl".source = nvim-spell-fr-utf8-dictionary;
+  home.file."${config.xdg.configHome}/nvim/spell/ro.utf-8.spl".source = nvim-spell-ro-utf8-dictionary;
+  home.file."${config.xdg.configHome}/nvim/spell/en.utf-8.spl".source = nvim-spell-en-utf8-dictionary;
 
   programs.neovim = {
     package = pkgs.neovim-unwrapped;

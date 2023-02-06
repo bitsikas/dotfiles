@@ -76,7 +76,7 @@
   ];
 
   programs.adb.enable = true;
-  #programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
+  programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
   programs.fish.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -155,10 +155,13 @@
       lightdm.enable = false;
       gdm.enable = true;
       gdm.wayland = true;
+      defaultSession = "gnome";
+
     };
-    desktopManager = { gnome.enable = true; };
+    desktopManager = { gnome.enable = true; plasma5.enable = true; };
     # modules = [ pkgs.xf86_input_wacom ];
     videoDrivers = [ "modesetting" ];
+    
     # wacom.enable = true;
   };
 

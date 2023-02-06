@@ -21,7 +21,7 @@ let &t_ut=''
 set t_Co=256
 "let g:gruvbox_contrast_light="hard"
 let g:solarized_termcolors=256
-colorscheme solarized
+colorscheme solarized-high
 set termguicolors
 syntax on
 " Set gutter for CoC-nvim color to none
