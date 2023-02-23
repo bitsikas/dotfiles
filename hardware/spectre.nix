@@ -25,18 +25,19 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "i8042.nopnp=1" "i8042.dumbkbd=1" ];
   boot.loader.systemd-boot.enable = true;
-  hardware.opengl.extraPackages = with pkgs; [ 
-      intel-compute-runtime 
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      vaapiVdpau
-      libvdpau-va-gl
+  # hardware.opengl.extraPackages = with pkgs; [ 
+  #     intel-compute-runtime 
+  #     intel-media-driver # LIBVA_DRIVER_NAME=iHD
+  #     vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+  #     vaapiVdpau
+  #     libvdpau-va-gl
 
-  ];
+  # ];
 
+     # options snd-intel-hda model=alc295-hp-x360
+     # options snd slots=snd-hda-intel
    boot.extraModprobeConfig = ''
      options snd-intel-dspcfg dsp_driver=1
-     options snd-intel-hda model=alc295-hp-x360
    '';
 
   fileSystems."/" = {
@@ -62,7 +63,7 @@
     lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.steam-hardware.enable = true;
 
-  hardware.opentabletdriver.enable = false;
+  hardware.opentabletdriver.enable = true;
   hardware.bluetooth.enable = true;
   hardware.opengl = { enable = true; };
 

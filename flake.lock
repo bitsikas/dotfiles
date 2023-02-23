@@ -2,11 +2,11 @@
   "nodes": {
     "flake-utils": {
       "locked": {
-        "lastModified": 1667395993,
-        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "lastModified": 1676283394,
+        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
         "type": "github"
       },
       "original": {
@@ -36,13 +36,29 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1676908411,
+        "narHash": "sha256-WGXUAN3Q7/vsmxqApzct5/3LZvxHIcIJnPY6VXpysbQ=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "0f900cfae013b11d5387624496239825ffaf9665",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1674692158,
-        "narHash": "sha256-oqGpwVg4D+eMSgF7Th5Ve1ysCiH3H3g85vGJ3nvJsZQ=",
+        "lastModified": 1676718858,
+        "narHash": "sha256-giQecvcifVLNHCC9lMfTGP09tNxXhOMw+d/aql7MhRw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "def9e420d27c951026d57dc96ce0218c3131f412",
+        "rev": "e6d5772f3515b8518d50122471381feae7cbae36",
         "type": "github"
       },
       "original": {
@@ -54,11 +70,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1674764659,
-        "narHash": "sha256-e6lbYlCXi9Fxk6JfUbbTM+HZtMFiw5WgZ+PvrF8zsI0=",
+        "lastModified": 1676841691,
+        "narHash": "sha256-B6Gc4l2vBsGPKcmwP4DseWCUgqa+vr7AFKhrphj81oc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "8124b0b316222bc271e2f1ef4e8a0f0c8b340f10",
+        "rev": "1c60c2a81301a3b4d07ebfc3cbf7dcee7344d67c",
         "type": "github"
       },
       "original": {
@@ -71,6 +87,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }

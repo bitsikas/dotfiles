@@ -5,6 +5,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
       url = "github:nix-community/home-manager/release-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -12,7 +13,7 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, flake-utils, nixpkgs-unstable, ... }@inputs:
+    { self, nixpkgs, home-manager, flake-utils, nixpkgs-unstable, nixos-hardware, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
@@ -78,6 +79,11 @@
             modules = [
               ./configuration.nix
               ./hardware/spectre.nix
+              nixos-hardware.nixosModules.common-cpu-intel
+              nixos-hardware.nixosModules.common-gpu-intel
+              nixos-hardware.nixosModules.common-pc-laptop
+              nixos-hardware.nixosModules.common-pc-laptop-acpi_call
+              nixos-hardware.nixosModules.common-pc-laptop-ssd
               home-manager.nixosModules.home-manager
               {
                 home-manager.useGlobalPkgs = true;

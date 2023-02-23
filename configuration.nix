@@ -59,9 +59,9 @@
     fd
     _1password
     #_1password-gui
-    gnome.gnome-tweaks
-    gnomeExtensions.gsconnect
-    gnomeExtensions.media-controls
+    # gnome.gnome-tweaks
+    # gnomeExtensions.gsconnect
+    # gnomeExtensions.media-controls
     lazygit
     libinput-gestures
     libwacom
@@ -108,7 +108,7 @@
     proggyfonts
     roboto
     ubuntu_font_family
-    google-fonts
+    # google-fonts
   ];
 
   security.rtkit.enable = true;
@@ -131,7 +131,7 @@
 
   services.gvfs.enable = true;
 
-  services.gnome.gnome-keyring.enable = true;
+  # services.gnome.gnome-keyring.enable = true;
 
   services.pipewire = {
     enable = true;
@@ -153,14 +153,15 @@
     # libinput = { enable = true; };
     displayManager = {
       lightdm.enable = false;
+      # sddm.enable = true;
       gdm.enable = true;
       gdm.wayland = true;
-      defaultSession = "gnome";
+      defaultSession = "plasmawayland";
 
     };
-    desktopManager = { gnome.enable = true; plasma5.enable = true; };
+    desktopManager = { gnome.enable = false; plasma5.enable = true; };
     # modules = [ pkgs.xf86_input_wacom ];
-    videoDrivers = [ "modesetting" ];
+    # videoDrivers = [ "modesetting" ];
     
     # wacom.enable = true;
   };
