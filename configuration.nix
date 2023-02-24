@@ -131,7 +131,7 @@
 
   services.gvfs.enable = true;
 
-  # services.gnome.gnome-keyring.enable = true;
+  services.gnome.gnome-keyring.enable = true;
 
   services.pipewire = {
     enable = true;
@@ -156,10 +156,10 @@
       # sddm.enable = true;
       gdm.enable = true;
       gdm.wayland = true;
-      defaultSession = "plasmawayland";
+      defaultSession = "gnome";
 
     };
-    desktopManager = { gnome.enable = false; plasma5.enable = true; };
+    desktopManager = { gnome.enable = true; plasma5.enable = false; };
     # modules = [ pkgs.xf86_input_wacom ];
     # videoDrivers = [ "modesetting" ];
     
