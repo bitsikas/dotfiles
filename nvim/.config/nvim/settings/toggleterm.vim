@@ -2,12 +2,12 @@ lua <<EOF
 require 'toggleterm'.setup{
  shade_terminals=false; 
  open_mapping='<F2>', 
- direction='horizontal', 
+ direction='vertical', 
  size=function(term)
     if term.direction == "horizontal" then
       return 25
     elseif term.direction == "vertical" then
-      return vim.o.columns * 0.4
+      return vim.o.columns * 0.3
     end
 end
 }

@@ -6,7 +6,7 @@
     #extraConfig = (builtins.readFile .config/kitty/theme.conf);
     font = {
       name = "Fira Code";
-      size = 12;
+      size = 11;
     };
     #theme = "Gruvbox_light";
     settings = {
@@ -15,7 +15,7 @@
       background_tint = "0.9";
       window_margin_width = "15";
       background_opacity = "1";
-      adjust_line_height = "120%";
+      adjust_line_height = "150%";
     };
   };
 

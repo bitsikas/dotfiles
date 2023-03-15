@@ -54,7 +54,8 @@ in {
       pkgs.vimPlugins.editorconfig-vim
       pkgs.vimPlugins.bracey-vim
       pkgs.vimPlugins.lualine-nvim
-      pkgs.vimPlugins.gitgutter
+      # pkgs.vimPlugins.gitgutter
+      pkgs.vimPlugins.gitsigns-nvim
       # pkgs.vimPlugins.gruvbox
       pkgs.vimPlugins.nvim-solarized-lua
       pkgs.vimPlugins.indentLine
