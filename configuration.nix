@@ -59,7 +59,7 @@
     fd
     _1password
     #_1password-gui
-    # gnome.gnome-tweaks
+    gnome.gnome-tweaks
     # gnomeExtensions.gsconnect
     # gnomeExtensions.media-controls
     lazygit

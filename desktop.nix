@@ -11,6 +11,7 @@
     "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
   home.packages = with pkgs; [
+    chiaki
     firefox-wayland
     chromium
     gimp
