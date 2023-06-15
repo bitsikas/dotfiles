@@ -63,7 +63,7 @@
     lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.steam-hardware.enable = true;
 
-  hardware.opentabletdriver.enable = true;
+  # hardware.opentabletdriver.enable = true;
   hardware.bluetooth.enable = true;
   hardware.opengl = { enable = true; };
 
@@ -71,5 +71,7 @@
   networking.hostName = "spectre"; # Define your hostname.
   hardware.sensor.iio.enable = true;
   hardware.enableAllFirmware = true;
+  services.hardware.bolt.enable = true;
+#  hardware.opentabletdriver.enable = true;
 
 }

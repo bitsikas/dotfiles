@@ -23,6 +23,7 @@
     hack-font
     vlc
     krita
+    newsflash
     libreoffice
     mypaint
 

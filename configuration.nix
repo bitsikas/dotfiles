@@ -7,7 +7,9 @@
 {
 
   nixpkgs.config.allowUnfree = true;
-
+  nixpkgs.config.permittedInsecurePackages = [
+                "nodejs-16.20.0"
+              ];
   nix = {
     settings.auto-optimise-store = true;
     package = pkgs.nixFlakes; # or versioned attributes like nixVersions.nix_2_8
@@ -41,7 +43,7 @@
       "audio"
       "bluetooth"
       "libvirtd"
-      "vboxusers"
+      "qemu-libvirt"
       "video"
       "adbusers"
     ];
@@ -53,7 +55,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    busybox
+    # busybox
+    # procps
+    coreutils
     bat
     cifs-utils
     fd
@@ -161,16 +165,33 @@
       defaultSession = "gnome";
 
     };
-    desktopManager = { gnome.enable = true; plasma5.enable = false; };
+    desktopManager = { gnome.enable = true; plasma5.enable = true; };
     # modules = [ pkgs.xf86_input_wacom ];
     # videoDrivers = [ "modesetting" ];
     
-    # wacom.enable = true;
+    wacom.enable = true;
   };
 
   #
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.docker.enable = true;
+  virtualisation.libvirtd.enable = true;
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+  virtualisation.podman.enable = true;
   system.stateVersion = "22.05";
+  services.nfs.server.enable = true;
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "kostas" ];
+    # Minimal configuration for NFS support with Vagrant.
+  
+  # Add firewall exception for VirtualBox provider 
+  networking.firewall.extraCommands = ''
+    ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
+    ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 33306 -j ACCEPT
+  '';
+
+  # Add firewall exception for libvirt provider when using NFSv4 
+  networking.firewall.interfaces."virbr1" = {                                   
+    allowedTCPPorts = [ 2049 33306 ];
+    allowedUDPPorts = [ 2049 33306 ];
+  };
 
 }
