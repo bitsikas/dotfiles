@@ -30,6 +30,10 @@
       ssh-add-apple = "ssh-add --apple-use-keychain";
       kssh = "kitty +kitten ssh";
     };
+    functions = {
+      ssht = "ssh -t \"$argv\" 'tmux new-session -t kostas'";
+    };
+
     interactiveShellInit =
       # Use vim bindings and cursors
       ''

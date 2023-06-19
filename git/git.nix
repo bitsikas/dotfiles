@@ -7,7 +7,12 @@
     extraConfig = {
       color = { ui = "auto"; };
       feature = { manyFiles = true; };
-      core = { fsmonitor = true; };
+      core = { 
+        fsmonitor = true; 
+    };
+      fsmonitor = {
+        socketDir = "~/.fsmonitor";
+      };
       push = { default = "simple"; };
       mergetool = {
         tool = "fugitive";

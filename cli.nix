@@ -29,16 +29,18 @@
   programs.direnv.enable = true;
   home.packages = with pkgs; [
     # unrar
-    docker
     dnsutils
+    docker
     gcc
     gnumake
+    gnupg
     go
     gopls
     htop
     httpie
     nixfmt
     nodejs-16_x
+    pass
     pipenv
     python39
     ranger
@@ -46,8 +48,8 @@
     rnix-lsp
     rq
     stow
-    tmux
     taskell
+    tmux
     visidata
     wget
   ];
