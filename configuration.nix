@@ -60,7 +60,7 @@
     _1password
     #_1password-gui
     gnome.gnome-tweaks
-    # gnomeExtensions.gsconnect
+    gnomeExtensions.gsconnect
     # gnomeExtensions.media-controls
     lazygit
     libinput-gestures
@@ -85,6 +85,8 @@
   };
   programs.light.enable = true;
   programs.steam.enable = true;
+  programs.kdeconnect.enable = true;
+  programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
 
   fonts.fontconfig.enable = true;
   fonts.enableDefaultFonts = true;
