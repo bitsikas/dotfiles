@@ -3,11 +3,11 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
-      url = "github:nix-community/home-manager/release-22.05";
+      url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -35,17 +35,23 @@
         in {
           "Kostas.Papakon@PKOSTAS-MB" =
             home-manager.lib.homeManagerConfiguration {
-              username = "Kostas.Papakon";
-              system = "x86_64-darwin";
-              homeDirectory = "/Users/Kostas.Papakon";
-              configuration = import ./kostas.papakon.nix;
-
-              extraModules = [
+              pkgs = nixpkgs.legacyPackages.${system};
+              # username = "Kostas.Papakon";
+              # system = "x86_64-darwin";
+              # homeDirectory = "/Users/Kostas.Papakon";
+              # configuration = import ./kostas.papakon.nix;
+              modules = [
+                ./kostas.papakon.nix
                 ({ pkgs, ... }: rec {
                   _module.args.nixpkgs-unstable =
                     import nixpkgs-unstable { inherit system; };
-                })
+                  })
+
               ];
+
+              # extraModules = [
+                
+              # ];
 
               # modules = [ ./cli.nix ./home.nix ] ;
 
