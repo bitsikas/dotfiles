@@ -1,7 +1,7 @@
 {pkgs, ...}:
 {
   home.packages = with pkgs; [
-    colima
+    # colima
     reattach-to-user-namespace
       fira-code
       fira-code-symbols

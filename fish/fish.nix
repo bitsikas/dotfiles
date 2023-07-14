@@ -25,6 +25,8 @@
 
     shellAbbrs = {
       ls = "exa";
+      light_on = "kitty +kitten themes --config-file-name kitty.d/theme.conf --reload-in=all Solarized Light";
+      light_off = "kitty +kitten themes --config-file-name kitty.d/theme.conf --reload-in=all Solarized Dark Higher Contrast";
       cat = "bat";
       taskell = "taskell ~/taskell.md";
       ssh-add-apple = "ssh-add --apple-use-keychain";

@@ -2,7 +2,7 @@
   programs.kitty = {
     enable = true;
     # theme = "Solarized Dark Higher Contrast";
-    theme = "Solarized Light";
+    # theme = "Solarized Light";
     #extraConfig = (builtins.readFile .config/kitty/theme.conf);
     font = {
       name = "Fira Code";
@@ -19,17 +19,19 @@
     };
     darwinLaunchOptions = [
   "--single-instance"
-  "--directory=/tmp/kitty-kostas"
   "--listen-on=unix:/tmp/kitty-kostas-socket"
 ];
     settings = {
+      listen-on = "unix:/tmp/kitty-kostas-socket";
       enabled_layouts="splits:split_axis=horizontal;bias=50";
       enable_audio_bell = "no";
       allow_remote_control = "yes";
       background_tint = "0.9";
-      window_margin_width = "15";
+      window_padding_width = "8";
       background_opacity = "1";
       adjust_line_height = "150%";
+      include = "current-theme.conf";
+      # globinclude  = "kitty.d/**/*.conf";
     };
   };
 

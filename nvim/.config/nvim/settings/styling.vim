@@ -16,7 +16,7 @@ else
   set signcolumn=yes
 endif
 " Fix colors
-set background=dark
+" set background=dark
 let &t_ut=''
 set t_Co=256
 "let g:gruvbox_contrast_light="hard"
