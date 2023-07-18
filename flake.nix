@@ -41,19 +41,18 @@
               # homeDirectory = "/Users/Kostas.Papakon";
               # configuration = import ./kostas.papakon.nix;
               modules = [
-                ./kostas.papakon.nix
+                # ./kostas.papakon.nix
+                ./cli.nix 
+                ./home.nix 
+                ./kitty/kitty.nix 
+                ./mac.nix
+
                 ({ pkgs, ... }: rec {
                   _module.args.nixpkgs-unstable =
                     import nixpkgs-unstable { inherit system; };
                   })
 
               ];
-
-              # extraModules = [
-                
-              # ];
-
-              # modules = [ ./cli.nix ./home.nix ] ;
 
             };
         });
@@ -84,6 +83,7 @@
             system = "x86_64-linux";
             modules = [
               ./configuration.nix
+              ./linux.nix
               ./hardware/spectre.nix
               nixos-hardware.nixosModules.common-cpu-intel
               nixos-hardware.nixosModules.common-gpu-intel

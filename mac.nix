@@ -7,5 +7,11 @@
       fira-code-symbols
 
   ];
-  home.programs.kitty.settings.text_composition_strategy = "4 30";
+  home.username = "Kostas.Papakon";
+  home.stateVersion = "22.05";
+  home.homeDirectory = "/Users/Kostas.Papakon";
+  nixpkgs.config.permittedInsecurePackages = [
+                "nodejs-16.20.0"
+              ];
+  programs.kitty.settings.text_composition_strategy = "4 30";
 }

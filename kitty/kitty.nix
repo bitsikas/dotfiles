@@ -30,7 +30,6 @@
       window_padding_width = "8";
       background_opacity = "1";
       adjust_line_height = "120%";
-      text_composition_strategy = "1.2 30";
       include = "current-theme.conf";
       # globinclude  = "kitty.d/**/*.conf";
     };
