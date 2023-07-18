@@ -7,4 +7,5 @@
       fira-code-symbols
 
   ];
+  home.programs.kitty.settings.text_composition_strategy = "4 30";
 }
