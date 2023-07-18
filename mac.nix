@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{pkgs, lib, ...}:
 {
   home.packages = with pkgs; [
     # colima
@@ -7,7 +7,4 @@
       fira-code-symbols
 
   ];
-  
-
-
 }

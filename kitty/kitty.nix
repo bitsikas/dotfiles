@@ -6,7 +6,7 @@
     #extraConfig = (builtins.readFile .config/kitty/theme.conf);
     font = {
       name = "Fira Code";
-      size = 11;
+      size = 12;
     };
     #theme = "Gruvbox_light";
     keybindings = {
@@ -26,11 +26,12 @@
       enabled_layouts="splits:split_axis=horizontal;bias=50";
       enable_audio_bell = "no";
       allow_remote_control = "yes";
-      background_tint = "0.9";
+      # background_tint = "0.9";
       window_padding_width = "8";
       background_opacity = "1";
-      adjust_line_height = "150%";
+      adjust_line_height = "120%";
       include = "current-theme.conf";
+      text_composition_strategy = "4 30";
       # globinclude  = "kitty.d/**/*.conf";
     };
   };

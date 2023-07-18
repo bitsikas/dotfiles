@@ -21,11 +21,12 @@ let &t_ut=''
 set t_Co=256
 "let g:gruvbox_contrast_light="hard"
 let g:solarized_termcolors=256
-colorscheme solarized-high
+let g:solarized_disable_background = v:false
+colorscheme solarized
 set termguicolors
 syntax on
-" Set gutter for CoC-nvim color to none
-highlight SignColumn ctermbg=none
+" " Set gutter for CoC-nvim color to none
+" highlight SignColumn ctermbg=none
 
 
 " Use hybrid line numbers
