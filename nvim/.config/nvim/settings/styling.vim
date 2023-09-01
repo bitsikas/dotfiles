@@ -19,10 +19,7 @@ endif
 " set background=dark
 let &t_ut=''
 set t_Co=256
-"let g:gruvbox_contrast_light="hard"
-let g:solarized_termcolors=256
-let g:solarized_disable_background = v:false
-colorscheme solarized
+colorscheme NeoSolarized
 set termguicolors
 syntax on
 " " Set gutter for CoC-nvim color to none

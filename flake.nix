@@ -83,7 +83,7 @@
             system = "x86_64-linux";
             modules = [
               ./configuration.nix
-              ./linux.nix
+              # ./linux.nix
               ./hardware/spectre.nix
               nixos-hardware.nixosModules.common-cpu-intel
               nixos-hardware.nixosModules.common-gpu-intel
@@ -100,7 +100,7 @@
                   home.homeDirectory = "/home/kostas";
                   home.stateVersion = "21.11";
                   home.sessionVariables = { "EDITOR" = "nvim"; };
-                  imports = [ ./desktop.nix ./cli.nix ];
+                  imports = [ ./desktop.nix ./cli.nix ./linux.nix ];
                 };
               }
             ];

@@ -57,7 +57,7 @@ in {
       # pkgs.vimPlugins.gitgutter
       pkgs.vimPlugins.gitsigns-nvim
       pkgs.vimPlugins.gruvbox
-      pkgs.vimPlugins.solarized-nvim
+      pkgs.vimPlugins.NeoSolarized
       pkgs.vimPlugins.indentLine
       #pkgs.vimPlugins.nord-vim 
       pkgs.vimPlugins.nvim-compe

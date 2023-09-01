@@ -52,6 +52,8 @@
     tmux
     visidata
     wget
+    nixpkgs-unstable.zrok
+    nixpkgs-unstable.ngrok
   ];
 }
 
