@@ -20,14 +20,14 @@ in {
     extraConfig = (builtins.concatStringsSep "\n" [
       (builtins.readFile .config/nvim/init.vim)
       (builtins.readFile .config/nvim/settings/floatterm.vim)
-      (builtins.readFile .config/nvim/settings/styling.vim)
       (builtins.readFile .config/nvim/settings/telescope_settings.vim)
       (builtins.readFile .config/nvim/settings/treesitter.vim)
       (builtins.readFile .config/nvim/settings/lsp.vim)
       (builtins.readFile .config/nvim/settings/toggleterm.vim)
-      (builtins.readFile .config/nvim/settings/lualine.vim)
+      # (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/trouble.vim)
       (builtins.readFile .config/nvim/settings/nvim-compe.vim)
+      (builtins.readFile .config/nvim/settings/styling.vim)
       # (builtins.readFile .config/nvim/settings/neorg.vim)
     ]);
     plugins = [
@@ -56,7 +56,7 @@ in {
       pkgs.vimPlugins.lualine-nvim
       # pkgs.vimPlugins.gitgutter
       pkgs.vimPlugins.gitsigns-nvim
-      pkgs.vimPlugins.gruvbox
+      pkgs.vimPlugins.solarized-nvim
       pkgs.vimPlugins.NeoSolarized
       pkgs.vimPlugins.indentLine
       #pkgs.vimPlugins.nord-vim 
@@ -76,7 +76,7 @@ in {
       pkgs.vimPlugins.vim-fugitive
       pkgs.vimPlugins.vim-nix
       pkgs.vimPlugins.vim-terraform
-      pkgs.vimPlugins.vim-tmux-navigator
+      # pkgs.vimPlugins.vim-tmux-navigator
       pkgs.vimPlugins.vim-python-pep8-indent
       #pkgs.vimPlugins.vim-surround
       #pkgs.vimPlugins.vimspector
