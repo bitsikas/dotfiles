@@ -9,7 +9,6 @@
   ];
   programs.home-manager.enable = true;
   programs.fzf.enable = true;
-  programs.exa.enable = true;
   programs.gh.enable = true;
   programs.gh.settings = {
     git_protocol = "ssh";
@@ -31,6 +30,7 @@
     # unrar
     dnsutils
     docker
+    nixpkgs-unstable.eza
     gcc
     gnumake
     gnupg
@@ -52,8 +52,6 @@
     tmux
     visidata
     wget
-    nixpkgs-unstable.zrok
-    nixpkgs-unstable.ngrok
   ];
 }
 

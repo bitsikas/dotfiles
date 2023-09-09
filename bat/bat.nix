@@ -1,5 +1,5 @@
 {
 
   programs.bat.enable = true;
-  programs.bat.config = { theme = "base16"; };
+  programs.bat.config = { theme = "ansi"; };
 }

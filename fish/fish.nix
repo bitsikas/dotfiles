@@ -24,7 +24,7 @@
     '';
 
     shellAbbrs = {
-      ls = "exa";
+      ls = "eza";
       light_on = "kitty +kitten themes --config-file-name kitty.d/theme.conf --reload-in=all Solarized Light";
       light_off = "kitty +kitten themes --config-file-name kitty.d/theme.conf --reload-in=all Solarized Dark - Patched";
       cat = "bat";

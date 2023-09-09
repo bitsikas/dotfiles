@@ -8,7 +8,7 @@
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
-                "nodejs-16.20.0"
+                "nodejs-16.20.2"
               ];
   nix = {
     settings.auto-optimise-store = true;
@@ -178,7 +178,7 @@
   virtualisation.podman.enable = true;
   system.stateVersion = "22.05";
   services.nfs.server.enable = true;
-  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enable = false;
   users.extraGroups.vboxusers.members = [ "kostas" ];
     # Minimal configuration for NFS support with Vagrant.
   
