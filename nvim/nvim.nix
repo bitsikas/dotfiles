@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs,  ... }:
 
 let
   nvim-spell-ro-utf8-dictionary = builtins.fetchurl {
@@ -24,6 +24,7 @@ in {
       (builtins.readFile .config/nvim/settings/treesitter.vim)
       (builtins.readFile .config/nvim/settings/lsp.vim)
       (builtins.readFile .config/nvim/settings/toggleterm.vim)
+      (builtins.readFile .config/nvim/settings/coverage.vim)
       # (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/trouble.vim)
       (builtins.readFile .config/nvim/settings/nvim-compe.vim)
@@ -72,6 +73,19 @@ in {
       pkgs.vimPlugins.telescope-nvim
       # pkgs.vimPlugins.bufferline-nvim
       pkgs.vimPlugins.vim-commentary
+      (
+        pkgs.vimUtils.buildVimPluginFrom2Nix {
+          pname = "nvim-coverage";
+          version = "2023-07-20";
+          src = pkgs.fetchFromGitHub {
+            owner = "andythigpen";
+            repo = "nvim-coverage";
+            rev = "4634dfb00961a86948518c7e6f85737c24364308";
+            sha256 = "0ry8b5945spz00scab6xxs8va56yg17q1dd6g90k3zm9gvdi0r79";
+          };
+          meta.homepage = "https://github.com/andythigpen/nvim-coverage/";
+        }
+        )
       #pkgs.vimPlugins.vim-floaterm
       pkgs.vimPlugins.vim-fugitive
       pkgs.vimPlugins.vim-nix
