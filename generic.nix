@@ -11,4 +11,7 @@
     "EDITOR" = "nvim";
     "TERMINAL" = "kitty";
   };
+  nixpkgs.config.permittedInsecurePackages = [
+                "nodejs-16.20.2"
+              ];
 }
