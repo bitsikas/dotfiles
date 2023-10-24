@@ -66,6 +66,7 @@
                 # ./kostas.papakon.nix
                 ./cli.nix 
                 ./home.nix 
+                ./generic.nix 
 
                 ({ pkgs, ... }: rec {
                   _module.args.nixpkgs-unstable =
