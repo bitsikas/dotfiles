@@ -55,6 +55,27 @@
               ];
 
             };
+          "generic" = 
+            home-manager.lib.homeManagerConfiguration {
+              pkgs = nixpkgs.legacyPackages.${system};
+              # username = "Kostas.Papakon";
+              # system = "x86_64-darwin";
+              # homeDirectory = "/Users/Kostas.Papakon";
+              # configuration = import ./kostas.papakon.nix;
+              modules = [
+                # ./kostas.papakon.nix
+                ./cli.nix 
+                ./home.nix 
+
+                ({ pkgs, ... }: rec {
+                  _module.args.nixpkgs-unstable =
+                    import nixpkgs-unstable { inherit system; };
+                  })
+
+              ];
+
+            };
+          
         });
 
         nixosConfigurations = {
