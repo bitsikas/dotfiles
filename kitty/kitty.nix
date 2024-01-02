@@ -10,8 +10,9 @@
     };
     #theme = "Gruvbox_light";
     keybindings = {
-      "f5"= "launch --location vsplit";
-      "f6"= "launch --location hsplit";
+      # open new split in current directory
+      "ctrl+return"= "launch --location vsplit --cwd=current";
+      "ctrl+shift+return"= "launch --location hsplit --cwd=current";
       "ctrl+left"  = "neighboring_window left";
       "ctrl+right" =  "neighboring_window right";
       "ctrl+up"  = "neighboring_window up";

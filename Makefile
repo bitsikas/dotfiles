@@ -6,6 +6,7 @@ switch:
 ifeq ($(UNAME), Darwin)
 	home-manager switch --flake ".#${USER}@${HOSTNAME}"
 else
+	sudo nix-collect-garbage -d
 	sudo nixos-rebuild switch --flake ".#"
 endif
 
@@ -14,6 +15,7 @@ boot:
 ifeq ($(UNAME), Darwin)
 	echo "skipping"
 else
+	sudo nix-collect-garbage -d
 	sudo nixos-rebuild boot --flake ".#"
 endif
 

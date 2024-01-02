@@ -28,6 +28,7 @@
   programs.direnv.enable = true;
   home.packages = with pkgs; [
     # unrar
+    devbox
     dnsutils
     docker
     nixpkgs-unstable.eza
@@ -39,7 +40,7 @@
     htop
     httpie
     nixfmt
-    nodejs-16_x
+    nodejs-18_x
     pass
     pipenv
     python39
@@ -48,7 +49,7 @@
     rnix-lsp
     rq
     stow
-    taskell
+    # taskell
     tmux
     visidata
     wget

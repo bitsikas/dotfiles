@@ -74,7 +74,7 @@ in {
       # pkgs.vimPlugins.bufferline-nvim
       pkgs.vimPlugins.vim-commentary
       (
-        pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pkgs.vimUtils.buildVimPlugin {
           pname = "nvim-coverage";
           version = "2023-07-20";
           src = pkgs.fetchFromGitHub {

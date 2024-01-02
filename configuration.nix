@@ -66,6 +66,7 @@
     gnome.gnome-tweaks
     gnomeExtensions.gsconnect
     # gnomeExtensions.media-controls
+    k3s
     lazygit
     libinput-gestures
     libwacom
@@ -93,14 +94,14 @@
   # programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
 
   fonts.fontconfig.enable = true;
-  fonts.enableDefaultFonts = true;
+  fonts.enableDefaultPackages = true;
   fonts.fontconfig.defaultFonts = {
     serif = [ "Ubuntu" ];
     sansSerif = [ "Ubuntu" ];
     monospace = [ "Hack" ];
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     fira-code
     dina-font
     fira-code
@@ -120,6 +121,20 @@
   security.rtkit.enable = true;
 
   # List services that you want to enable:
+
+    networking.firewall.allowedTCPPorts = [
+    6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
+    # 2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
+    # 2380 # k3s, etcd peers: required if using a "High Availability Embedded etcd" configuration
+  ];
+  networking.firewall.allowedUDPPorts = [
+    # 8472 # k3s, flannel: required if using multi-node for inter-node networking
+  ];
+  services.k3s.enable = true;
+  services.k3s.role = "server";
+  services.k3s.extraFlags = toString [
+    # "--kubelet-arg=v=4" # Optionally add additional args to k3s
+  ];
 
   services.mullvad-vpn.enable = true;
 
@@ -151,6 +166,7 @@
     pkgs.cnijfilter2
     pkgs.gutenprint
     pkgs.gutenprintBin
+    pkgs.hplip
 
   ];
 
