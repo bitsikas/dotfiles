@@ -33,7 +33,7 @@
       }) // {
         homeConfigurations = (let system = "x86_64-darwin";
         in {
-          "Kostas.Papakon@PKOSTAS-MB" =
+          "Kostas.Papakon@MB-C02DQ48VMD6T" =
             home-manager.lib.homeManagerConfiguration {
               pkgs = nixpkgs.legacyPackages.${system};
               # username = "Kostas.Papakon";

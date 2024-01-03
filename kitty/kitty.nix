@@ -13,6 +13,8 @@
       # open new split in current directory
       "ctrl+return"= "launch --location vsplit --cwd=current";
       "ctrl+shift+return"= "launch --location hsplit --cwd=current";
+      "super+shift+return"= "launch --location hsplit --cwd=current";
+      "super+return"= "launch --location vsplit --cwd=current";
       "ctrl+left"  = "neighboring_window left";
       "ctrl+right" =  "neighboring_window right";
       "ctrl+up"  = "neighboring_window up";

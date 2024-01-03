@@ -25,9 +25,10 @@ in {
       (builtins.readFile .config/nvim/settings/lsp.vim)
       (builtins.readFile .config/nvim/settings/toggleterm.vim)
       (builtins.readFile .config/nvim/settings/coverage.vim)
-      # (builtins.readFile .config/nvim/settings/lualine.vim)
+      (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/trouble.vim)
       (builtins.readFile .config/nvim/settings/nvim-compe.vim)
+      (builtins.readFile .config/nvim/settings/navic.vim)
       (builtins.readFile .config/nvim/settings/styling.vim)
       # (builtins.readFile .config/nvim/settings/neorg.vim)
     ]);
@@ -66,6 +67,7 @@ in {
       pkgs.vimPlugins.nvim-lsputils
       pkgs.vimPlugins.toggleterm-nvim
       pkgs.vimPlugins.trouble-nvim
+      pkgs.vimPlugins.nvim-navic
       pkgs.vimPlugins.markdown-preview-nvim
       # pkgs.vimPlugins.nvim-tree-lua
       #pkgs.vimPlugins.papercolor-theme 

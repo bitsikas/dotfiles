@@ -28,7 +28,7 @@
   programs.direnv.enable = true;
   home.packages = with pkgs; [
     # unrar
-    devbox
+    nixpkgs-unstable.devbox
     dnsutils
     docker
     nixpkgs-unstable.eza

@@ -1,10 +1,11 @@
 lua << EOF
 local navic = require("nvim-navic")
+navic.setup {
 
-require("lspconfig").clangd.setup {
-    on_attach = function(client, bufnr)
-        navic.attach(client, bufnr)
-    end
+lsp = {
+        auto_attach = true,
+        preference = nil,
+    }
 }
 
 EOF

@@ -3,8 +3,8 @@
   home.packages = with pkgs; [
     # colima
     reattach-to-user-namespace
-      fira-code
-      fira-code-symbols
+    fira-code
+    fira-code-symbols
 
   ];
   home.username = "Kostas.Papakon";
