@@ -5,7 +5,7 @@
     # theme = "Solarized Light";
     #extraConfig = (builtins.readFile .config/kitty/theme.conf);
     font = {
-      name = "Fira Code";
+      name = "FiraCode Nerd Font Mono";
       size = 12;
     };
     #theme = "Gruvbox_light";
