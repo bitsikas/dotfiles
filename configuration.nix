@@ -58,6 +58,8 @@
     # busybox
     # procps
     coreutils
+    mangal
+    calibre
     bat
     cifs-utils
     fd

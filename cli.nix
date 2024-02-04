@@ -1,9 +1,10 @@
 { config, pkgs, lib, nixpkgs-unstable, ... }: {
   imports = [
-    fish/fish.nix
-    nvim/nvim.nix
-    git/git.nix
     bat/bat.nix
+    fish/fish.nix
+    git/git.nix
+    nvim/nvim.nix
+    ranger/ranger.nix
     starship/starship.nix
     tmux/tmux.nix
   ];
@@ -28,6 +29,7 @@
   programs.direnv.enable = true;
   home.packages = with pkgs; [
     # unrar
+    _7zz
     nixpkgs-unstable.devbox
     dnsutils
     docker
@@ -42,6 +44,7 @@
     nixfmt
     nodejs-18_x
     pass
+    pandoc
     pipenv
     python39
     ranger
@@ -51,6 +54,7 @@
     stow
     # taskell
     tmux
+    unzip
     visidata
     wget
   ];
