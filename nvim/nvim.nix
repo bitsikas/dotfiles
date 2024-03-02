@@ -24,10 +24,11 @@ in {
       (builtins.readFile .config/nvim/settings/treesitter.vim)
       (builtins.readFile .config/nvim/settings/lsp.vim)
       (builtins.readFile .config/nvim/settings/toggleterm.vim)
-      (builtins.readFile .config/nvim/settings/coverage.vim)
-      (builtins.readFile .config/nvim/settings/lualine.vim)
+      # (builtins.readFile .config/nvim/settings/coverage.vim)
+      # (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/trouble.vim)
-      (builtins.readFile .config/nvim/settings/nvim-compe.vim)
+      # (builtins.readFile .config/nvim/settings/nvim-compe.vim)
+      (builtins.readFile .config/nvim/settings/cmp.vim)
       (builtins.readFile .config/nvim/settings/navic.vim)
       (builtins.readFile .config/nvim/settings/styling.vim)
       # (builtins.readFile .config/nvim/settings/neorg.vim)
@@ -55,16 +56,19 @@ in {
         ]))
       pkgs.vimPlugins.editorconfig-vim
       pkgs.vimPlugins.bracey-vim
-      pkgs.vimPlugins.lualine-nvim
+      # pkgs.vimPlugins.lualine-nvim
       # pkgs.vimPlugins.gitgutter
       pkgs.vimPlugins.gitsigns-nvim
-      pkgs.vimPlugins.solarized-nvim
+      # pkgs.vimPlugins.solarized-nvim
       pkgs.vimPlugins.NeoSolarized
-      pkgs.vimPlugins.indentLine
+      # pkgs.vimPlugins.indentLine
       #pkgs.vimPlugins.nord-vim 
-      pkgs.vimPlugins.nvim-compe
-      pkgs.vimPlugins.nvim-lspconfig
-      pkgs.vimPlugins.nvim-lsputils
+      pkgs.vimPlugins.nvim-cmp
+      pkgs.vimPlugins.cmp-nvim-lsp
+      pkgs.vimPlugins.cmp_luasnip
+      # pkgs.vimPlugins.nvim-lspconfig
+      # pkgs.vimPlugins.nvim-lsputils
+      pkgs.vimPlugins.lsp-zero-nvim
       pkgs.vimPlugins.toggleterm-nvim
       pkgs.vimPlugins.trouble-nvim
       pkgs.vimPlugins.nvim-navic
@@ -93,10 +97,11 @@ in {
       pkgs.vimPlugins.vim-nix
       pkgs.vimPlugins.vim-terraform
       # pkgs.vimPlugins.vim-tmux-navigator
-      pkgs.vimPlugins.vim-python-pep8-indent
+      # pkgs.vimPlugins.vim-python-pep8-indent
       #pkgs.vimPlugins.vim-surround
       #pkgs.vimPlugins.vimspector
-      pkgs.vimPlugins.copilot-vim
+      pkgs.vimPlugins.copilot-lua
+      pkgs.vimPlugins.copilot-cmp
       pkgs.vimPlugins.flutter-tools-nvim
       # pkgs.vimPlugins.neorg
 

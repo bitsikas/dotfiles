@@ -26,4 +26,9 @@ noremap <silent> <m-k> :TmuxNavigateUp<cr>
 noremap <silent> <m-l> :TmuxNavigateRight<cr>
 lua << EOF
 require('gitsigns').setup()
+require("copilot").setup({
+  suggestion = {enabled = false},
+  panel = {enabled = false},
+})
+require("copilot_cmp").setup({})
 EOF
