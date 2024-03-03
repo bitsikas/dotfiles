@@ -13,3 +13,4 @@ if client.server_capabilities.documentSymbolProvider then
 
 EOF
 
+nmap <C-p>j  :Navbuddy<cr>

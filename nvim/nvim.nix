@@ -36,6 +36,8 @@ in {
     plugins = [
       (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
         with plugins; [
+          tree-sitter-c
+          tree-sitter-cpp
           tree-sitter-bash
           tree-sitter-dart
           tree-sitter-fish
@@ -72,6 +74,7 @@ in {
       pkgs.vimPlugins.toggleterm-nvim
       pkgs.vimPlugins.trouble-nvim
       pkgs.vimPlugins.nvim-navic
+      pkgs.vimPlugins.nvim-navbuddy
       pkgs.vimPlugins.markdown-preview-nvim
       # pkgs.vimPlugins.nvim-tree-lua
       #pkgs.vimPlugins.papercolor-theme 
