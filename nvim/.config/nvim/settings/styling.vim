@@ -11,9 +11,9 @@ set shortmess+=c
 
 " Fix colors
 " set background=dark
-let &t_ut=''
-set t_Co=256
-colorscheme NeoSolarized
+" let &t_ut=''
+" set t_Co=256
+colorscheme catppuccin-frappe
 set termguicolors
 syntax on
 " " Set gutter for CoC-nvim color to none
@@ -21,5 +21,5 @@ syntax on
 
 " Use hybrid line numbers
 set number relativenumber
-set nu rnu
+" set nu rnu
 

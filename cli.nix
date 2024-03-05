@@ -27,9 +27,11 @@
 
   programs.git.package = nixpkgs-unstable.git;
   programs.direnv.enable = true;
+#  programs.direnv.package = pkgs.nix-direnv-flakes;
   home.packages = with pkgs; [
     # unrar
     _7zz
+    nix-direnv-flakes
     nixpkgs-unstable.devbox
     dnsutils
     docker

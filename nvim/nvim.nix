@@ -1,4 +1,4 @@
-{ config, pkgs,  ... }:
+{ config, pkgs,... }:
 
 let
   nvim-spell-ro-utf8-dictionary = builtins.fetchurl {
@@ -19,11 +19,11 @@ in {
     enable = true;
     extraConfig = (builtins.concatStringsSep "\n" [
       (builtins.readFile .config/nvim/init.vim)
-      (builtins.readFile .config/nvim/settings/floatterm.vim)
+      # (builtins.readFile .config/nvim/settings/floatterm.vim)
       (builtins.readFile .config/nvim/settings/telescope_settings.vim)
       (builtins.readFile .config/nvim/settings/treesitter.vim)
       (builtins.readFile .config/nvim/settings/lsp.vim)
-      (builtins.readFile .config/nvim/settings/toggleterm.vim)
+      # (builtins.readFile .config/nvim/settings/toggleterm.vim)
       # (builtins.readFile .config/nvim/settings/coverage.vim)
       # (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/trouble.vim)
@@ -54,8 +54,10 @@ in {
           tree-sitter-norg
           tree-sitter-python
           tree-sitter-typescript
+          tree-sitter-rust
           tree-sitter-sql
         ]))
+      # pkgs.vimPlugins.nvim-treesitter-context
       pkgs.vimPlugins.editorconfig-vim
       pkgs.vimPlugins.bracey-vim
       # pkgs.vimPlugins.lualine-nvim
@@ -63,6 +65,7 @@ in {
       pkgs.vimPlugins.gitsigns-nvim
       # pkgs.vimPlugins.solarized-nvim
       pkgs.vimPlugins.NeoSolarized
+      pkgs.vimPlugins.catppuccin-nvim
       # pkgs.vimPlugins.indentLine
       #pkgs.vimPlugins.nord-vim 
       pkgs.vimPlugins.nvim-cmp
@@ -71,7 +74,7 @@ in {
       # pkgs.vimPlugins.nvim-lspconfig
       # pkgs.vimPlugins.nvim-lsputils
       pkgs.vimPlugins.lsp-zero-nvim
-      pkgs.vimPlugins.toggleterm-nvim
+      # pkgs.vimPlugins.toggleterm-nvim
       pkgs.vimPlugins.trouble-nvim
       pkgs.vimPlugins.nvim-navic
       pkgs.vimPlugins.nvim-navbuddy
@@ -82,6 +85,22 @@ in {
       pkgs.vimPlugins.telescope-nvim
       # pkgs.vimPlugins.bufferline-nvim
       pkgs.vimPlugins.vim-commentary
+
+
+      (
+        pkgs.vimUtils.buildVimPlugin {
+          pname = "harpoon2";
+          version = "2024-01-26";
+          src = pkgs.fetchFromGitHub {
+            owner = "ThePrimeagen";
+            repo = "harpoon";
+            rev = "a38be6e0dd4c6db66997deab71fc4453ace97f9c";
+            sha256 = "1cmiw4sy5r4h8f2k1m91f2xykasnp66zdibx0l8vk94hw990sg26";
+          };
+          meta.homepage = "https://github.com/ThePrimeagen/harpoon/";
+        }
+      )
+
       (
         pkgs.vimUtils.buildVimPlugin {
           pname = "nvim-coverage";
@@ -106,6 +125,7 @@ in {
       pkgs.vimPlugins.copilot-lua
       pkgs.vimPlugins.copilot-cmp
       pkgs.vimPlugins.flutter-tools-nvim
+      pkgs.vimPlugins.undotree
       # pkgs.vimPlugins.neorg
 
     ];

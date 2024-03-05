@@ -19,11 +19,19 @@ let g:vimspector_enable_mappings = 'HUMAN'
 let mapleader = " "
 let g:indentLine_enabled = 1
 
-noremap <silent> <m-h> :TmuxNavigateLeft<cr>
-noremap <silent> <m-j> :TmuxNavigateDown<cr>
-noremap <silent> <m-k> :TmuxNavigateUp<cr>
+nnoremap <F5> :UndotreeToggle<CR>
 
-noremap <silent> <m-l> :TmuxNavigateRight<cr>
+if has("persistent_undo")
+		let target_path = expand('~/.undodir')
+
+		if !isdirectory(target_path)
+				call mkdir(target_path, "p", 0700)
+		endif
+
+		let &undodir=target_path
+		set undofile
+endif
+
 lua << EOF
 require('gitsigns').setup()
 require("copilot").setup({
@@ -31,4 +39,12 @@ require("copilot").setup({
   panel = {enabled = false},
 })
 require("copilot_cmp").setup({})
+harpoon = require("harpoon").setup({})
+vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<leader>p", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<leader>n", function() harpoon:list():next() end)
+
 EOF
