@@ -54,8 +54,9 @@
 
               ];
 
-            };
-          "generic" = 
+            };}) // (let system = "x86_64-linux";
+            in {
+          "linuxcli" = 
             home-manager.lib.homeManagerConfiguration {
               pkgs = nixpkgs.legacyPackages.${system};
               # username = "Kostas.Papakon";

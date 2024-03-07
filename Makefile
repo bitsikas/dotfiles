@@ -2,10 +2,9 @@
 
 UNAME := $(shell uname)
 HOSTNAME := $(shell hostname)
-TARTGET = ""
 
 home:
-ifeq ($(TARGET), "")
+ifndef TARGET
 	home-manager switch --flake ".#${USER}@${HOSTNAME}"
 else
 	home-manager switch --flake $(TARGET)
