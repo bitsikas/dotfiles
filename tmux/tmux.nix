@@ -8,7 +8,10 @@
     '';
     plugins = [
       pkgs.tmuxPlugins.sensible
-      pkgs.tmuxPlugins.nord
+      {
+        plugin= pkgs.tmuxPlugins.catppuccin;
+        extraConfig = "set -g @catppuccin_flavour 'frappe'";
+      }
       pkgs.tmuxPlugins.vim-tmux-navigator
       pkgs.tmuxPlugins.yank
       {
