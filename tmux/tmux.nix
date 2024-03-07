@@ -5,6 +5,7 @@
     enable = true;
     extraConfig = ''
       set -g mouse  on 
+      set-window-option -g mode-keys vi
     '';
     plugins = [
       pkgs.tmuxPlugins.sensible
