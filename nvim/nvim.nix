@@ -77,6 +77,7 @@ in {
       # pkgs.vimPlugins.toggleterm-nvim
       pkgs.vimPlugins.trouble-nvim
       pkgs.vimPlugins.nvim-navic
+      pkgs.vimPlugins.nvim-suda
       pkgs.vimPlugins.nvim-navbuddy
       pkgs.vimPlugins.markdown-preview-nvim
       # pkgs.vimPlugins.nvim-tree-lua

@@ -18,6 +18,7 @@ imap jk <Esc>
 let g:vimspector_enable_mappings = 'HUMAN'
 let mapleader = " "
 let g:indentLine_enabled = 1
+let g:suda#nopass = 1
 
 nnoremap <F5> :UndotreeToggle<CR>
 
