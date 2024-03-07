@@ -2,9 +2,20 @@
 
 UNAME := $(shell uname)
 HOSTNAME := $(shell hostname)
+TARTGET = ""
+
+home:
+ifeq ($(TARGET), "")
+	home-manager switch --flake ".#${USER}@${HOSTNAME}"
+else
+	home-manager switch --flake $(TARGET)
+endif
+
+
+
 switch:
 ifeq ($(UNAME), Darwin)
-	home-manager switch --flake ".#${USER}@${HOSTNAME}"
+	echo "skipping"
 else
 	sudo nix-collect-garbage -d
 	sudo nixos-rebuild switch --flake ".#"
