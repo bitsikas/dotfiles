@@ -6,7 +6,7 @@
     userEmail = "kostas@bitsikas.dev";
     extraConfig = {
       color = { ui = "auto"; };
-      feature = { manyFiles = true; };
+      feature = { manyFiles = true; skipHash= true; };
       core = { 
         fsmonitor = true; 
     };
