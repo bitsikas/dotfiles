@@ -9,7 +9,12 @@ if client.server_capabilities.documentSymbolProvider then
 	end
 	end
 	)
-	require('lspconfig').pyright.setup({})
+	require'lspconfig'.pyright.setup({})
+	require'lspconfig'.tailwindcss.setup({})
+	require'lspconfig'.cmake.setup{}
+	require'lspconfig'.htmx.setup{}
+	require'lspconfig'.html.setup{}
+	require'lspconfig'.nixd.setup{}
 
 EOF
 
