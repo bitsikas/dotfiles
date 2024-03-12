@@ -51,7 +51,6 @@
     python39
     ranger
     ripgrep
-    rnix-lsp
     rq
     stow
     # taskell
