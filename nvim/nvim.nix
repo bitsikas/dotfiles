@@ -1,4 +1,4 @@
-{ config, pkgs, lib, darwin, ... }:
+{ config, pkgs, lib, darwin, nixpkgs-unstable, ... }:
 
 let
   nvim-spell-ro-utf8-dictionary = builtins.fetchurl {
@@ -136,35 +136,9 @@ in {
     pkgs.pyright 
     pkgs.tailwindcss-language-server 
     pkgs.cmake-language-server
-    pkgs.nixd
     pkgs.lua-language-server
     pkgs.clang-tools_14
     pkgs.vscode-langservers-extracted
-
-    (
-      pkgs.rustPlatform.buildRustPackage rec {
-        pname = "htmx-lsp";
-        version = "0.1.0";
-
-        src = pkgs.fetchFromGitHub {
-          owner = "ThePrimeagen";
-          repo = "htmx-lsp";
-          rev = version;
-          hash = "sha256-CvQ+vgo3+qUOj0SS6/NrapzXkP98tpiZbGhRHJxEqeo=";
-        };
-
-        cargoHash = "sha256-qKiFUnNUOBakfK3Vplr/bLR+4L/vIViHJYgw9+RoRZQ=";
-
-        meta = with lib; {
-          description = "Language server implementation for htmx";
-          homepage = "https://github.com/ThePrimeagen/htmx-lsp";
-          license = licenses.mit;
-          maintainers = with maintainers; [ vinnymeller ];
-          mainProgram = "htmx-lsp";
-        };
-      }
-)
-
   ];
 
 }

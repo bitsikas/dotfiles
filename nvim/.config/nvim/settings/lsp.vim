@@ -14,7 +14,6 @@ if client.server_capabilities.documentSymbolProvider then
 	require'lspconfig'.cmake.setup{}
 	require'lspconfig'.htmx.setup{}
 	require'lspconfig'.html.setup{}
-	require'lspconfig'.nixd.setup{}
 
 EOF
 
