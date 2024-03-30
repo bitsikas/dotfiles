@@ -13,7 +13,7 @@ set shortmess+=c
 " set background=dark
 " let &t_ut=''
 " set t_Co=256
-colorscheme catppuccin-frappe
+" colorscheme catppuccin-frappe
 set termguicolors
 syntax on
 " " Set gutter for CoC-nvim color to none
@@ -23,3 +23,14 @@ syntax on
 set number relativenumber
 " set nu rnu
 
+lua << EOF
+require"catppuccin".setup({
+	    background = { -- :h background
+        light = "latte",
+        dark = "frappe",
+    },
+})
+vim.cmd.colorscheme "catppuccin"
+
+EOF
+" colorscheme catppuccin

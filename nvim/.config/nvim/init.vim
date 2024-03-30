@@ -47,5 +47,6 @@ vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:lis
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<leader>p", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<leader>n", function() harpoon:list():next() end)
+require"nvim-navic".setup({highlight=true})
 
 EOF

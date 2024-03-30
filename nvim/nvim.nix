@@ -1,4 +1,4 @@
-{ config, pkgs, lib, darwin, nixpkgs-unstable, ... }:
+{ config, pkgs, nixpkgs-unstable, lib, darwin, ... }:
 
 let
   nvim-spell-ro-utf8-dictionary = builtins.fetchurl {
@@ -25,11 +25,11 @@ in {
       (builtins.readFile .config/nvim/settings/lsp.vim)
       # (builtins.readFile .config/nvim/settings/toggleterm.vim)
       # (builtins.readFile .config/nvim/settings/coverage.vim)
-      # (builtins.readFile .config/nvim/settings/lualine.vim)
+      (builtins.readFile .config/nvim/settings/lualine.vim)
       (builtins.readFile .config/nvim/settings/trouble.vim)
       # (builtins.readFile .config/nvim/settings/nvim-compe.vim)
       (builtins.readFile .config/nvim/settings/cmp.vim)
-      (builtins.readFile .config/nvim/settings/navic.vim)
+      # (builtins.readFile .config/nvim/settings/navic.vim)
       (builtins.readFile .config/nvim/settings/styling.vim)
       # (builtins.readFile .config/nvim/settings/neorg.vim)
     ]);
@@ -60,12 +60,12 @@ in {
       # pkgs.vimPlugins.nvim-treesitter-context
       pkgs.vimPlugins.editorconfig-vim
       pkgs.vimPlugins.bracey-vim
-      # pkgs.vimPlugins.lualine-nvim
+      pkgs.vimPlugins.lualine-nvim
       # pkgs.vimPlugins.gitgutter
       pkgs.vimPlugins.gitsigns-nvim
       # pkgs.vimPlugins.solarized-nvim
       pkgs.vimPlugins.NeoSolarized
-      pkgs.vimPlugins.catppuccin-nvim
+      nixpkgs-unstable.vimPlugins.catppuccin-nvim
       # pkgs.vimPlugins.indentLine
       #pkgs.vimPlugins.nord-vim 
       pkgs.vimPlugins.nvim-cmp

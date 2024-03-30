@@ -1,6 +1,6 @@
 { config, pkgs, lib, nixpkgs-unstable, ... }: {
   imports = [
-    bat/bat.nix
+    # bat/bat.nix
     fish/fish.nix
     git/git.nix
     nvim/nvim.nix
@@ -58,6 +58,12 @@
     unzip
     visidata
     wget
+    (pkgs.writeShellApplication {
+      name = "lights";
+      runtimeInputs = with pkgs; [ neovim-remote ];
+      text = (builtins.readFile ./utils/lights.sh);
+    })
+
   ];
 }
 
