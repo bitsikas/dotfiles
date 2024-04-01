@@ -1,6 +1,7 @@
 "set foldmethod=expr
 "set foldexpr=nvim_treesitter#foldexpr()
 set foldlevel=99
+syntax on
 
 lua <<EOF
 
@@ -8,6 +9,9 @@ vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 require'nvim-treesitter.configs'.setup {
+    indent = {
+	    enable = true,
+	},
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,

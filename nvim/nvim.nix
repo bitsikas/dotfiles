@@ -34,30 +34,31 @@ in {
       # (builtins.readFile .config/nvim/settings/neorg.vim)
     ]);
     plugins = [
-      (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
-        with plugins; [
-          tree-sitter-c
-          tree-sitter-cpp
-          tree-sitter-bash
-          tree-sitter-dart
-          tree-sitter-fish
-          tree-sitter-go
-          tree-sitter-hcl
-          tree-sitter-html
-          tree-sitter-http
-          tree-sitter-java
-          tree-sitter-javascript
-          tree-sitter-lua
-          tree-sitter-make
-          tree-sitter-markdown
-          tree-sitter-nix
-          tree-sitter-norg
-          tree-sitter-python
-          tree-sitter-typescript
-          tree-sitter-rust
-          tree-sitter-sql
-        ]))
+      # (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
+      #   with plugins; [
+      #     tree-sitter-c
+      #     tree-sitter-cpp
+      #     tree-sitter-bash
+      #     tree-sitter-dart
+      #     tree-sitter-fish
+      #     tree-sitter-go
+      #     tree-sitter-hcl
+      #     tree-sitter-html
+      #     tree-sitter-http
+      #     tree-sitter-java
+      #     tree-sitter-javascript
+      #     tree-sitter-lua
+      #     tree-sitter-make
+      #     tree-sitter-markdown
+      #     tree-sitter-nix
+      #     tree-sitter-norg
+      #     tree-sitter-python
+      #     tree-sitter-typescript
+      #     tree-sitter-rust
+      #     tree-sitter-sql
+      #   ]))
       # pkgs.vimPlugins.nvim-treesitter-context
+      nixpkgs-unstable.vimPlugins.nvim-treesitter.withAllGrammars
       pkgs.vimPlugins.editorconfig-vim
       pkgs.vimPlugins.bracey-vim
       pkgs.vimPlugins.lualine-nvim
