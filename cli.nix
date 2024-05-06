@@ -1,6 +1,6 @@
 { config, pkgs, lib, nixpkgs-unstable, ... }: {
   imports = [
-    # bat/bat.nix
+    bat/bat.nix
     fish/fish.nix
     git/git.nix
     nvim/nvim.nix
@@ -47,8 +47,6 @@
     nodejs-18_x
     pass
     pandoc
-    pipenv
-    python39
     ranger
     ripgrep
     rq
