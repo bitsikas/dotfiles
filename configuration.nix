@@ -68,7 +68,7 @@
     gnome.gnome-tweaks
     gnomeExtensions.gsconnect
     # gnomeExtensions.media-controls
-    k3s
+    # k3s
     lazygit
     libinput-gestures
     libwacom
@@ -78,6 +78,8 @@
     wireguard-tools
     docker-compose
     qt5.qtwayland
+    catppuccin-gtk
+    catppuccin-kde
 
 
   ];
@@ -130,18 +132,18 @@
   # List services that you want to enable:
 
     networking.firewall.allowedTCPPorts = [
-    6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
+    # 6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
     # 2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
     # 2380 # k3s, etcd peers: required if using a "High Availability Embedded etcd" configuration
   ];
   networking.firewall.allowedUDPPorts = [
     # 8472 # k3s, flannel: required if using multi-node for inter-node networking
   ];
-  services.k3s.enable = true;
-  services.k3s.role = "server";
-  services.k3s.extraFlags = toString [
-    # "--kubelet-arg=v=4" # Optionally add additional args to k3s
-  ];
+  # services.k3s.enable = true;
+  # services.k3s.role = "server";
+  # services.k3s.extraFlags = toString [
+  #   # "--kubelet-arg=v=4" # Optionally add additional args to k3s
+  # ];
 
   services.mullvad-vpn.enable = true;
 
@@ -188,7 +190,7 @@
       defaultSession = "gnome";
 
     };
-    desktopManager = { gnome.enable = true; plasma5.enable = true; };
+    desktopManager = { gnome.enable = true; plasma5.enable = false; };
     # modules = [ pkgs.xf86_input_wacom ];
     # videoDrivers = [ "modesetting" ];
     

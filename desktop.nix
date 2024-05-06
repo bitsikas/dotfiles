@@ -1,9 +1,9 @@
 { builtins, config, pkgs, lib, nixpkgs-unstable, ... }: {
   imports = [
-    sway/sway.nix
-    wofi/wofi.nix
-    mako/mako.nix
-    waybar/waybar.nix
+    # sway/sway.nix
+    # wofi/wofi.nix
+    # mako/mako.nix
+    # waybar/waybar.nix
     kitty/kitty.nix
   ];
 
@@ -25,7 +25,7 @@
     krita
     newsflash
     libreoffice
-    mypaint
+    # mypaint
 
 
     # (
@@ -69,10 +69,10 @@
   #   # style.name = "gruvbox";
   #   # style.package = pkgs.kde-gruvbox;
   # };
-  programs.vscode = {
-    enable = true;
-    package = pkgs.vscode.fhs;
-  };
+  # programs.vscode = {
+  #   enable = true;
+  #   package = pkgs.vscode.fhs;
+  # };
 }
 
 
