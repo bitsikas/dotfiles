@@ -34,30 +34,6 @@ in {
       # (builtins.readFile .config/nvim/settings/neorg.vim)
     ]);
     plugins = [
-      # (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
-      #   with plugins; [
-      #     tree-sitter-c
-      #     tree-sitter-cpp
-      #     tree-sitter-bash
-      #     tree-sitter-dart
-      #     tree-sitter-fish
-      #     tree-sitter-go
-      #     tree-sitter-hcl
-      #     tree-sitter-html
-      #     tree-sitter-http
-      #     tree-sitter-java
-      #     tree-sitter-javascript
-      #     tree-sitter-lua
-      #     tree-sitter-make
-      #     tree-sitter-markdown
-      #     tree-sitter-nix
-      #     tree-sitter-norg
-      #     tree-sitter-python
-      #     tree-sitter-typescript
-      #     tree-sitter-rust
-      #     tree-sitter-sql
-      #   ]))
-      # pkgs.vimPlugins.nvim-treesitter-context
       nixpkgs-unstable.vimPlugins.nvim-treesitter.withAllGrammars
       pkgs.vimPlugins.editorconfig-vim
       pkgs.vimPlugins.bracey-vim
@@ -70,14 +46,17 @@ in {
       # pkgs.vimPlugins.indentLine
       #pkgs.vimPlugins.nord-vim 
       pkgs.vimPlugins.nvim-cmp
+      pkgs.vimPlugins.nvim-web-devicons
       pkgs.vimPlugins.cmp-nvim-lsp
       pkgs.vimPlugins.cmp_luasnip
       pkgs.vimPlugins.luasnip
       # pkgs.vimPlugins.nvim-lspconfig
       # pkgs.vimPlugins.nvim-lsputils
       pkgs.vimPlugins.lsp-zero-nvim
+      pkgs.vimPlugins.vim-test
       # pkgs.vimPlugins.toggleterm-nvim
       pkgs.vimPlugins.trouble-nvim
+      pkgs.vimPlugins.octo-nvim
       pkgs.vimPlugins.nvim-navic
       pkgs.vimPlugins.suda-vim
       pkgs.vimPlugins.nvim-navbuddy
@@ -88,6 +67,7 @@ in {
       pkgs.vimPlugins.telescope-nvim
       # pkgs.vimPlugins.bufferline-nvim
       pkgs.vimPlugins.vim-commentary
+      pkgs.vimPlugins.nvim-coverage
 
 
       (
@@ -135,6 +115,7 @@ in {
   };
   home.packages = [
     pkgs.pyright 
+    nixpkgs-unstable.ruff-lsp 
     pkgs.tailwindcss-language-server 
     pkgs.cmake-language-server
     pkgs.lua-language-server

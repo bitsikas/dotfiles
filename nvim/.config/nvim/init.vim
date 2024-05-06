@@ -34,6 +34,7 @@ if has("persistent_undo")
 endif
 
 lua << EOF
+vim.g.polyglot_disabled = { "ftdetect" }
 require('gitsigns').setup()
 require("copilot").setup({
   suggestion = {enabled = false},
@@ -48,5 +49,9 @@ vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:lis
 vim.keymap.set("n", "<leader>p", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<leader>n", function() harpoon:list():next() end)
 require"nvim-navic".setup({highlight=true})
+require("coverage").setup()
+require'nvim-web-devicons'.setup()
+require("octo").setup({ enable_builtin = true })
+vim.cmd([[hi OctoEditable guibg=none]])
 
 EOF
