@@ -3,11 +3,11 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -109,7 +109,8 @@
               # ./linux.nix
               ./hardware/spectre.nix
               nixos-hardware.nixosModules.common-cpu-intel
-              nixos-hardware.nixosModules.common-gpu-intel
+              # nixos-hardware.nixosModules.common-cpu-intel.tiger-lake
+              # nixos-hardware.nixosModules.common-gpu-intel
               nixos-hardware.nixosModules.common-pc-laptop
               nixos-hardware.nixosModules.common-pc-laptop-acpi_call
               nixos-hardware.nixosModules.common-pc-laptop-ssd
@@ -128,7 +129,8 @@
               }
             ];
             # Example how to pass an arg to configuration.nix:
-            specialArgs = inputs;
+            # specialArgs = inputs;
+            specialArgs.nixpkgs-unstable =  import nixpkgs-unstable { inherit system; };
           };
         };
       };

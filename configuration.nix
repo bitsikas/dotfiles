@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, nixpkgs-unstable, ... }:
 
 {
 
@@ -60,6 +60,7 @@
     coreutils
     mangal
     calibre
+    # openjdk21
     bat
     cifs-utils
     fd
@@ -74,27 +75,27 @@
     libwacom
     papirus-icon-theme
     pavucontrol
-    sof-firmware
+    nixpkgs-unstable.sof-firmware
     wireguard-tools
-    docker-compose
+    # docker-compose
     qt5.qtwayland
-    catppuccin-gtk
-    catppuccin-kde
+    # catppuccin-gtk
+    # catppuccin-kde
 
 
   ];
 
-  programs.adb.enable = true;
+  # programs.adb.enable = true;
   programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
   programs.fish.enable = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
-    pinentryFlavor = "qt";
+    # pinentryFlavor = "qt";
   };
   programs.light.enable = true;
-  programs.steam.enable = true;
-  programs.kdeconnect.enable = true;
+  # programs.steam.enable = true;
+  # programs.kdeconnect.enable = true;
   # programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
 
   fonts.fontconfig.enable = true;
@@ -112,17 +113,17 @@
         fonts = [ "FiraCode" ];
       }
       )
-    dina-font
-    fira-code
-    fira-code-symbols
-    font-awesome
-    hack-font
-    liberation_ttf
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    proggyfonts
-    roboto
+    # dina-font
+    # fira-code
+    # fira-code-symbols
+    # font-awesome
+    # hack-font
+    # liberation_ttf
+    # noto-fonts
+    # noto-fonts-cjk
+    # noto-fonts-emoji
+    # proggyfonts
+    # roboto
     ubuntu_font_family
     # google-fonts
   ];
@@ -149,7 +150,7 @@
 
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
   };
 
   services.blueman.enable = true;
@@ -198,12 +199,16 @@
   };
 
   #
-  virtualisation.libvirtd.enable = true;
-  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+  # virtualisation.libvirtd.enable = true;
+  boot.kernelModules = [ "kvm-intel" ];
   virtualisation.podman.enable = true;
+  
+   # nixpkgs.config.allowUnfree = true;
+   # virtualisation.virtualbox.host.enable = true;
+   # virtualisation.virtualbox.host.enableExtensionPack = true;
   system.stateVersion = "22.05";
-  services.nfs.server.enable = true;
-  virtualisation.virtualbox.host.enable = false;
+  # services.nfs.server.enable = true;
+  # virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "kostas" ];
     # Minimal configuration for NFS support with Vagrant.
   

@@ -34,7 +34,7 @@
     nix-direnv-flakes
     nixpkgs-unstable.devbox
     dnsutils
-    docker
+    # docker
     nixpkgs-unstable.eza
     gcc
     gnumake
@@ -43,7 +43,7 @@
     gopls
     htop
     httpie
-    nixfmt
+    # nixfmt
     nodejs-18_x
     pass
     pandoc

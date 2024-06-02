@@ -11,19 +11,19 @@
     "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
   home.packages = with pkgs; [
-    chiaki
+    # chiaki
     firefox-wayland
-    chromium
-    gimp
+    # chromium
+    # gimp
     dconf
     inkscape
-    zathura
-    google-chrome
+    # zathura
+    # google-chrome
     imv
-    hack-font
+    # hack-font
     vlc
     krita
-    newsflash
+    # newsflash
     libreoffice
     # mypaint
 

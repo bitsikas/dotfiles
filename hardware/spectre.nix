@@ -23,7 +23,7 @@
   boot.kernelModules = [ "kvm-intel" "coretemp" ];
   boot.extraModulePackages = [ ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [ "i8042.nopnp=1" "i8042.dumbkbd=1" ];
+  boot.kernelParams = [ "i8042.nopnp=1" "i8042.dumbkbd=1" "acpi_osi=\"!Windows 2013\"" "acpi_osi=\"!Windows 2012\""];
   boot.loader.systemd-boot.enable = true;
   # hardware.opengl.extraPackages = with pkgs; [ 
   #     intel-compute-runtime 
@@ -62,6 +62,7 @@
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.steam-hardware.enable = true;
+  hardware.intelgpu.driver = "xe";
 
   # hardware.opentabletdriver.enable = true;
   hardware.bluetooth.enable = true;

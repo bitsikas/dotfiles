@@ -17,7 +17,7 @@ ifeq ($(UNAME), Darwin)
 	echo "skipping"
 else
 	sudo nix-collect-garbage -d
-	sudo nixos-rebuild switch --flake ".#"
+	sudo nixos-rebuild switch --flake ".#" --show-trace
 endif
 
 
