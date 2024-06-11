@@ -6,6 +6,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,7 +17,7 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, flake-utils, nixpkgs-unstable, nixos-hardware, ... }@inputs:
+    { self, nixpkgs, home-manager, flake-utils, nixpkgs-unstable, nixos-hardware, nixos-generators, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
@@ -31,6 +35,50 @@
           ];
         };
       }) // {
+
+        packages.aarch64-linux = let 
+          rawkeys = builtins.readFile (builtins.fetchurl {
+                      url = "https://github.com/bitsikas.keys";
+                      sha256 = "1rbxms3pv6msfyhds2bc0haza34fhvy3ya9qj5k30i11xd8sapmv";
+                    });
+          listkeys = nixpkgs.lib.strings.splitString "\n" rawkeys;
+          goodlistkeys = nixpkgs.lib.trace listkeys builtins.filter (x: x != "") listkeys;
+                  
+
+        in{
+          sdcard = nixos-generators.nixosGenerate {
+            system = "aarch64-linux";
+            format = "sd-aarch64";
+            modules = [
+
+              ({
+                console.enable = false;
+                environment.systemPackages = with nixpkgs.legacyPackages.aarch64-linux; [
+                  libraspberrypi
+                  raspberrypi-eeprom
+                ];
+                system.stateVersion = "24.05";
+                sdImage.compressImage=false;
+                networking = {
+                  hostName = "beershot";
+                };
+                services.openssh.enable = true;
+                disabledModules = [
+                  "profiles/base.nix"
+                ];
+
+                users.users = {
+                  root = {
+                    password = "root";
+                    openssh.authorizedKeys.keys = goodlistkeys; 
+                  };
+                };
+              }
+              )
+            ];
+          };
+        };
+
         homeConfigurations = (let system = "x86_64-darwin";
         in {
           "Kostas.Papakon@MB-C02DQ48VMD6T" =
@@ -131,6 +179,16 @@
             # Example how to pass an arg to configuration.nix:
             # specialArgs = inputs;
             specialArgs.nixpkgs-unstable =  import nixpkgs-unstable { inherit system; };
+          };
+          pi4 = nixpkgs.lib.nixosSystem rec {
+            system = "aarch64-linux";
+            modules = [
+              ./pi-config.nix
+              ./hardware/pi4.nix
+              nixos-hardware.nixosModules.raspberry-pi-4
+            ];
+            # Example how to pass an arg to configuration.nix:
+            # specialArgs = inputs;
           };
         };
       };

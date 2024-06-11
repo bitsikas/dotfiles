@@ -5,6 +5,8 @@
 { config, pkgs, nixpkgs-unstable, ... }:
 
 {
+  # Enable binfmt emulation of aarch64-linux.
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
@@ -77,6 +79,7 @@
     pavucontrol
     nixpkgs-unstable.sof-firmware
     wireguard-tools
+    transmission-remote-gtk
     # docker-compose
     qt5.qtwayland
     # catppuccin-gtk
@@ -95,15 +98,15 @@
   };
   programs.light.enable = true;
   # programs.steam.enable = true;
-  # programs.kdeconnect.enable = true;
-  # programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
+  programs.kdeconnect.enable = true;
+  programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
 
   fonts.fontconfig.enable = true;
   fonts.enableDefaultPackages = true;
   fonts.fontconfig.defaultFonts = {
     serif = [ "Ubuntu" ];
     sansSerif = [ "Ubuntu" ];
-    monospace = [ "Hack" ];
+    monospace = [ "FiraCode" ];
   };
 
   fonts.packages = with pkgs; [
