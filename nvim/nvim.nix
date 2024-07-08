@@ -68,6 +68,7 @@ in {
       # pkgs.vimPlugins.bufferline-nvim
       pkgs.vimPlugins.vim-commentary
       pkgs.vimPlugins.nvim-coverage
+      pkgs.vimPlugins.indent-blankline-nvim-lua
 
 
       (

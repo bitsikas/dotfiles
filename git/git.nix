@@ -5,6 +5,7 @@
     userName = "Kostas Papakonstantinou";
     userEmail = "kostas@bitsikas.dev";
     extraConfig = {
+      rerere= {enabled = true;};
       color = { ui = "auto"; };
       feature = { manyFiles = true; skipHash= true; };
       core = { 
