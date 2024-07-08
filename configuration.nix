@@ -77,7 +77,7 @@
     libwacom
     papirus-icon-theme
     pavucontrol
-    nixpkgs-unstable.sof-firmware
+    sof-firmware
     wireguard-tools
     transmission-remote-gtk
     # docker-compose

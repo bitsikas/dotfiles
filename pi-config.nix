@@ -19,10 +19,88 @@ in{
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
+systemd.timers."dyndns" = {
+  wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "15m";
+      OnUnitActiveSec = "15m";
+      Unit = "dynamic-dns-updater.service";
+    };
+};
+  systemd.services = {
+    dynamic-dns-updater = {
+      path = [
+        pkgs.curl
+      ];
+      script = "cat /etc/dyndns | curl -k -K -";
+      serviceConfig = {
+        Type = "oneshot";
+        User = "root";
+      };
+    };
+  };
+
+  networking.hostName = "beershot"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.firewall = {
+    allowedTCPPorts = [ 51413 ];
+    allowedUDPPorts = [ 51413 51820 ];
+  };
+
+    # enable NAT
+  networking.nat.enable = true;
+  networking.nat.externalInterface = "end0";
+  networking.nat.internalInterfaces = [ "wg0" ];
+
+  networking.wireguard.interfaces = {
+    # "wg0" is the network interface name. You can name the interface arbitrarily.
+    wg0 = {
+      # Determines the IP address and subnet of the server's end of the tunnel interface.
+      ips = [ "10.100.0.1/24" ];
+
+      # The port that WireGuard listens to. Must be accessible by the client.
+      listenPort = 51820;
+
+      # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
+      # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
+      postSetup = ''
+        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o eth0 -j MASQUERADE
+      '';
+
+      # This undoes the above command
+      postShutdown = ''
+        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o eth0 -j MASQUERADE
+      '';
+
+      # Path to the private key file.
+      #
+      # Note: The private key can also be included inline via the privateKey option,
+      # but this makes the private key world-readable; thus, using privateKeyFile is
+      # recommended.
+      privateKeyFile = "/etc/wg.private.key";
+
+      peers = [
+        # List of allowed peers.
+        { 
+          # pixel8
+          publicKey = "9qK6GvoTyWcIp4jk2X8iQ3h8hMSScdvGil2yF++SFX0=";
+          # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
+          allowedIPs = [ "10.100.0.2/32" ];
+        }
+        { 
+          # hp
+          publicKey = "R2EmSxebQgZoXwaDCQGqjzDrf682zCjpVr6K31EVLFc=";
+          # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
+          allowedIPs = [ "10.100.0.3/32" ];
+        }
+      ];
+    };
+  };
+
+
+
 
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
@@ -79,6 +157,15 @@ in{
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.avahi= {
+    publish = {
+      enable=true;
+      domain = true;
+      addresses = true;
+    };
+    enable = true;
+    nssmdns = true;
+  };
 
   system.stateVersion = "24.05"; # Did you read the comment?
   hardware = {
@@ -111,6 +198,10 @@ in{
     openFirewall = true;
     dataDir = "/mnt/services/jellyfin";
   };
+  services.bazarr = {
+    enable = true;
+    openFirewall = true;
+  };
   services.sonarr = {
     enable = true;
     openFirewall = true;
@@ -132,8 +223,11 @@ in{
     openRPCPort = true; #Open firewall for RPC
     settings = { #Override default settings
     download-dir = "/mnt/Downloads";
+    incomplete-dir= "/mnt/.incomplete";
     rpc-bind-address = "0.0.0.0"; #Bind to own IP
     rpc-whitelist = "127.0.0.1,192.168.*.*"; #Whitelist your remote machine (10.0.0.1 in this example)
+    seed-queue-enabled = true;
+    seed-queue-size = 5;
     };
     };
 

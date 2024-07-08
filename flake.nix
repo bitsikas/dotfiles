@@ -62,6 +62,7 @@
                 networking = {
                   hostName = "beershot";
                 };
+                services.avahi.enable = true;
                 services.openssh.enable = true;
                 disabledModules = [
                   "profiles/base.nix"
