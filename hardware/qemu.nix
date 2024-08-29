@@ -33,8 +33,8 @@
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp0s7.useDHCP = lib.mkDefault true;
 
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  # hardware.cpu.intel.updateMicrocode =
+  #   lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.pulseaudio.enable = false;
   hardware.opengl.enable = true;
   networking.hostName = "qemu"; # Define your hostname.
