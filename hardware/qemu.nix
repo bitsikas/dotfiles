@@ -38,4 +38,5 @@
   hardware.pulseaudio.enable = false;
   hardware.opengl.enable = true;
   networking.hostName = "qemu"; # Define your hostname.
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }
