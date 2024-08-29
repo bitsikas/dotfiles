@@ -16,6 +16,7 @@
     # chromium
     # gimp
     dconf
+    wezterm
     inkscape
     # zathura
     # google-chrome

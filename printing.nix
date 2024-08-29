@@ -1,3 +1,4 @@
+{ config, pkgs, lib, nixpkgs-unstable, ... }: {
   services.printing.enable = true;
   services.printing.drivers = [
     pkgs.cnijfilter2 
@@ -5,4 +6,5 @@
     pkgs.gutenprintBin
     pkgs.hplip
   ];
+}
 
