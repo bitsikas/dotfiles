@@ -39,6 +39,8 @@
    boot.extraModprobeConfig = ''
      options snd-intel-dspcfg dsp_driver=1
    '';
+   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/4ba27507-ce64-4b3d-8039-4371fdd680a3";

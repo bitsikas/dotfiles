@@ -157,6 +157,7 @@
               ./configuration.nix
               # ./linux.nix
               ./hardware/spectre.nix
+              ./printing.nix
               nixos-hardware.nixosModules.common-cpu-intel
               # nixos-hardware.nixosModules.common-cpu-intel.tiger-lake
               # nixos-hardware.nixosModules.common-gpu-intel

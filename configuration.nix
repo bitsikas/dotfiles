@@ -6,7 +6,7 @@
 
 {
   # Enable binfmt emulation of aarch64-linux.
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
@@ -174,14 +174,6 @@
     pulse.enable = true;
   };
 
-  services.printing.enable = true;
-  services.printing.drivers = [
-    pkgs.cnijfilter2
-    pkgs.gutenprint
-    pkgs.gutenprintBin
-    pkgs.hplip
-
-  ];
 
   services.xserver = {
     enable = true;
