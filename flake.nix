@@ -129,7 +129,7 @@
         });
 
         nixosConfigurations = {
-          qemu = nixpkgs.lib.nixosSystem {
+          qemu = nixpkgs.lib.nixosSystem rec {
             system = "aarch64-linux";
             modules = [
               ./configuration.nix
