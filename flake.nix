@@ -24,7 +24,7 @@
         unstable-pkgs = import nixpkgs-unstable { inherit system; };
       in {
         # devShells.default = import ./shell.nix { inherit pkgs; };
-        devShell = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           buildInputs = [
             pkgs.openssh
             pkgs.rsync # Included by default on NixOS
@@ -130,7 +130,7 @@
 
         nixosConfigurations = {
           qemu = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
+            system = "aarch64-linux";
             modules = [
               ./configuration.nix
               ./hardware/qemu.nix
@@ -138,12 +138,13 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
+                home-manager.extraSpecialArgs = { nixpkgs-unstable =  import nixpkgs-unstable { inherit system; }; };
                 home-manager.users.kostas = {
                   home.username = "kostas";
                   home.homeDirectory = "/home/kostas";
-                  home.stateVersion = "22.05";
+                  home.stateVersion = "21.11";
                   home.sessionVariables = { "EDITOR" = "nvim"; };
-                  imports = [ ./desktop.nix ./cli.nix ];
+                  imports = [ ./desktop.nix ./cli.nix ./linux.nix ];
                 };
               }
             ];
