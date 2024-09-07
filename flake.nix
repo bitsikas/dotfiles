@@ -74,7 +74,7 @@
 
       homeConfigurations = let
         mkHome = import ./lib/mkHome.nix {
-          inherit nixpkgs inputs nixpkgs-unstable nixos-hardware;
+          inherit nixpkgs inputs nixpkgs-unstable home-manager;
         };
       in {
         "Kostas.Papakon@MB-C02DQ48VMD6T" = mkHome "Kostas.Papakon" {

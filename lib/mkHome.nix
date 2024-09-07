@@ -1,4 +1,4 @@
-{ nixpkgs, nixpkgs-unstable, nixos-hardware, inputs }:
+{ nixpkgs, nixpkgs-unstable, home-manager, inputs }:
 
 user:
 {
@@ -9,6 +9,7 @@ user:
 let
   homeDirectory = '/${if darwin "Users" else "home"}/${user}';
   userHMConfig = ../users/${user}/home.nix;
+  homeFunc = home-manager.lib.homeManagerConfiguration
 
 in homeFunc rec { 
 
