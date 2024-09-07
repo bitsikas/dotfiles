@@ -29,6 +29,7 @@ in systemFunc rec {
 
     # Allow unfree packages.
     { nixpkgs.config.allowUnfree = true; }
+    { nixpkgs.config.permittedInsecurePackages = [ "nodejs-16.20.2" ]; }
 
 
     machineConfig
@@ -38,7 +39,6 @@ in systemFunc rec {
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { nixpkgs-unstable =  import nixpkgs-unstable { inherit system; }; };
       home-manager.users.${user} = import userHMConfig {
-        # isWSL = isWSL;
         inputs = inputs;
       };
     }

@@ -18,6 +18,9 @@ in{
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
+  imports = [
+    ./hardware/pi4.nix
+  ];
 
 systemd.timers."dyndns" = {
   wantedBy = [ "timers.target" ];
@@ -100,73 +103,12 @@ systemd.timers."dyndns" = {
   };
 
 
-
-
-  # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-
-  
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # hardware.pulseaudio.enable = true;
-  # OR
-  # services.pipewire = {
-  #   enable = true;
-  #   pulse.enable = true;
-  # };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.kostas = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys =  goodlistkeys ; 
-
-  };
   users.users.root = {
-    openssh.authorizedKeys.keys =  goodlistkeys ; 
+    openssh.authorizedKeys.keys =  [
+     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
+    ]
   };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.avahi= {
-    publish = {
-      enable=true;
-      domain = true;
-      addresses = true;
-    };
-    enable = true;
-    nssmdns = true;
-  };
-
-  system.stateVersion = "24.05"; # Did you read the comment?
   hardware = {
     raspberry-pi."4".apply-overlays-dtmerge.enable = true;
     deviceTree = {
@@ -186,11 +128,19 @@ systemd.timers."dyndns" = {
     yt-dlp
     sqlite
   ];
+
+  services.avahi= {
+    publish = {
+      enable=true;
+      domain = true;
+      addresses = true;
+    };
+    enable = true;
+    nssmdns = true;
+  };
   services.prowlarr={
     enable = true;
     openFirewall = true;
-    # dataDir = "/mnt/services/Prowlarr";
-      
   };
   services.jellyfin={
     enable = true;
@@ -216,7 +166,6 @@ systemd.timers."dyndns" = {
     openFirewall = true;
     dataDir = "/mnt/services/readarr";
   };
-
   services.transmission = { 
     enable = true; #Enable transmission daemon
     openRPCPort = true; #Open firewall for RPC

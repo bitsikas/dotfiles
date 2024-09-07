@@ -43,17 +43,17 @@
 
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/4ba27507-ce64-4b3d-8039-4371fdd680a3";
+    device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/5073-48D5";
+    device = "/dev/disk/by-uuid/5E8C-1E63";
     fsType = "vfat";
   };
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/bbef1a50-872d-4f34-bba6-187ecb18b7f3";
+    device = "/dev/disk/by-uuid/0d139682-508d-4a08-b8c4-987991a20c52";
     fsType = "ext4";
   };
 

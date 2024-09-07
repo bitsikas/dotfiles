@@ -134,74 +134,32 @@
           inherit nixpkgs inputs nixpkgs-unstable nixos-hardware;
         };
       in{
-          qemu = nixpkgs.lib.nixosSystem rec {
-            system = "aarch64-linux";
-            modules = [
-              ./configuration.nix
-              ./hardware/qemu.nix
-              ./qemu.nix
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.extraSpecialArgs = { nixpkgs-unstable =  import nixpkgs-unstable { inherit system; }; };
-                home-manager.users.kostas = {
-                  home.username = "kostas";
-                  home.homeDirectory = "/home/kostas";
-                  home.stateVersion = "21.11";
-                  home.sessionVariables = { "EDITOR" = "nvim"; };
-                  imports = [ ./desktop.nix ./cli.nix ./linux.nix ];
-                };
-              }
-            ];
-            # Example how to pass an arg to configuration.nix:
-            specialArgs = inputs;
-          };
+        qemu-aarch64 = mkSystem "vm-qemu-aarch64" { 
+          system = "aarch64-linux";
+          user = "kostas";
+        };
+        qemu-x86_64 = mkSystem "vm-qemu-x86_64" { 
+          system = "aarch64-linux";
+          user = "kostas";
+        };
         spectre = mkSystem "spectre" {
           system = "x86_64-linux";
           user = "kostas";
         };
-          # spectre = nixpkgs.lib.nixosSystem rec {
-          #   system = "x86_64-linux";
-          #   modules = [
-          #     ./configuration.nix
-          #     # ./linux.nix
-          #     ./hardware/spectre.nix
-          #     ./printing.nix
-          #     nixos-hardware.nixosModules.common-cpu-intel
-          #     # nixos-hardware.nixosModules.common-cpu-intel.tiger-lake
-          #     # nixos-hardware.nixosModules.common-gpu-intel
-          #     nixos-hardware.nixosModules.common-pc-laptop
-          #     nixos-hardware.nixosModules.common-pc-laptop-acpi_call
-          #     nixos-hardware.nixosModules.common-pc-laptop-ssd
-          #     home-manager.nixosModules.home-manager
-          #     {
-          #       home-manager.useGlobalPkgs = true;
-          #       home-manager.useUserPackages = true;
-          #       home-manager.extraSpecialArgs = { nixpkgs-unstable =  import nixpkgs-unstable { inherit system; }; };
-          #       home-manager.users.kostas = {
-          #         home.username = "kostas";
-          #         home.homeDirectory = "/home/kostas";
-          #         home.stateVersion = "21.11";
-          #         home.sessionVariables = { "EDITOR" = "nvim"; };
-          #         imports = [ ./desktop.nix ./cli.nix ./linux.nix ];
-          #       };
-          #     }
-          #   ];
-          #   # Example how to pass an arg to configuration.nix:
-          #   # specialArgs = inputs;
-          #   specialArgs.nixpkgs-unstable =  import nixpkgs-unstable { inherit system; };
-          # };
-          pi4 = nixpkgs.lib.nixosSystem rec {
-            system = "aarch64-linux";
-            modules = [
-              ./pi-config.nix
-              ./hardware/pi4.nix
-              nixos-hardware.nixosModules.raspberry-pi-4
-            ];
-            # Example how to pass an arg to configuration.nix:
-            # specialArgs = inputs;
-          };
+        beershot = mkSystem "pi4" {
+          system = "aarch64-linux";
+          user = "kostas";
         };
+      #   pi4 = nixpkgs.lib.nixosSystem rec {
+      #     system = "aarch64-linux";
+      #     modules = [
+      #       ./pi-config.nix
+      #       ./hardware/pi4.nix
+      #       nixos-hardware.nixosModules.raspberry-pi-4
+      #     ];
+      #     # Example how to pass an arg to configuration.nix:
+      #     # specialArgs = inputs;
+      #   };
       };
+    };
 }

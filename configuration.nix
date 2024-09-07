@@ -69,6 +69,7 @@
     _1password
     #_1password-gui
     gnome.gnome-tweaks
+    gnome.gnome-boxes
     gnomeExtensions.gsconnect
     # gnomeExtensions.media-controls
     # k3s
@@ -197,10 +198,13 @@
   # virtualisation.libvirtd.enable = true;
   boot.kernelModules = [ "kvm-intel" ];
   virtualisation.podman.enable = true;
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+
   
    # nixpkgs.config.allowUnfree = true;
-   # virtualisation.virtualbox.host.enable = true;
-   # virtualisation.virtualbox.host.enableExtensionPack = true;
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
   system.stateVersion = "22.05";
   # services.nfs.server.enable = true;
   # virtualisation.virtualbox.host.enable = true;
