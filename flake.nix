@@ -31,21 +31,11 @@
             pkgs.nixFlakes
             pkgs.home-manager
             unstable-pkgs.git
-            
           ];
         };
       }) // {
 
-        packages.aarch64-linux = let 
-          rawkeys = builtins.readFile (builtins.fetchurl {
-                      url = "https://github.com/bitsikas.keys";
-                      sha256 = "1rbxms3pv6msfyhds2bc0haza34fhvy3ya9qj5k30i11xd8sapmv";
-                    });
-          listkeys = nixpkgs.lib.strings.splitString "\n" rawkeys;
-          goodlistkeys = nixpkgs.lib.trace listkeys builtins.filter (x: x != "") listkeys;
-                  
-
-        in{
+        packages.aarch64-linux = {
           sdcard = nixos-generators.nixosGenerate {
             system = "aarch64-linux";
             format = "sd-aarch64";
@@ -71,7 +61,9 @@
                 users.users = {
                   root = {
                     password = "root";
-                    openssh.authorizedKeys.keys = goodlistkeys; 
+                  openssh.authorizedKeys.keys = [
+                   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
+                  ]; 
                   };
                 };
               }

@@ -4,15 +4,7 @@
 
 { config, lib, pkgs, ... }:
 
-let
-
-  rawkeys = builtins.readFile (builtins.fetchurl {
-    url = "https://github.com/bitsikas.keys";
-    sha256 = "1rbxms3pv6msfyhds2bc0haza34fhvy3ya9qj5k30i11xd8sapmv";
-  });
-  listkeys = lib.strings.splitString "\n" rawkeys;
-  goodlistkeys = builtins.filter (x: x != "") listkeys;
-in{
+{
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
