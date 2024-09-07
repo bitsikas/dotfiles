@@ -72,54 +72,19 @@
           };
         };
 
-        homeConfigurations = (let system = "x86_64-darwin";
-        in {
-          "Kostas.Papakon@MB-C02DQ48VMD6T" =
-            home-manager.lib.homeManagerConfiguration {
-              pkgs = nixpkgs.legacyPackages.${system};
-              # username = "Kostas.Papakon";
-              # system = "x86_64-darwin";
-              # homeDirectory = "/Users/Kostas.Papakon";
-              # configuration = import ./kostas.papakon.nix;
-              modules = [
-                # ./kostas.papakon.nix
-                ./cli.nix 
-                ./home.nix 
-                ./kitty/kitty.nix 
-                ./mac.nix
-
-                ({ pkgs, ... }: rec {
-                  _module.args.nixpkgs-unstable =
-                    import nixpkgs-unstable { inherit system; };
-                  })
-
-              ];
-
-            };}) // (let system = "x86_64-linux";
-            in {
-          "linuxcli" = 
-            home-manager.lib.homeManagerConfiguration {
-              pkgs = nixpkgs.legacyPackages.${system};
-              # username = "Kostas.Papakon";
-              # system = "x86_64-darwin";
-              # homeDirectory = "/Users/Kostas.Papakon";
-              # configuration = import ./kostas.papakon.nix;
-              modules = [
-                # ./kostas.papakon.nix
-                ./cli.nix 
-                ./home.nix 
-                ./generic.nix 
-
-                ({ pkgs, ... }: rec {
-                  _module.args.nixpkgs-unstable =
-                    import nixpkgs-unstable { inherit system; };
-                  })
-
-              ];
-
-            };
-          
-        });
+      homeConfigurations = let
+        mkHome = import ./lib/mkHome.nix {
+          inherit nixpkgs inputs nixpkgs-unstable nixos-hardware;
+        };
+      in {
+        "Kostas.Papakon@MB-C02DQ48VMD6T" = mkHome "Kostas.Papakon" {
+          system = "x86_64-darwin";
+          darwin = true;
+        }; 
+        "linuxcli" = mkHome "kostas.papakon" {
+          system = "x86_64-linux";
+        }; 
+      };
 
       nixosConfigurations = let 
         mkSystem = import ./lib/mkSystem.nix {

@@ -26,34 +26,23 @@
   };
 
   programs.git.package = nixpkgs-unstable.git;
-  programs.direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 #  programs.direnv.package = pkgs.nix-direnv-flakes;
   home.packages = with pkgs; [
-    # unrar
     _7zz
-    nix-direnv-flakes
-    nixpkgs-unstable.devbox
     dnsutils
-    # docker
-    nixpkgs-unstable.eza
-    gcc
-    gnumake
     gnupg
-    go
-    gopls
     htop
     httpie
-    # nixfmt
-    nodejs-18_x
+    nixpkgs-unstable.eza
     pass
-    pandoc
     ranger
     ripgrep
     rq
-    stow
-    # taskell
     tmux
-    unzip
     visidata
     wget
     (pkgs.writeShellApplication {
@@ -61,7 +50,6 @@
       runtimeInputs = with pkgs; [ neovim-remote ];
       text = (builtins.readFile ./utils/lights.sh);
     })
-
   ];
 }
 
