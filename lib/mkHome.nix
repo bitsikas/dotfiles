@@ -7,21 +7,22 @@ user:
 }:
 
 let
-  homeDirectory = '/${if darwin "Users" else "home"}/${user}';
+  homedir = if darwin then "/Users/${user}/" else "/home/${user}/";
   userHMConfig = ../users/${user}/home.nix;
-  homeFunc = home-manager.lib.homeManagerConfiguration
+  homeFunc = home-manager.lib.homeManagerConfiguration;
 
 in homeFunc rec { 
 
-    inherit system;
     pkgs = nixpkgs.legacyPackages.${system};
-    username = user;
-    home.homeDirectory = homeDirectory;
-    home.sessionVariables = {
-      "EDITOR" = "nvim";
-      "TERMINAL" = "kitty";
-    };
     modules = [
+      {
+        home.username = user;
+        home.homeDirectory = homedir;
+        home.sessionVariables = {
+          "EDITOR" = "nvim";
+          "TERMINAL" = "kitty";
+        };
+      }
       {
         fonts.fontconfig.enable = true;
       }
@@ -36,7 +37,7 @@ in homeFunc rec {
       {
         home.stateVersion = "23.05";
       }
-      ./cli.nix 
+      ../cli.nix 
       ({ pkgs, ... }: rec {
         _module.args.nixpkgs-unstable =
           import nixpkgs-unstable { inherit system; };
