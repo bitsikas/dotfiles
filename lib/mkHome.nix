@@ -8,7 +8,8 @@ user:
 
 let
   homedir = if darwin then "/Users/${user}/" else "/home/${user}/";
-  userHMConfig = ../users/${user}/home.nix;
+  platform = if darwin then "macos" else "linux";
+  platformConfig = ../users/${user}/${platform}.nix;
   homeFunc = home-manager.lib.homeManagerConfiguration;
 
 in homeFunc rec { 
@@ -34,6 +35,7 @@ in homeFunc rec {
           "nodejs-16.20.2"
         ];
       }
+      platformConfig
       {
         home.stateVersion = "23.05";
       }

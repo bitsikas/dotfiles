@@ -81,7 +81,11 @@
           system = "x86_64-darwin";
           darwin = true;
         }; 
-        "linuxcli" = mkHome "kostas.papakon" {
+        "kostas.papakonstantinou@MB-L33Y5V90G5T" = mkHome "kostas.papakonstantinou" {
+          system = "aarch64-darwin";
+          darwin = true;
+        }; 
+        "linuxcli" = mkHome "kostas" {
           system = "x86_64-linux";
         }; 
       };

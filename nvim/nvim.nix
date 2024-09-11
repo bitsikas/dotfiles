@@ -115,13 +115,14 @@ in {
     ];
   };
   home.packages = [
-    pkgs.pyright 
-    nixpkgs-unstable.ruff-lsp 
-    pkgs.tailwindcss-language-server 
-    pkgs.cmake-language-server
-    pkgs.lua-language-server
-    pkgs.clang-tools_14
-    pkgs.vscode-langservers-extracted
+    # temp disable to try them per project
+    # pkgs.pyright 
+    # nixpkgs-unstable.ruff-lsp 
+    # pkgs.tailwindcss-language-server 
+    # pkgs.cmake-language-server
+    # pkgs.lua-language-server
+    # pkgs.clang-tools_14
+    # pkgs.vscode-langservers-extracted
   ];
 
 }

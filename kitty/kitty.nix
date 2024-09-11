@@ -25,6 +25,7 @@
   "--listen-on=unix:/tmp/kitty-kostas-socket"
 ];
     settings = {
+      shell = "${pkgs.fish}/bin/fish";
       listen-on = "unix:/tmp/kitty-kostas-socket";
       enabled_layouts="splits:split_axis=horizontal;bias=50";
       enable_audio_bell = "no";
