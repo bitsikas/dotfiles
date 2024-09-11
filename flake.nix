@@ -85,7 +85,7 @@
           system = "aarch64-darwin";
           darwin = true;
         }; 
-        "linuxcli" = mkHome "kostas" {
+        "linuxcli" = mkHome "kp" {
           system = "x86_64-linux";
         }; 
       };
