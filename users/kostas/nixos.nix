@@ -48,7 +48,7 @@
   fonts.enableDefaultPackages = true;
   fonts.fontconfig.defaultFonts = {
     serif = [ "Ubuntu" ];
-    sansSerif = [ "Ubuntu" ];
+    sansSerif = [ "Cantarell" ];
     monospace = [ "FiraCode" ];
   };
 
@@ -60,6 +60,7 @@
       }
       )
     ubuntu_font_family
+    cantarell-fonts
   ];
 
 }

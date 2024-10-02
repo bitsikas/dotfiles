@@ -26,6 +26,7 @@
     krita
     # newsflash
     libreoffice
+    thunderbird
     # mypaint
 
 

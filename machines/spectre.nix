@@ -30,6 +30,7 @@
     cifs-utils
     coreutils
     fd
+    ffmpeg
     gnome.gnome-boxes
     gnome.gnome-tweaks
     gnomeExtensions.gsconnect
@@ -50,6 +51,7 @@
   security.rtkit.enable = true;
 
   networking.firewall.allowedTCPPorts = [
+    8000
   ];
   networking.firewall.allowedUDPPorts = [
   ];

@@ -35,6 +35,7 @@
   home.packages = with pkgs; [
     _7zz
     dnsutils
+    ffmpeg
     gnupg
     htop
     httpie
