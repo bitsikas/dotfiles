@@ -39,7 +39,7 @@ in homeFunc rec {
       {
         home.stateVersion = "23.05";
       }
-      ../cli.nix 
+      ../modules/cli.nix 
       ({ pkgs, ... }: rec {
         _module.args.nixpkgs-unstable =
           import nixpkgs-unstable { inherit system; };

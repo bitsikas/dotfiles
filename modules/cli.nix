@@ -1,12 +1,12 @@
 { config, pkgs, lib, nixpkgs-unstable, ... }: {
   imports = [
-    bat/bat.nix
-    fish/fish.nix
-    git/git.nix
-    nvim/nvim.nix
-    ranger/ranger.nix
-    starship/starship.nix
-    tmux/tmux.nix
+    ./bat/bat.nix
+    ./fish/fish.nix
+    ./git/git.nix
+    ./nvim/nvim.nix
+    ./ranger/ranger.nix
+    ./starship/starship.nix
+    ./tmux/tmux.nix
   ];
   programs.home-manager.enable = true;
   programs.fzf.enable = true;
@@ -50,7 +50,7 @@
     (pkgs.writeShellApplication {
       name = "lights";
       runtimeInputs = with pkgs; [ neovim-remote ];
-      text = (builtins.readFile ./utils/lights.sh);
+      text = (builtins.readFile ../utils/lights.sh);
     })
   ];
 }

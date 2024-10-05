@@ -4,7 +4,7 @@
     # wofi/wofi.nix
     # mako/mako.nix
     # waybar/waybar.nix
-    kitty/kitty.nix
+    ./kitty/kitty.nix
   ];
 
   nixpkgs.config.chromium.commandLineArgs =
