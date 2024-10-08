@@ -24,13 +24,24 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, flake-utils, nixpkgs-unstable, nixos-hardware, nixos-generators, disko, ... }@inputs:
-    flake-utils.lib.eachDefaultSystem (system:
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      flake-utils,
+      nixpkgs-unstable,
+      nixos-hardware,
+      nixos-generators,
+      disko,
+      ...
+    }@inputs:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs { inherit system; };
         unstable-pkgs = import nixpkgs-unstable { inherit system; };
-      in {
-
+      in
+      {
 
         devShells.default = pkgs.mkShell {
           buildInputs = [
@@ -41,91 +52,103 @@
             unstable-pkgs.git
           ];
         };
-      }) // {
+      }
+    )
+    // {
 
-        packages.aarch64-linux = {
-          sdcard = nixos-generators.nixosGenerate {
-            system = "aarch64-linux";
-            format = "sd-aarch64";
-            modules = [
+      packages.aarch64-linux = {
+        sdcard = nixos-generators.nixosGenerate {
+          system = "aarch64-linux";
+          format = "sd-aarch64";
+          modules = [
 
-              ({
-                console.enable = false;
-                environment.systemPackages = with nixpkgs.legacyPackages.aarch64-linux; [
-                  libraspberrypi
-                  raspberrypi-eeprom
-                ];
-                system.stateVersion = "24.05";
-                sdImage.compressImage=false;
-                networking = {
-                  hostName = "beershot";
-                };
-                services.avahi.enable = true;
-                services.openssh.enable = true;
-                disabledModules = [
-                  "profiles/base.nix"
-                ];
+            ({
+              console.enable = false;
+              environment.systemPackages = with nixpkgs.legacyPackages.aarch64-linux; [
+                libraspberrypi
+                raspberrypi-eeprom
+              ];
+              system.stateVersion = "24.05";
+              sdImage.compressImage = false;
+              networking = {
+                hostName = "beershot";
+              };
+              services.avahi.enable = true;
+              services.openssh.enable = true;
+              disabledModules = [ "profiles/base.nix" ];
 
-                users.users = {
-                  root = {
-                    password = "root";
+              users.users = {
+                root = {
+                  password = "root";
                   openssh.authorizedKeys.keys = [
-                   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
-                  ]; 
-                  };
+                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
+                  ];
                 };
-              }
-              )
-            ];
+              };
+            })
+          ];
+        };
+      };
+
+      homeConfigurations =
+        let
+          mkHome = import ./lib/mkHome.nix {
+            inherit
+              nixpkgs
+              inputs
+              nixpkgs-unstable
+              home-manager
+              ;
           };
+        in
+        {
+          "Kostas.Papakon@MB-C02DQ48VMD6T" = mkHome "Kostas.Papakon" {
+            system = "x86_64-darwin";
+            darwin = true;
+          };
+          "kostas.papakonstantinou@MB-L33Y5V90G5T" = mkHome "kostas.papakonstantinou" {
+            system = "aarch64-darwin";
+            darwin = true;
+          };
+          "linuxcli" = mkHome "kp" { system = "x86_64-linux"; };
         };
 
-      homeConfigurations = let
-        mkHome = import ./lib/mkHome.nix {
-          inherit nixpkgs inputs nixpkgs-unstable home-manager;
-        };
-      in {
-        "Kostas.Papakon@MB-C02DQ48VMD6T" = mkHome "Kostas.Papakon" {
-          system = "x86_64-darwin";
-          darwin = true;
-        }; 
-        "kostas.papakonstantinou@MB-L33Y5V90G5T" = mkHome "kostas.papakonstantinou" {
-          system = "aarch64-darwin";
-          darwin = true;
-        }; 
-        "linuxcli" = mkHome "kp" {
-          system = "x86_64-linux";
-        }; 
-      };
+      nixosConfigurations =
+        let
+          mkSystem = import ./lib/mkSystem.nix {
+            inherit
+              nixpkgs
+              inputs
+              nixpkgs-unstable
+              nixos-hardware
+              disko
+              ;
+          };
+        in
+        {
+          qemu-aarch64 = mkSystem "vm-qemu-aarch64" {
+            system = "aarch64-linux";
+            user = "kostas";
+          };
+          qemu-x86_64 = mkSystem "vm-qemu-x86_64" {
+            system = "aarch64-linux";
+            user = "kostas";
+          };
+          spectre = mkSystem "spectre" {
+            system = "x86_64-linux";
+            user = "kostas";
+          };
+          beershot = mkSystem "pi4" {
+            system = "aarch64-linux";
+            user = "kostas";
+          };
+          hetzner-cloud = mkSystem "hetzner-cloud" {
+            system = "x86_64-linux";
+            user = "kostas";
+            usedisko = true;
+          };
 
-      nixosConfigurations = let 
-        mkSystem = import ./lib/mkSystem.nix {
-          inherit nixpkgs inputs nixpkgs-unstable nixos-hardware disko;
         };
-      in{
-        qemu-aarch64 = mkSystem "vm-qemu-aarch64" { 
-          system = "aarch64-linux";
-          user = "kostas";
-        };
-        qemu-x86_64 = mkSystem "vm-qemu-x86_64" { 
-          system = "aarch64-linux";
-          user = "kostas";
-        };
-        spectre = mkSystem "spectre" {
-          system = "x86_64-linux";
-          user = "kostas";
-        };
-        beershot = mkSystem "pi4" {
-          system = "aarch64-linux";
-          user = "kostas";
-        };
-        hetzner-cloud = mkSystem "hetzner-cloud" {
-          system = "x86_64-linux";
-          user = "kostas";
-          usedisko = true;
-        };
-
-      };
 
     };
 }
