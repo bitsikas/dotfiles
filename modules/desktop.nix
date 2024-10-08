@@ -7,27 +7,8 @@
     ./kitty/kitty.nix
   ];
 
-  nixpkgs.config.chromium.commandLineArgs =
-    "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
   home.packages = with pkgs; [
-    # chiaki
-    firefox-wayland
-    # chromium
-    # gimp
-    dconf
-    wezterm
-    inkscape
-    # zathura
-    # google-chrome
-    imv
-    # hack-font
-    vlc
-    krita
-    # newsflash
-    libreoffice
-    thunderbird
-    # mypaint
 
 
     # (

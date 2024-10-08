@@ -2,14 +2,21 @@
   description = "Nix configuration";
 
   inputs = {
+
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+    pdfblanks.url = "git+ssh://git@github.com/bitsikas/pdfblanks";
+    pdfblanks.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,13 +24,14 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, flake-utils, nixpkgs-unstable, nixos-hardware, nixos-generators, ... }@inputs:
+    { self, nixpkgs, home-manager, flake-utils, nixpkgs-unstable, nixos-hardware, nixos-generators, disko, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
         unstable-pkgs = import nixpkgs-unstable { inherit system; };
       in {
-        # devShells.default = import ./shell.nix { inherit pkgs; };
+
+
         devShells.default = pkgs.mkShell {
           buildInputs = [
             pkgs.openssh
@@ -92,7 +100,7 @@
 
       nixosConfigurations = let 
         mkSystem = import ./lib/mkSystem.nix {
-          inherit nixpkgs inputs nixpkgs-unstable nixos-hardware;
+          inherit nixpkgs inputs nixpkgs-unstable nixos-hardware disko;
         };
       in{
         qemu-aarch64 = mkSystem "vm-qemu-aarch64" { 
@@ -111,16 +119,13 @@
           system = "aarch64-linux";
           user = "kostas";
         };
-      #   pi4 = nixpkgs.lib.nixosSystem rec {
-      #     system = "aarch64-linux";
-      #     modules = [
-      #       ./pi-config.nix
-      #       ./hardware/pi4.nix
-      #       nixos-hardware.nixosModules.raspberry-pi-4
-      #     ];
-      #     # Example how to pass an arg to configuration.nix:
-      #     # specialArgs = inputs;
-      #   };
+        hetzner-cloud = mkSystem "hetzner-cloud" {
+          system = "x86_64-linux";
+          user = "kostas";
+          usedisko = true;
+        };
+
       };
+
     };
 }

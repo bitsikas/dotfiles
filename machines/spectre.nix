@@ -23,6 +23,10 @@
     pkgs.gutenprintBin
     pkgs.hplip
   ];
+
+  nixpkgs.config.chromium.commandLineArgs =
+    "--enable-features=UseOzonePlatform --ozone-platform=wayland";
+
   environment.systemPackages = with pkgs; [
     _1password
     bat
@@ -44,6 +48,27 @@
     sof-firmware
     transmission-remote-gtk
     wireguard-tools
+
+    # chiaki
+    firefox-wayland
+    # chromium
+    # gimp
+    dconf
+    wezterm
+    inkscape
+    # zathura
+    # google-chrome
+    imv
+    # hack-font
+    vlc
+    krita
+    # newsflash
+    libreoffice
+    thunderbird
+    # mypaint
+
+
+
   ];
   programs.light.enable = true;
   programs.kdeconnect.enable = true;
@@ -104,8 +129,8 @@
   programs.virt-manager.enable = true;
 
   
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
   system.stateVersion = "22.05";
   
   # Add firewall exception for VirtualBox provider 
