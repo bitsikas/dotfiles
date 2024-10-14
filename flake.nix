@@ -9,7 +9,8 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-    pdfblanks.url = "git+ssh://git@github.com/bitsikas/pdfblanks";
+    # pdfblanks.url = "git+ssh://git@github.com/bitsikas/pdfblanks";
+    pdfblanks.url = "git+file:///home/kostas/work/addpdfblank/addpdfblank";
     pdfblanks.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-generators = {
