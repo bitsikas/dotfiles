@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, nixpkgs-unstable, ... }:
+{
+  config,
+  pkgs,
+  nixpkgs-unstable,
+  ...
+}:
 
 {
   # Set your time zone.
@@ -31,8 +36,8 @@
       "wheel"
     ];
     shell = pkgs.fish;
-    openssh.authorizedKeys.keys =  [
-     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
     ];
   };
 
@@ -54,11 +59,7 @@
 
   fonts.packages = with pkgs; [
     fira-code
-    (
-      nerdfonts.override {
-        fonts = [ "FiraCode" ];
-      }
-      )
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
     ubuntu_font_family
     cantarell-fonts
   ];

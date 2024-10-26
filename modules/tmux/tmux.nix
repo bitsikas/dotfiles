@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
 
   programs.tmux = {
@@ -10,7 +10,7 @@
     plugins = [
       pkgs.tmuxPlugins.sensible
       {
-        plugin= pkgs.tmuxPlugins.catppuccin;
+        plugin = pkgs.tmuxPlugins.catppuccin;
         extraConfig = "set -g @catppuccin_flavour 'frappe'";
       }
       pkgs.tmuxPlugins.vim-tmux-navigator

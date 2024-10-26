@@ -1,4 +1,11 @@
-{ config, pkgs, lib, nixpkgs-unstable, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  nixpkgs-unstable,
+  ...
+}:
+{
   imports = [
     ./bat/bat.nix
     ./fish/fish.nix
@@ -31,7 +38,7 @@
     enable = true;
     nix-direnv.enable = true;
   };
-#  programs.direnv.package = pkgs.nix-direnv-flakes;
+  #  programs.direnv.package = pkgs.nix-direnv-flakes;
   home.packages = with pkgs; [
     _7zz
     dnsutils
@@ -54,4 +61,3 @@
     })
   ];
 }
-

@@ -1,8 +1,16 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
-  customconfig = { wallpaper = "/home/kostas/.wallpaper.jpg"; };
-in rec {
+  customconfig = {
+    wallpaper = "/home/kostas/.wallpaper.jpg";
+  };
+in
+rec {
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
@@ -24,7 +32,9 @@ in rec {
           xkb_layout = "us,gr";
           xkb_options = "grp:alt_shift_toggle";
         };
-        "type:touchpad" = { tap = "enabled"; };
+        "type:touchpad" = {
+          tap = "enabled";
+        };
       };
       startup = [
         # { command = "${swaylock} -i ${customconfig.wallpaper}"; }
@@ -32,21 +42,21 @@ in rec {
         { command = "swaybg -i ${customconfig.wallpaper}"; }
         { command = "mako"; }
         { command = "waybar"; }
-        {
-          command = "flashfocus";
-        }
+        { command = "flashfocus"; }
         # { command = "squeekboard" ;}
         { command = "blueman-applet"; }
 
       ];
     };
-    extraConfig = (builtins.concatStringsSep "\n" [
-      (builtins.readFile .config/sway/config)
-      ''
-        exec dbus-update-activation-environment WAYLAND_DISPLAY
-        exec systemctl --user import-environment WAYLAND_DISPLAY
-      ''
-    ]);
+    extraConfig = (
+      builtins.concatStringsSep "\n" [
+        (builtins.readFile .config/sway/config)
+        ''
+          exec dbus-update-activation-environment WAYLAND_DISPLAY
+          exec systemctl --user import-environment WAYLAND_DISPLAY
+        ''
+      ]
+    );
 
   };
   home.packages = with pkgs; [

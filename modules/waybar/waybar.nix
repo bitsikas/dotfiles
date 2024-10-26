@@ -1,2 +1,4 @@
-{ config, pkgs, ... }: { programs.waybar.enable = true; }
-
+{ config, pkgs, ... }:
+{
+  programs.waybar.enable = true;
+}

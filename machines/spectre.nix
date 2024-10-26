@@ -1,8 +1,11 @@
-{ config, pkgs, nixpkgs-unstable, ... }:
 {
-  imports = [
-    ./hardware/spectre.nix
-  ];
+  config,
+  pkgs,
+  nixpkgs-unstable,
+  ...
+}:
+{
+  imports = [ ./hardware/spectre.nix ];
 
   nix = {
     settings.auto-optimise-store = true;
@@ -18,14 +21,13 @@
   networking.networkmanager.enable = true;
   services.printing.enable = true;
   services.printing.drivers = [
-    pkgs.cnijfilter2 
+    pkgs.cnijfilter2
     pkgs.gutenprint
     pkgs.gutenprintBin
     pkgs.hplip
   ];
 
-  nixpkgs.config.chromium.commandLineArgs =
-    "--enable-features=UseOzonePlatform --ozone-platform=wayland";
+  nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
   environment.systemPackages = with pkgs; [
     _1password
@@ -67,8 +69,6 @@
     thunderbird
     # mypaint
 
-
-
   ];
   programs.light.enable = true;
   programs.kdeconnect.enable = true;
@@ -76,11 +76,8 @@
   security.rtkit.enable = true;
   security.sudo.enable = true;
 
-  networking.firewall.allowedTCPPorts = [
-    8000
-  ];
-  networking.firewall.allowedUDPPorts = [
-  ];
+  networking.firewall.allowedTCPPorts = [ 8000 ];
+  networking.firewall.allowedUDPPorts = [ ];
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = false; # Open ports in the firewall for Steam Remote Play
@@ -103,9 +100,9 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  services.avahi= {
+  services.avahi = {
     publish = {
-      enable=true;
+      enable = true;
       domain = true;
       addresses = true;
     };
@@ -119,7 +116,10 @@
       gdm.enable = true;
       gdm.wayland = true;
     };
-    desktopManager = { gnome.enable = true; plasma5.enable = false; };
+    desktopManager = {
+      gnome.enable = true;
+      plasma5.enable = false;
+    };
     wacom.enable = true;
   };
   services.displayManager = {
@@ -129,11 +129,10 @@
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
-  
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
   system.stateVersion = "22.05";
-  
+
   # Add firewall exception for VirtualBox provider 
   networking.firewall.extraCommands = ''
     ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
@@ -141,9 +140,14 @@
   '';
 
   # Add firewall exception for libvirt provider when using NFSv4 
-  networking.firewall.interfaces."virbr1" = {                                   
-    allowedTCPPorts = [ 2049 33306 ];
-    allowedUDPPorts = [ 2049 33306 ];
+  networking.firewall.interfaces."virbr1" = {
+    allowedTCPPorts = [
+      2049
+      33306
+    ];
+    allowedUDPPorts = [
+      2049
+      33306
+    ];
   };
 }
-

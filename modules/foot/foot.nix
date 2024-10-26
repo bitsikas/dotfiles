@@ -8,6 +8,8 @@
       dpi-aware = "yes";
     };
 
-    mouse = { hide-when-typing = "yes"; };
+    mouse = {
+      hide-when-typing = "yes";
+    };
   };
 }

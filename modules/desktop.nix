@@ -1,4 +1,12 @@
-{ builtins, config, pkgs, lib, nixpkgs-unstable, ... }: {
+{
+  builtins,
+  config,
+  pkgs,
+  lib,
+  nixpkgs-unstable,
+  ...
+}:
+{
   imports = [
     # sway/sway.nix
     # wofi/wofi.nix
@@ -7,9 +15,7 @@
     ./kitty/kitty.nix
   ];
 
-
   home.packages = with pkgs; [
-
 
     # (
     #   let 
@@ -57,5 +63,3 @@
   #   package = pkgs.vscode.fhs;
   # };
 }
-
-

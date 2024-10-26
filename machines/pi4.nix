@@ -2,7 +2,14 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, modulesPath, nixos-hardware, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  nixos-hardware,
+  ...
+}:
 
 {
 
@@ -11,33 +18,28 @@
   # building sd image failes with missing sun4i-drm
   # but it's not necessary to run 
   nixpkgs.overlays = [
-        (final: super: {
-          makeModulesClosure = x:
-            super.makeModulesClosure (x // { allowMissing = true; });
-        })
+    (final: super: {
+      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
+    })
   ];
 
   # boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
   # boot.loader.generic-extlinux-compatible.enable = true;
-  imports = [
-    ./hardware/pi4.nix
-  ];
+  imports = [ ./hardware/pi4.nix ];
 
-systemd.timers."dyndns" = {
-  wantedBy = [ "timers.target" ];
+  systemd.timers."dyndns" = {
+    wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "15m";
       OnUnitActiveSec = "15m";
       Unit = "dynamic-dns-updater.service";
     };
-};
+  };
   system.stateVersion = "24.05";
   systemd.services = {
     dynamic-dns-updater = {
-      path = [
-        pkgs.curl
-      ];
+      path = [ pkgs.curl ];
       script = "cat /etc/dyndns | curl -k -K -";
       serviceConfig = {
         Type = "oneshot";
@@ -59,8 +61,14 @@ systemd.timers."dyndns" = {
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   networking.firewall = {
-    allowedTCPPorts = [ 51413 22 ];
-    allowedUDPPorts = [ 51413 51820 ];
+    allowedTCPPorts = [
+      51413
+      22
+    ];
+    allowedUDPPorts = [
+      51413
+      51820
+    ];
   };
 
   networking.useDHCP = lib.mkDefault true;
@@ -98,13 +106,13 @@ systemd.timers."dyndns" = {
 
       peers = [
         # List of allowed peers.
-        { 
+        {
           # pixel8
           publicKey = "9qK6GvoTyWcIp4jk2X8iQ3h8hMSScdvGil2yF++SFX0=";
           # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
           allowedIPs = [ "10.100.0.2/32" ];
         }
-        { 
+        {
           # hp
           publicKey = "R2EmSxebQgZoXwaDCQGqjzDrf682zCjpVr6K31EVLFc=";
           # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
@@ -114,12 +122,11 @@ systemd.timers."dyndns" = {
     };
   };
 
-
   services.openssh.enable = true;
 
   users.users.root = {
-    openssh.authorizedKeys.keys =  [
-     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
     ];
   };
 
@@ -136,20 +143,20 @@ systemd.timers."dyndns" = {
     qrencode
   ];
 
-  services.avahi= {
+  services.avahi = {
     publish = {
-      enable=true;
+      enable = true;
       domain = true;
       addresses = true;
     };
     enable = true;
     nssmdns4 = true;
   };
-  services.prowlarr={
+  services.prowlarr = {
     enable = true;
     openFirewall = true;
   };
-  services.jellyfin={
+  services.jellyfin = {
     enable = true;
     openFirewall = true;
     dataDir = "/mnt/services/jellyfin";
@@ -173,21 +180,19 @@ systemd.timers."dyndns" = {
     openFirewall = true;
     dataDir = "/mnt/services/readarr";
   };
-  services.transmission = { 
-    enable = true; #Enable transmission daemon
-    openRPCPort = true; #Open firewall for RPC
-    settings = { #Override default settings
-    download-dir = "/mnt/Downloads";
-    incomplete-dir= "/mnt/.incomplete";
-    rpc-bind-address = "0.0.0.0"; #Bind to own IP
-    rpc-whitelist = "127.0.0.1,192.168.*.*,10.*.*.*"; #Whitelist your remote machine (10.0.0.1 in this example)
-    seed-queue-enabled = true;
-    seed-queue-size = 5;
+  services.transmission = {
+    enable = true; # Enable transmission daemon
+    openRPCPort = true; # Open firewall for RPC
+    settings = {
+      # Override default settings
+      download-dir = "/mnt/Downloads";
+      incomplete-dir = "/mnt/.incomplete";
+      rpc-bind-address = "0.0.0.0"; # Bind to own IP
+      rpc-whitelist = "127.0.0.1,192.168.*.*,10.*.*.*"; # Whitelist your remote machine (10.0.0.1 in this example)
+      seed-queue-enabled = true;
+      seed-queue-size = 5;
     };
-    };
-  systemd.services.transmission.serviceConfig.BindPaths = [
-    "/mnt"
-  ];
+  };
+  systemd.services.transmission.serviceConfig.BindPaths = [ "/mnt" ];
 
 }
-
