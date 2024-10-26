@@ -30,7 +30,10 @@ in systemFunc rec {
       # Apply our overlays. Overlays are keyed by system type so we have
       # to go through and apply our system type. We do this first so
       # the overlays are available globally.
-      { nixpkgs.overlays = [inputs.pdfblanks.overlays.${system}.default]; }
+      { nixpkgs.overlays = [
+        inputs.pdfblancs.overlays.${system}.default
+        inputs.artframe.overlays.${system}.default
+      ]; }
 
       # Allow unfree packages.
       { nixpkgs.config.allowUnfree = true; }
@@ -38,6 +41,7 @@ in systemFunc rec {
       (if withDisko then disko.nixosModules.disko else {} )
       (if withDisko then diskoConfig else {} )
       inputs.pdfblancs.nixosModules.default
+      inputs.artframe.nixosModules.default
 
 
       machineConfig
@@ -45,7 +49,7 @@ in systemFunc rec {
       home-manager.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { nixpkgs-unstable =  import nixpkgs-unstable { inherit system; }; };
+        home-manager.extraSpecialArgs = { nixpkgs-unstable =  import nixpkgs-unstable { inherit system; config.allowUnfree=true; }; };
         home-manager.users.${user} = import userHMConfig {
           inputs = inputs;
         };
@@ -62,7 +66,7 @@ in systemFunc rec {
         };
       }
     ];
-    specialArgs.nixpkgs-unstable =  import nixpkgs-unstable {inherit system;};
+    specialArgs.nixpkgs-unstable =  import nixpkgs-unstable {inherit system; config.allowUnfree=true; };
     specialArgs.nixos-hardware =  nixos-hardware;
     specialArgs.inputs = inputs;
 

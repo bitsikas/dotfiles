@@ -74,6 +74,7 @@
   programs.kdeconnect.enable = true;
   programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
   security.rtkit.enable = true;
+  security.sudo.enable = true;
 
   networking.firewall.allowedTCPPorts = [
     8000

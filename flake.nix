@@ -9,9 +9,10 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-    # pdfblanks.url = "git+ssh://git@github.com/bitsikas/pdfblanks";
-    pdfblanks.url = "git+file:///home/kostas/work/addpdfblank/addpdfblank";
-    pdfblanks.inputs.nixpkgs.follows = "nixpkgs";
+    pdfblancs.url = "git+file:///home/kostas/work/addpdfblank/addpdfblank";
+    pdfblancs.inputs.nixpkgs.follows = "nixpkgs";
+    artframe.url = "git+file:///home/kostas/work/artframe/artframe";
+    artframe.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
@@ -56,40 +57,6 @@
       }
     )
     // {
-
-      packages.aarch64-linux = {
-        sdcard = nixos-generators.nixosGenerate {
-          system = "aarch64-linux";
-          format = "sd-aarch64";
-          modules = [
-
-            ({
-              console.enable = false;
-              environment.systemPackages = with nixpkgs.legacyPackages.aarch64-linux; [
-                libraspberrypi
-                raspberrypi-eeprom
-              ];
-              system.stateVersion = "24.05";
-              sdImage.compressImage = false;
-              networking = {
-                hostName = "beershot";
-              };
-              services.avahi.enable = true;
-              services.openssh.enable = true;
-              disabledModules = [ "profiles/base.nix" ];
-
-              users.users = {
-                root = {
-                  password = "root";
-                  openssh.authorizedKeys.keys = [
-                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
-                  ];
-                };
-              };
-            })
-          ];
-        };
-      };
 
       homeConfigurations =
         let

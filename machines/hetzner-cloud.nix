@@ -1,10 +1,11 @@
 {
-  modulesPath,
-  lib,
-  pkgs,
-  inputs,
-  currentSystem,
-  ...
+modulesPath,
+lib,
+pkgs,
+nixpkgs-unstable,
+inputs,
+currentSystem,
+...
 }:
 {
   imports = [
@@ -29,14 +30,32 @@
     ];
 
   };
+  services.artframe.enable = true;
   services.pdfblancs.enable = true;
-  services.openssh.enable = true;
+
+  security.sudo.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+  };
+
   services.unifi.enable = true;
   services.unifi.openFirewall = true;
   services.unifi.unifiPackage = pkgs.unifi8;
-  services.unifi.mongodbPackage = pkgs.mongodb-5_0;
+  services.unifi.mongodbPackage = nixpkgs-unstable.mongodb-ce;
   services.nginx = {
     enable = true;
+
+    # Use recommended settings
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    # recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+
+    # Only allow PFS-enabled ciphers with AES256
+    sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+
     virtualHosts.localhost = {
       locations."/" = {
         return = "200 '<html><body>It works</body></html>'";
@@ -73,17 +92,17 @@
       proxy_hide_header Authorization;
       proxy_set_header Referer "";
       proxy_set_header Origin "";
-      '';
+        '';
 
-};
+      };
 
-  locations."/inform"  = {
+      locations."/inform"  = {
 
-    # Proxy Unifi Controller inform endpoint traffic
+        # Proxy Unifi Controller inform endpoint traffic
 
-    # The lack of '/' at the end is significant.
-    proxyPass  = "https://127.0.0.1:8080";
-    extraConfig = ''
+        # The lack of '/' at the end is significant.
+        proxyPass  = "https://127.0.0.1:8080";
+        extraConfig = ''
     proxy_ssl_verify off;
     proxy_ssl_session_reuse on;
     proxy_buffering off;
@@ -93,18 +112,18 @@
     proxy_hide_header Authorization;
     proxy_set_header Referer "";
     proxy_set_header Origin "";
-    '';
+        '';
 
-};
+      };
 
-locations."/wss" = {
+      locations."/wss" = {
 
-    # Proxy Unifi Controller UI websocket traffic
+        # Proxy Unifi Controller UI websocket traffic
 
-    # The lack of '/' at the end is significant.
+        # The lack of '/' at the end is significant.
 
-    proxyPass = "https://127.0.0.1:8443";
-    extraConfig = ''
+        proxyPass = "https://127.0.0.1:8443";
+        extraConfig = ''
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
@@ -113,22 +132,20 @@ locations."/wss" = {
     proxy_buffering off;
     proxy_hide_header Authorization;
     proxy_set_header Referer "";
-    '';
+        '';
 
-};
+      };
 
 
     };
   };
-security.acme.acceptTerms = true;
-security.acme.certs = {
-  "piftel.bitsikas.dev".email = "piftel@bitsikas.dev";
-  "unifi.piftel.bitsikas.dev".email = "piftel@bitsikas.dev";
-};
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "piftel@bitsikas.dev";
 
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
     pkgs.gitMinimal
+    pkgs.vim
   ];
 
   users.users.root.openssh.authorizedKeys.keys = [
@@ -141,6 +158,6 @@ security.acme.certs = {
   system.stateVersion = "24.05";
   networking.firewall = {
     allowedTCPPorts = [ 80 443 ];
-    allowedUDPPorts = [  ];
+    allowedUDPPorts = [ ];
   };
 }

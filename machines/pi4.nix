@@ -2,14 +2,24 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, modulesPath, nixos-hardware, ... }:
 
 {
 
-  # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
-  boot.loader.grub.enable = false;
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+
+  # building sd image failes with missing sun4i-drm
+  # but it's not necessary to run 
+  nixpkgs.overlays = [
+        (final: super: {
+          makeModulesClosure = x:
+            super.makeModulesClosure (x // { allowMissing = true; });
+        })
+  ];
+
+  # boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
-  boot.loader.generic-extlinux-compatible.enable = true;
+  # boot.loader.generic-extlinux-compatible.enable = true;
   imports = [
     ./hardware/pi4.nix
   ];
@@ -22,6 +32,7 @@ systemd.timers."dyndns" = {
       Unit = "dynamic-dns-updater.service";
     };
 };
+  system.stateVersion = "24.05";
   systemd.services = {
     dynamic-dns-updater = {
       path = [
@@ -34,17 +45,26 @@ systemd.timers."dyndns" = {
       };
     };
   };
+  security.sudo.enable = true;
+  sdImage.compressImage = false;
+
+  # this takes a lot of time sometimes
+  documentation.man.generateCaches = false;
+
+  # avoid building zfs
+  disabledModules = [ "profiles/base.nix" ];
 
   networking.hostName = "beershot"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   networking.firewall = {
-    allowedTCPPorts = [ 51413 ];
+    allowedTCPPorts = [ 51413 22 ];
     allowedUDPPorts = [ 51413 51820 ];
   };
 
-    # enable NAT
+  networking.useDHCP = lib.mkDefault true;
+  # enable NAT
   networking.nat.enable = true;
   networking.nat.externalInterface = "end0";
   networking.nat.internalInterfaces = [ "wg0" ];
@@ -61,12 +81,12 @@ systemd.timers."dyndns" = {
       # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
       # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
       postSetup = ''
-        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o eth0 -j MASQUERADE
+        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o end0 -j MASQUERADE
       '';
 
       # This undoes the above command
       postShutdown = ''
-        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o eth0 -j MASQUERADE
+        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o end0 -j MASQUERADE
       '';
 
       # Path to the private key file.
@@ -95,20 +115,14 @@ systemd.timers."dyndns" = {
   };
 
 
+  services.openssh.enable = true;
+
   users.users.root = {
     openssh.authorizedKeys.keys =  [
      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
-    ]
+    ];
   };
 
-  hardware = {
-    raspberry-pi."4".apply-overlays-dtmerge.enable = true;
-    deviceTree = {
-      enable = true;
-      filter = "*rpi-4-*.dtb";
-    };
-  };
-  console.enable = false;
   environment.enableAllTerminfo = true;
   environment.systemPackages = with pkgs; [
     libraspberrypi
@@ -119,6 +133,7 @@ systemd.timers."dyndns" = {
     mullvad
     yt-dlp
     sqlite
+    qrencode
   ];
 
   services.avahi= {
@@ -128,7 +143,7 @@ systemd.timers."dyndns" = {
       addresses = true;
     };
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
   };
   services.prowlarr={
     enable = true;
@@ -165,11 +180,14 @@ systemd.timers."dyndns" = {
     download-dir = "/mnt/Downloads";
     incomplete-dir= "/mnt/.incomplete";
     rpc-bind-address = "0.0.0.0"; #Bind to own IP
-    rpc-whitelist = "127.0.0.1,192.168.*.*"; #Whitelist your remote machine (10.0.0.1 in this example)
+    rpc-whitelist = "127.0.0.1,192.168.*.*,10.*.*.*"; #Whitelist your remote machine (10.0.0.1 in this example)
     seed-queue-enabled = true;
     seed-queue-size = 5;
     };
     };
+  systemd.services.transmission.serviceConfig.BindPaths = [
+    "/mnt"
+  ];
 
 }
 
