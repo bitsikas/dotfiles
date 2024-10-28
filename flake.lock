@@ -9,16 +9,17 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "dirtyRev": "c5011033867cb053952dbd96273c69f26a2f48ed-dirty",
-        "dirtyShortRev": "c501103-dirty",
-        "lastModified": 1717259428,
-        "narHash": "sha256-hYQpffF+4xZI260d9YG8QAKiDEvSzqV6fNNEUT9jlX8=",
+        "lastModified": 1730121456,
+        "narHash": "sha256-wf3juR7srq9mbWOyoo2leERi5/VN2DPLhyHr5PNbCic=",
+        "ref": "refs/heads/master",
+        "rev": "c4a0fa5dcb9b9814ef9531ad516c258641f8f642",
+        "revCount": 122,
         "type": "git",
-        "url": "file:///home/kostas/work/artframe/artframe"
+        "url": "ssh://git@github.com/bitsikas/artframe"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/kostas/work/artframe/artframe"
+        "url": "ssh://git@github.com/bitsikas/artframe"
       }
     },
     "disko": {
@@ -28,11 +29,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1729942962,
-        "narHash": "sha256-xzt7tb4YUw6VZXSCGw4sukirJSfYsIcFyvmhK5KMiKw=",
+        "lastModified": 1730045523,
+        "narHash": "sha256-W5Avk1THhZALXITHGazKfZbIZ5+Bc4nSYvAYHUn96EU=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "58cd832497f9c87cb4889744b86aba4284fd0474",
+        "rev": "89e458a3bb3693e769bfb2b2447c3fe72092d498",
         "type": "github"
       },
       "original": {
@@ -50,14 +51,17 @@
         "poetry2nix": "poetry2nix_2"
       },
       "locked": {
-        "lastModified": 0,
-        "narHash": "sha256-yZlQfI0CVMJRlFFUex7Z04Y3kLLV6pQ2wgdDCd8EDi8=",
+        "lastModified": 1730121574,
+        "narHash": "sha256-Thw5rFiUMt807VufxPW0N8MdSW4ji91gB3m7FA+laFk=",
+        "ref": "refs/heads/main",
+        "rev": "2fd79f054fe13cadbfc9e0a299aa915fb1de7d06",
+        "revCount": 1,
         "type": "git",
-        "url": "file:///home/kostas/work/fittrack/fittrack"
+        "url": "ssh://git@github.com/bitsikas/fittrack"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/kostas/work/fittrack/fittrack"
+        "url": "ssh://git@github.com/bitsikas/fittrack"
       }
     },
     "flake-utils": {
@@ -235,11 +239,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1729742320,
-        "narHash": "sha256-u3Of8xRkN//me8PU+RucKA59/6RNy4B2jcGAF36P4jI=",
+        "lastModified": 1730068391,
+        "narHash": "sha256-jlAGtfMuI8pUUoUmNkm2P/38pOtHZdcAf3Az8XQLAf4=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "e8a2f6d5513fe7b7d15701b2d05404ffdc3b6dda",
+        "rev": "6906ac67a1078cf950b8527341e229eeecb5bc30",
         "type": "github"
       },
       "original": {
@@ -267,11 +271,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1730035279,
-        "narHash": "sha256-IwVWVNa4ajsozFyB0mpHHp6q19o0DEFIo5ZM6zMyvPs=",
+        "lastModified": 1730121582,
+        "narHash": "sha256-CG5hXTMIGbgU0ALoXCTC+GPeQD00uLWpY5p2t7MTyJ4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e88258b3fd639639f0452ed936e0294fb8c8976f",
+        "rev": "186411877a1ed98266dfd24a883048d3b3155015",
         "type": "github"
       },
       "original": {
@@ -288,16 +292,17 @@
         "utils": "utils"
       },
       "locked": {
-        "dirtyRev": "719aa6908e269c27d37ce18261ead6a510f5ef7b-dirty",
-        "dirtyShortRev": "719aa69-dirty",
-        "lastModified": 1728833448,
+        "lastModified": 1730121521,
         "narHash": "sha256-5mNU9LoREM6QGQr0t6xZo8RePv1mvKKjxsoXZW6A//I=",
+        "ref": "refs/heads/main",
+        "rev": "50a9e7374f6238102d2f4203be07e0db198d1b0a",
+        "revCount": 18,
         "type": "git",
-        "url": "file:///home/kostas/work/addpdfblank/addpdfblank"
+        "url": "ssh://git@github.com/bitsikas/pdfblanks"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/kostas/work/addpdfblank/addpdfblank"
+        "url": "ssh://git@github.com/bitsikas/pdfblanks"
       }
     },
     "poetry2nix": {
