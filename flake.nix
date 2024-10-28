@@ -13,7 +13,7 @@
     pdfblancs.inputs.nixpkgs.follows = "nixpkgs";
     artframe.url = "github:bitsikas/artframe";
     artframe.inputs.nixpkgs.follows = "nixpkgs";
-    fittrack.url = "githut:bitsikas/fittrack";
+    fittrack.url = "github:bitsikas/fittrack";
     fittrack.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-generators = {
