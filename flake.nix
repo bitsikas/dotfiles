@@ -9,10 +9,12 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-    pdfblancs.url = "git+file:///home/kostas/work/addpdfblank/addpdfblank";
+    pdfblancs.url = "github:bitsikas/addpdfblank";
     pdfblancs.inputs.nixpkgs.follows = "nixpkgs";
-    artframe.url = "git+file:///home/kostas/work/artframe/artframe";
+    artframe.url = "github:bitsikas/artframe";
     artframe.inputs.nixpkgs.follows = "nixpkgs";
+    fittrack.url = "githut:bitsikas/fittrack";
+    fittrack.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";

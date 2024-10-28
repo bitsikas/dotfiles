@@ -29,6 +29,7 @@
 
   };
   services.artframe.enable = true;
+  services.fittrack.enable = true;
   services.pdfblancs.enable = true;
 
   security.sudo.enable = true;

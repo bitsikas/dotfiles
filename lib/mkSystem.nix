@@ -40,6 +40,7 @@ systemFunc rec {
       nixpkgs.overlays = [
         inputs.pdfblancs.overlays.${system}.default
         inputs.artframe.overlays.${system}.default
+        inputs.fittrack.overlays.${system}.default
       ];
     }
 
@@ -50,6 +51,7 @@ systemFunc rec {
     (if withDisko then diskoConfig else { })
     inputs.pdfblancs.nixosModules.default
     inputs.artframe.nixosModules.default
+    inputs.fittrack.nixosModules.default
 
     machineConfig
     userOSConfig
