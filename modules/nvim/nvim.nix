@@ -66,6 +66,7 @@ in
       pkgs.vimPlugins.vim-test
       # pkgs.vimPlugins.toggleterm-nvim
       pkgs.vimPlugins.trouble-nvim
+      pkgs.vimPlugins.CopilotChat-nvim
       pkgs.vimPlugins.octo-nvim
       pkgs.vimPlugins.nvim-navic
       pkgs.vimPlugins.vim-suda
@@ -120,6 +121,7 @@ in
     ];
   };
   home.packages = [
+    pkgs.nodejs_18
     # temp disable to try them per project
     # pkgs.pyright 
     # nixpkgs-unstable.ruff-lsp 
