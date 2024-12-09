@@ -5,6 +5,6 @@
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
   ];
-  programs.kitty.settings.text_composition_strategy = "4 30";
-  imports = [ ../../kitty/kitty.nix ];
+  # programs.kitty.settings.text_composition_strategy = "4 30";
+  imports = [ ../../modules/kitty/kitty.nix ];
 }

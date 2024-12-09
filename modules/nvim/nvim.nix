@@ -80,6 +80,7 @@ in
       # pkgs.vimPlugins.bufferline-nvim
       pkgs.vimPlugins.vim-commentary
       pkgs.vimPlugins.nvim-coverage
+      pkgs.vimPlugins.vim-tmux-navigator
       pkgs.vimPlugins.indent-blankline-nvim-lua
       pkgs.vimPlugins.harpoon2
       pkgs.vimPlugins.nvim-coverage

@@ -52,7 +52,6 @@
     ripgrep
     rq
     tmux
-    visidata
     wget
     (pkgs.writeShellApplication {
       name = "lights";
