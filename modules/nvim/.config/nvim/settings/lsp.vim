@@ -8,11 +8,13 @@ lsp_zero.on_attach(function(client, bufnr)
 			require('nvim-navic').attach(client, bufnr)
 		end
 end)
-require'lspconfig'.ruff_lsp.setup({})
+require'lspconfig'.ruff.setup({})
 require'lspconfig'.pyright.setup({})
 require'lspconfig'.tailwindcss.setup({})
 require'lspconfig'.htmx.setup{}
 require'lspconfig'.html.setup{}
+require'lspconfig'.superhtml.setup{}
+require'lspconfig'.gopls.setup{}
 
 EOF
 

@@ -4,7 +4,7 @@
   inputs = {
 
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     disko.url = "github:nix-community/disko";
@@ -16,13 +16,18 @@
     fittrack.url = "git+ssh://git@github.com/bitsikas/fittrack";
     fittrack.inputs.nixpkgs.follows = "nixpkgs";
 
+    ihasb33r = {
+      url = "git+ssh://git@github.com/bitsikas/ihasb33r";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -51,7 +56,8 @@
           buildInputs = [
             pkgs.openssh
             pkgs.rsync # Included by default on NixOS
-            pkgs.nixFlakes
+            # pkgs.nixFlakes
+            pkgs.nixVersions.stable
             pkgs.home-manager
             unstable-pkgs.git
           ];

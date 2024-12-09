@@ -41,17 +41,19 @@ systemFunc rec {
         inputs.pdfblancs.overlays.${system}.default
         inputs.artframe.overlays.${system}.default
         inputs.fittrack.overlays.${system}.default
+        inputs.ihasb33r.overlays.${system}.default
       ];
     }
 
     # Allow unfree packages.
     { nixpkgs.config.allowUnfree = true; }
-    { nixpkgs.config.permittedInsecurePackages = [ "nodejs-16.20.2" ]; }
+      #{ nixpkgs.config.permittedInsecurePackages = [ "nodejs-16.20.2" ]; }
     (if withDisko then disko.nixosModules.disko else { })
     (if withDisko then diskoConfig else { })
     inputs.pdfblancs.nixosModules.default
     inputs.artframe.nixosModules.default
     inputs.fittrack.nixosModules.default
+    inputs.ihasb33r.nixosModules.default
 
     machineConfig
     userOSConfig

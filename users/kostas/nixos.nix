@@ -52,16 +52,20 @@
   fonts.fontconfig.enable = true;
   fonts.enableDefaultPackages = true;
   fonts.fontconfig.defaultFonts = {
-    serif = [ "Ubuntu" ];
-    sansSerif = [ "Cantarell" ];
+    serif = [ "Noto Serif" ];
+    sansSerif = [ "Noto Sans" ];
     monospace = [ "FiraCode" ];
   };
 
   fonts.packages = with pkgs; [
     fira-code
+    noto-fonts
+    noto-fonts-emoji
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     ubuntu_font_family
     cantarell-fonts
+    roboto
+    roboto-serif
   ];
 
 }

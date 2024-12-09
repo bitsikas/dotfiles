@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   pkgs,
   nixpkgs-unstable,
@@ -9,7 +10,7 @@
 
   nix = {
     settings.auto-optimise-store = true;
-    package = pkgs.nixFlakes; # or versioned attributes like nixVersions.nix_2_8
+    package = pkgs.nixVersions.stable; # or versioned attributes like nixVersions.nix_2_8
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -17,6 +18,7 @@
 
   environment.sessionVariables = {
     QT_QPA_PLATFORM = "wayland-egl";
+    KWIN_IM_SHOW_ALWAYS = "1";
   };
   networking.networkmanager.enable = true;
   services.printing.enable = true;
@@ -30,16 +32,16 @@
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
   environment.systemPackages = with pkgs; [
-    _1password
+    _1password-cli
     bat
     calibre
     cifs-utils
     coreutils
     fd
     ffmpeg
-    gnome.gnome-boxes
-    gnome.gnome-tweaks
-    gnomeExtensions.gsconnect
+    # gnome-boxes
+    # gnome-tweaks
+    # gnomeExtensions.gsconnect
     lazygit
     libinput-gestures
     libwacom
@@ -49,7 +51,9 @@
     qt5.qtwayland
     sof-firmware
     transmission-remote-gtk
+    #vanilla-dmz
     wireguard-tools
+    wl-clipboard
 
     # chiaki
     firefox-wayland
@@ -72,7 +76,8 @@
   ];
   programs.light.enable = true;
   programs.kdeconnect.enable = true;
-  programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
+  programs.ssh.askPassword = lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/kssaskpass";
+  # programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
   security.rtkit.enable = true;
   security.sudo.enable = true;
 
@@ -115,13 +120,18 @@
       lightdm.enable = false;
       gdm.enable = true;
       gdm.wayland = true;
+      gdm.debug = false;
     };
     desktopManager = {
       gnome.enable = true;
-      plasma5.enable = false;
+      gnome.debug=false;
     };
-    wacom.enable = true;
+    # wacom.enable = true;
   };
+  #  services.displayManager.ly.enable = true;
+
+  # services.desktopManager.plasma6.enable = true;
+
   services.displayManager = {
     defaultSession = "gnome";
   };
@@ -132,6 +142,17 @@
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
   system.stateVersion = "22.05";
+
+  # systemd.tmpfiles.rules =
+  # let
+  #   firmware =
+  #     pkgs.runCommandLocal "qemu-firmware" { } ''
+  #       mkdir $out
+  #       cp ${pkgs.qemu}/share/qemu/firmware/*.json $out
+  #       substituteInPlace $out/*.json --replace ${pkgs.qemu} /run/current-system/sw
+  #     '';
+  # in
+  # [ "L+ /var/lib/qemu/firmware - - - - ${firmware}" ];
 
   # Add firewall exception for VirtualBox provider 
   networking.firewall.extraCommands = ''

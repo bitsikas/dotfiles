@@ -15,12 +15,13 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-laptop
-    nixos-hardware.nixosModules.common-pc-laptop-acpi_call
+    # nixos-hardware.nixosModules.common-pc-laptop-acpi_call
     nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
   # allow cross building for pi
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.preferStaticEmulators = true;
 
   boot.initrd.availableKernelModules = [
     "nvme"
@@ -45,6 +46,7 @@
     "i8042.dumbkbd=1"
   ];
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
@@ -64,11 +66,12 @@
   hardware.bluetooth.enable = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.enableAllFirmware = true;
-  hardware.intelgpu.driver = "xe";
-  hardware.opengl.enable = true;
+ hardware.intelgpu.driver = "xe";
+  hardware.graphics.enable = true;
   hardware.pulseaudio.enable = false;
   hardware.sensor.iio.enable = true;
   hardware.steam-hardware.enable = true;
+  # hardware.opentabletdriver.enable = true;
   networking.hostName = "spectre"; # Define your hostname.
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   services.hardware.bolt.enable = true;

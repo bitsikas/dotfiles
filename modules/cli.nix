@@ -46,7 +46,7 @@
     gnupg
     htop
     httpie
-    nixpkgs-unstable.eza
+    eza
     pass
     ranger
     ripgrep

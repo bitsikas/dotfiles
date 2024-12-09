@@ -31,6 +31,7 @@
   services.artframe.enable = true;
   services.fittrack.enable = true;
   services.pdfblancs.enable = true;
+  services.ihasb33r.enable = true;
 
   security.sudo.enable = true;
   services.openssh = {

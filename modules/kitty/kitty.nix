@@ -32,8 +32,8 @@
       enable_audio_bell = "no";
       allow_remote_control = "yes";
       # background_tint = "0.9";
-      window_padding_width = "8";
-      background_opacity = "1";
+      window_padding_width = "4";
+      background_opacity = "0.9";
       adjust_line_height = "120%";
       include = "current-theme.conf";
       # globinclude  = "kitty.d/**/*.conf";

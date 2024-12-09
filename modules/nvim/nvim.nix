@@ -38,6 +38,7 @@ in
         (builtins.readFile .config/nvim/settings/trouble.vim)
         # (builtins.readFile .config/nvim/settings/nvim-compe.vim)
         (builtins.readFile .config/nvim/settings/cmp.vim)
+        (builtins.readFile .config/nvim/settings/conform.vim)
         # (builtins.readFile .config/nvim/settings/navic.vim)
         (builtins.readFile .config/nvim/settings/styling.vim)
         # (builtins.readFile .config/nvim/settings/neorg.vim)
@@ -80,30 +81,9 @@ in
       pkgs.vimPlugins.vim-commentary
       pkgs.vimPlugins.nvim-coverage
       pkgs.vimPlugins.indent-blankline-nvim-lua
+      pkgs.vimPlugins.harpoon2
+      pkgs.vimPlugins.nvim-coverage
 
-      (pkgs.vimUtils.buildVimPlugin {
-        pname = "harpoon2";
-        version = "2024-01-26";
-        src = pkgs.fetchFromGitHub {
-          owner = "ThePrimeagen";
-          repo = "harpoon";
-          rev = "a38be6e0dd4c6db66997deab71fc4453ace97f9c";
-          sha256 = "1cmiw4sy5r4h8f2k1m91f2xykasnp66zdibx0l8vk94hw990sg26";
-        };
-        meta.homepage = "https://github.com/ThePrimeagen/harpoon/";
-      })
-
-      (pkgs.vimUtils.buildVimPlugin {
-        pname = "nvim-coverage";
-        version = "2023-07-20";
-        src = pkgs.fetchFromGitHub {
-          owner = "andythigpen";
-          repo = "nvim-coverage";
-          rev = "4634dfb00961a86948518c7e6f85737c24364308";
-          sha256 = "0ry8b5945spz00scab6xxs8va56yg17q1dd6g90k3zm9gvdi0r79";
-        };
-        meta.homepage = "https://github.com/andythigpen/nvim-coverage/";
-      })
       #pkgs.vimPlugins.vim-floaterm
       pkgs.vimPlugins.vim-fugitive
       pkgs.vimPlugins.vim-nix
@@ -116,6 +96,7 @@ in
       pkgs.vimPlugins.copilot-cmp
       pkgs.vimPlugins.flutter-tools-nvim
       pkgs.vimPlugins.undotree
+      pkgs.vimPlugins.conform-nvim
       # pkgs.vimPlugins.neorg
 
     ];
