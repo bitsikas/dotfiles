@@ -7,7 +7,7 @@
     #extraConfig = (builtins.readFile .config/kitty/theme.conf);
     font = {
       name = "FiraCode Nerd Font Mono";
-      size = 12;
+      size = 14;
     };
     #theme = "Gruvbox_light";
     keybindings = {
