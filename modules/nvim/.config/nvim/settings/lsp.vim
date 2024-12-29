@@ -12,7 +12,6 @@ require'lspconfig'.ruff.setup({})
 require'lspconfig'.pyright.setup({})
 require'lspconfig'.tailwindcss.setup({})
 require'lspconfig'.htmx.setup{}
-require'lspconfig'.html.setup{}
 require'lspconfig'.superhtml.setup{}
 require'lspconfig'.gopls.setup{}
 

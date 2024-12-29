@@ -7,10 +7,8 @@
   pkgs,
   modulesPath,
   ...
-}:
-
-{
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+}: {
+  imports = [(modulesPath + "/profiles/qemu-guest.nix")];
 
   boot.initrd.availableKernelModules = [
     "ehci_pci"
@@ -20,10 +18,21 @@
     "sd_mod"
     "sr_mod"
   ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
-  boot.extraModulePackages = [ ];
+  boot.initrd.kernelModules = [];
+  boot.kernelModules = [];
+  boot.extraModulePackages = [];
   boot.loader.systemd-boot.enable = true;
+  documentation.man.generateCaches = false;
+  services.sonarr.enable = true;
+  services.sonarr.package = import ../packages/sonarr.nix {
+    inherit pkgs;
+  };
+  nixpkgs.config.permittedInsecurePackages = [
+    "aspnetcore-runtime-6.0.36"
+    "aspnetcore-runtime-wrapped-6.0.36"
+    "dotnet-sdk-6.0.428"
+    "dotnet-sdk-wrapped-6.0.428"
+  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
@@ -35,7 +44,7 @@
     fsType = "vfat";
   };
 
-  swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
+  swapDevices = [{device = "/dev/disk/by-label/swap";}];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

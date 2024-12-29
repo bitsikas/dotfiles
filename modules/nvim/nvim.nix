@@ -5,9 +5,7 @@
   lib,
   darwin,
   ...
-}:
-
-let
+}: let
   nvim-spell-ro-utf8-dictionary = builtins.fetchurl {
     url = "https://ftp.nluug.nl/vim/runtime/spell/ro.utf-8.spl";
     sha256 = "abc1e405496c6f23dfa50c103ca523b30e92f4fc3d0db2a11054d9ae1d785a01";
@@ -16,9 +14,7 @@ let
     url = "https://ftp.nluug.nl/vim/runtime/spell/en.utf-8.spl";
     sha256 = "fecabdc949b6a39d32c0899fa2545eab25e63f2ed0a33c4ad1511426384d3070";
   };
-in
-{
-
+in {
   home.file."${config.xdg.configHome}/nvim/spell/ro.utf-8.spl".source = nvim-spell-ro-utf8-dictionary;
   home.file."${config.xdg.configHome}/nvim/spell/en.utf-8.spl".source = nvim-spell-en-utf8-dictionary;
 
@@ -55,7 +51,7 @@ in
       pkgs.vimPlugins.NeoSolarized
       nixpkgs-unstable.vimPlugins.catppuccin-nvim
       # pkgs.vimPlugins.indentLine
-      #pkgs.vimPlugins.nord-vim 
+      #pkgs.vimPlugins.nord-vim
       pkgs.vimPlugins.nvim-cmp
       pkgs.vimPlugins.nvim-web-devicons
       pkgs.vimPlugins.cmp-nvim-lsp
@@ -74,7 +70,7 @@ in
       pkgs.vimPlugins.nvim-navbuddy
       pkgs.vimPlugins.markdown-preview-nvim
       # pkgs.vimPlugins.nvim-tree-lua
-      #pkgs.vimPlugins.papercolor-theme 
+      #pkgs.vimPlugins.papercolor-theme
       pkgs.vimPlugins.plenary-nvim
       pkgs.vimPlugins.telescope-nvim
       # pkgs.vimPlugins.bufferline-nvim
@@ -89,7 +85,7 @@ in
       pkgs.vimPlugins.vim-fugitive
       pkgs.vimPlugins.vim-nix
       pkgs.vimPlugins.vim-terraform
-      # pkgs.vimPlugins.vim-tmux-navigator
+      pkgs.vimPlugins.vim-tmux-navigator
       # pkgs.vimPlugins.vim-python-pep8-indent
       #pkgs.vimPlugins.vim-surround
       #pkgs.vimPlugins.vimspector
@@ -99,19 +95,17 @@ in
       pkgs.vimPlugins.undotree
       pkgs.vimPlugins.conform-nvim
       # pkgs.vimPlugins.neorg
-
     ];
   };
   home.packages = [
     pkgs.nodejs_18
     # temp disable to try them per project
-    # pkgs.pyright 
-    # nixpkgs-unstable.ruff-lsp 
-    # pkgs.tailwindcss-language-server 
+    # pkgs.pyright
+    # nixpkgs-unstable.ruff-lsp
+    # pkgs.tailwindcss-language-server
     # pkgs.cmake-language-server
     # pkgs.lua-language-server
     # pkgs.clang-tools_14
     # pkgs.vscode-langservers-extracted
   ];
-
 }

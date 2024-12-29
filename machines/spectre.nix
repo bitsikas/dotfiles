@@ -3,10 +3,10 @@
   config,
   pkgs,
   nixpkgs-unstable,
+  inputs,
   ...
-}:
-{
-  imports = [ ./hardware/spectre.nix ];
+}: {
+  imports = [./hardware/spectre.nix];
 
   nix = {
     settings.auto-optimise-store = true;
@@ -34,55 +34,44 @@
   environment.systemPackages = with pkgs; [
     _1password-cli
     bat
-    calibre
     cifs-utils
     coreutils
     fd
     ffmpeg
     # gnome-boxes
-    # gnome-tweaks
-    # gnomeExtensions.gsconnect
-    lazygit
+    gnome-tweaks
+    gnomeExtensions.gsconnect
     libinput-gestures
     libwacom
     mangal
-    papirus-icon-theme
     pavucontrol
     qt5.qtwayland
     sof-firmware
     transmission-remote-gtk
-    #vanilla-dmz
+    vanilla-dmz
     wireguard-tools
     wl-clipboard
 
-    # chiaki
+    chiaki
     firefox-wayland
-    # chromium
-    # gimp
     dconf
-    wezterm
     inkscape
-    # zathura
-    # google-chrome
     imv
-    # hack-font
     vlc
     krita
-    # newsflash
     libreoffice
     thunderbird
-    # mypaint
-
+    inputs.ghostty.packages.x86_64-linux.default
   ];
   programs.light.enable = true;
   programs.kdeconnect.enable = true;
   programs.ssh.askPassword = lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/kssaskpass";
-  # programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
+  programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
   security.rtkit.enable = true;
   security.sudo.enable = true;
 
-  networking.firewall.allowedTCPPorts = [ 8000 ];
-  networking.firewall.allowedUDPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [8000];
+  networking.firewall.allowedUDPPorts = [];
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = false; # Open ports in the firewall for Steam Remote Play
@@ -94,7 +83,7 @@
   services.blueman.enable = true;
   services.dbus = {
     enable = true;
-    packages = with pkgs; [ pkgs.dconf ];
+    packages = with pkgs; [pkgs.dconf];
   };
   services.gnome.gnome-keyring.enable = true;
   services.gvfs.enable = true;
@@ -124,7 +113,7 @@
     };
     desktopManager = {
       gnome.enable = true;
-      gnome.debug=false;
+      gnome.debug = false;
     };
     # wacom.enable = true;
   };
@@ -136,8 +125,8 @@
     defaultSession = "gnome";
   };
   virtualisation.podman.enable = true;
-  virtualisation.libvirtd.enable = true;
-  programs.virt-manager.enable = true;
+  # virtualisation.libvirtd.enable = true;
+  # programs.virt-manager.enable = true;
 
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
@@ -154,13 +143,13 @@
   # in
   # [ "L+ /var/lib/qemu/firmware - - - - ${firmware}" ];
 
-  # Add firewall exception for VirtualBox provider 
+  # Add firewall exception for VirtualBox provider
   networking.firewall.extraCommands = ''
     ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
     ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 33306 -j ACCEPT
   '';
 
-  # Add firewall exception for libvirt provider when using NFSv4 
+  # Add firewall exception for libvirt provider when using NFSv4
   networking.firewall.interfaces."virbr1" = {
     allowedTCPPorts = [
       2049

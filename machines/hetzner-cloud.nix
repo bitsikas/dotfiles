@@ -6,8 +6,7 @@
   inputs,
   currentSystem,
   ...
-}:
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -25,13 +24,13 @@
 
   services.cron = {
     enable = true;
-    systemCronJobs = [ "0 0 * * * root rsync -avz /var/lib/unifi/data/backup /mnt/backups/unifi" ];
-
+    systemCronJobs = ["0 0 * * * root rsync -avz /var/lib/unifi/data/backup /mnt/backups/unifi"];
   };
   services.artframe.enable = true;
   services.fittrack.enable = true;
   services.pdfblancs.enable = true;
   services.ihasb33r.enable = true;
+  services.miliacaffe.enable = true;
 
   security.sudo.enable = true;
   services.openssh = {
@@ -93,11 +92,9 @@
           proxy_set_header Referer "";
           proxy_set_header Origin "";
         '';
-
       };
 
       locations."/inform" = {
-
         # Proxy Unifi Controller inform endpoint traffic
 
         # The lack of '/' at the end is significant.
@@ -113,11 +110,9 @@
           proxy_set_header Referer "";
           proxy_set_header Origin "";
         '';
-
       };
 
       locations."/wss" = {
-
         # Proxy Unifi Controller UI websocket traffic
 
         # The lack of '/' at the end is significant.
@@ -133,9 +128,7 @@
           proxy_hide_header Authorization;
           proxy_set_header Referer "";
         '';
-
       };
-
     };
   };
   security.acme.acceptTerms = true;
@@ -149,7 +142,6 @@
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
-
   ];
   nixpkgs.hostPlatform = lib.mkDefault currentSystem;
 
@@ -160,6 +152,6 @@
       80
       443
     ];
-    allowedUDPPorts = [ ];
+    allowedUDPPorts = [];
   };
 }

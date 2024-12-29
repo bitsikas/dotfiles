@@ -1,7 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 {
   config,
   lib,
@@ -10,10 +9,7 @@
   nixos-hardware,
   nixpkgs-unstable,
   ...
-}:
-
-{
-
+}: {
   nixpkgs.config.permittedInsecurePackages = [
     "aspnetcore-runtime-6.0.36"
     "aspnetcore-runtime-wrapped-6.0.36"
@@ -24,20 +20,20 @@
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
   # building sd image failes with missing sun4i-drm
-  # but it's not necessary to run 
+  # but it's not necessary to run
   nixpkgs.overlays = [
     (final: super: {
-      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
+      makeModulesClosure = x: super.makeModulesClosure (x // {allowMissing = true;});
     })
   ];
 
   # boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
   # boot.loader.generic-extlinux-compatible.enable = true;
-  imports = [ ./hardware/pi4.nix ];
+  imports = [./hardware/pi4.nix];
 
   systemd.timers."dyndns" = {
-    wantedBy = [ "timers.target" ];
+    wantedBy = ["timers.target"];
     timerConfig = {
       OnBootSec = "15m";
       OnUnitActiveSec = "15m";
@@ -47,7 +43,7 @@
   system.stateVersion = "24.05";
   systemd.services = {
     dynamic-dns-updater = {
-      path = [ pkgs.curl ];
+      path = [pkgs.curl];
       script = "cat /etc/dyndns | curl -k -K -";
       serviceConfig = {
         Type = "oneshot";
@@ -62,7 +58,7 @@
   documentation.man.generateCaches = false;
 
   # avoid building zfs
-  disabledModules = [ "profiles/base.nix" ];
+  disabledModules = ["profiles/base.nix"];
 
   networking.hostName = "beershot"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -83,13 +79,13 @@
   # enable NAT
   networking.nat.enable = true;
   networking.nat.externalInterface = "end0";
-  networking.nat.internalInterfaces = [ "wg0" ];
+  networking.nat.internalInterfaces = ["wg0"];
 
   networking.wireguard.interfaces = {
     # "wg0" is the network interface name. You can name the interface arbitrarily.
     wg0 = {
       # Determines the IP address and subnet of the server's end of the tunnel interface.
-      ips = [ "10.100.0.1/24" ];
+      ips = ["10.100.0.1/24"];
 
       # The port that WireGuard listens to. Must be accessible by the client.
       listenPort = 51820;
@@ -118,13 +114,13 @@
           # pixel8
           publicKey = "9qK6GvoTyWcIp4jk2X8iQ3h8hMSScdvGil2yF++SFX0=";
           # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
-          allowedIPs = [ "10.100.0.2/32" ];
+          allowedIPs = ["10.100.0.2/32"];
         }
         {
           # hp
           publicKey = "R2EmSxebQgZoXwaDCQGqjzDrf682zCjpVr6K31EVLFc=";
           # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
-          allowedIPs = [ "10.100.0.3/32" ];
+          allowedIPs = ["10.100.0.3/32"];
         }
       ];
     };
@@ -161,7 +157,7 @@
     nssmdns4 = true;
   };
   services.prowlarr = {
-    package= nixpkgs-unstable.prowlarr;
+    package = nixpkgs-unstable.prowlarr;
     enable = true;
     openFirewall = true;
   };
@@ -175,6 +171,9 @@
     openFirewall = true;
   };
   services.sonarr = {
+    package = import ../packages/sonarr.nix {
+      inherit pkgs;
+    };
     enable = true;
     openFirewall = true;
     dataDir = "/mnt/services/sonarr";
@@ -202,6 +201,5 @@
       seed-queue-size = 5;
     };
   };
-  systemd.services.transmission.serviceConfig.BindPaths = [ "/mnt" ];
-
+  systemd.services.transmission.serviceConfig.BindPaths = ["/mnt"];
 }

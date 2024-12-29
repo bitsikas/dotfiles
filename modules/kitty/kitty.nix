@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.kitty = {
     enable = true;
     # theme = "Solarized Dark Higher Contrast";
@@ -39,5 +42,4 @@
       # globinclude  = "kitty.d/**/*.conf";
     };
   };
-
 }

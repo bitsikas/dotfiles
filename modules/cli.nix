@@ -4,8 +4,7 @@
   lib,
   nixpkgs-unstable,
   ...
-}:
-{
+}: {
   imports = [
     ./bat/bat.nix
     ./fish/fish.nix
@@ -15,6 +14,7 @@
     ./starship/starship.nix
     ./tmux/tmux.nix
   ];
+
   programs.home-manager.enable = true;
   programs.fzf.enable = true;
   programs.gh.enable = true;
@@ -30,7 +30,7 @@
     # controlPath = "~/.c-%r@%n";
     forwardAgent = true;
     compression = true;
-    includes = [ "config.d/*" ];
+    includes = ["config.d/*"];
   };
 
   programs.git.package = nixpkgs-unstable.git;
@@ -41,6 +41,8 @@
   #  programs.direnv.package = pkgs.nix-direnv-flakes;
   home.packages = with pkgs; [
     _7zz
+    alejandra
+    nixfmt-rfc-style
     dnsutils
     ffmpeg
     gnupg
@@ -55,8 +57,8 @@
     wget
     (pkgs.writeShellApplication {
       name = "lights";
-      runtimeInputs = with pkgs; [ neovim-remote ];
-      text = (builtins.readFile ../utils/lights.sh);
+      runtimeInputs = with pkgs; [neovim-remote];
+      text = builtins.readFile ../utils/lights.sh;
     })
   ];
 }

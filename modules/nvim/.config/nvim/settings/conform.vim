@@ -9,7 +9,8 @@ require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
     -- Conform will run multiple formatters sequentially
-    python = {"black", "ruff", stop_after_first = true },
+    python = {"black", "ruff_format" },
+    nix = { "alejandra" },
     html = { "superhtml" },
     htmldjango = { "superhtml" },
     -- You can customize some of the format options for the filetype (:help conform.format)

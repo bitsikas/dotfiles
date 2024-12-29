@@ -3,14 +3,12 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   customconfig = {
     wallpaper = "/home/kostas/.wallpaper.jpg";
   };
-in
-rec {
+in rec {
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
@@ -25,7 +23,7 @@ rec {
         "XF86MonBrightnessUp" = ''exec "light -A 5"'';
         "XF86MonBrightnessDown" = ''exec "light -U 5"'';
       };
-      bars = [ ];
+      bars = [];
 
       input = {
         "type:keyboard" = {
@@ -39,13 +37,12 @@ rec {
       startup = [
         # { command = "${swaylock} -i ${customconfig.wallpaper}"; }
         # { command = "${swaylock} -i ${customconfig.wallpaper}"; }
-        { command = "swaybg -i ${customconfig.wallpaper}"; }
-        { command = "mako"; }
-        { command = "waybar"; }
-        { command = "flashfocus"; }
+        {command = "swaybg -i ${customconfig.wallpaper}";}
+        {command = "mako";}
+        {command = "waybar";}
+        {command = "flashfocus";}
         # { command = "squeekboard" ;}
-        { command = "blueman-applet"; }
-
+        {command = "blueman-applet";}
       ];
     };
     extraConfig = (
@@ -57,7 +54,6 @@ rec {
         ''
       ]
     );
-
   };
   home.packages = with pkgs; [
     waybar
@@ -83,5 +79,4 @@ rec {
     sway &> /dev/null
     end
   '';
-
 }

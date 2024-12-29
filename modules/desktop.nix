@@ -5,8 +5,7 @@
   lib,
   nixpkgs-unstable,
   ...
-}:
-{
+}: {
   imports = [
     # sway/sway.nix
     # wofi/wofi.nix
@@ -16,9 +15,8 @@
   ];
 
   home.packages = with pkgs; [
-
     # (
-    #   let 
+    #   let
     #     pname = "krita";
     #     version = "5.1.3";
     #     src = fetchurl {
@@ -41,7 +39,6 @@
     #   };
     # }
     # )
-
   ];
   # gtk = {
   #   enable = true;

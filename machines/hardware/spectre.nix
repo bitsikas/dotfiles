@@ -8,9 +8,7 @@
   modulesPath,
   nixos-hardware,
   ...
-}:
-
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     nixos-hardware.nixosModules.common-cpu-intel
@@ -20,7 +18,7 @@
   ];
 
   # allow cross building for pi
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
   boot.binfmt.preferStaticEmulators = true;
 
   boot.initrd.availableKernelModules = [
@@ -32,10 +30,10 @@
     "vmd"
     "xhci_pci"
   ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [];
 
-  boot.blacklistedKernelModules = [ "snd-soc-skl" ];
-  boot.extraModulePackages = [ ];
+  boot.blacklistedKernelModules = ["snd-soc-skl"];
+  boot.extraModulePackages = [];
   boot.kernelModules = [
     "kvm-intel"
     "coretemp"
@@ -66,7 +64,7 @@
   hardware.bluetooth.enable = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.enableAllFirmware = true;
- hardware.intelgpu.driver = "xe";
+  hardware.intelgpu.driver = "xe";
   hardware.graphics.enable = true;
   hardware.pulseaudio.enable = false;
   hardware.sensor.iio.enable = true;

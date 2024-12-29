@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   # environment.etc."ranger/rc.conf".source = .config/ranger/rc.conf;
   home.file.".config/ranger/rc.conf".source = .config/ranger/rc.conf;
   home.packages = with pkgs; [
@@ -12,5 +14,4 @@
     ffmpegthumbnailer
     odt2txt
   ];
-
 }

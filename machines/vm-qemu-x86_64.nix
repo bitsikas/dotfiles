@@ -7,10 +7,8 @@
   pkgs,
   modulesPath,
   ...
-}:
-
-{
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+}: {
+  imports = [(modulesPath + "/profiles/qemu-guest.nix")];
 
   boot.initrd.availableKernelModules = [
     "ehci_pci"
@@ -20,9 +18,9 @@
     "sd_mod"
     "sr_mod"
   ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
-  boot.extraModulePackages = [ ];
+  boot.initrd.kernelModules = [];
+  boot.kernelModules = [];
+  boot.extraModulePackages = [];
   boot.loader.systemd-boot.enable = true;
 
   fileSystems."/" = {
@@ -35,7 +33,7 @@
     fsType = "vfat";
   };
 
-  swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
+  swapDevices = [{device = "/dev/disk/by-label/swap";}];
 
   networking.useDHCP = lib.mkDefault true;
   hardware.pulseaudio.enable = false;

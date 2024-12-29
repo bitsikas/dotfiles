@@ -1,10 +1,12 @@
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   home.packages = with pkgs; [
     reattach-to-user-namespace
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-
+    (nerdfonts.override {fonts = ["FiraCode"];})
   ];
   # programs.kitty.settings.text_composition_strategy = "4 30";
-  imports = [ ../../modules/kitty/kitty.nix ];
+  imports = [../../kitty/kitty.nix];
 }

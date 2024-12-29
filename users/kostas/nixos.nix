@@ -1,15 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   config,
   pkgs,
   nixpkgs-unstable,
   ...
-}:
-
-{
+}: {
   # Set your time zone.
   time.timeZone = "Europe/Bucharest";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -41,7 +38,7 @@
     ];
   };
 
-  environment.pathsToLink = [ "/libexec" ];
+  environment.pathsToLink = ["/libexec"];
 
   programs.fish.enable = true;
   programs.gnupg.agent = {
@@ -52,20 +49,20 @@
   fonts.fontconfig.enable = true;
   fonts.enableDefaultPackages = true;
   fonts.fontconfig.defaultFonts = {
-    serif = [ "Noto Serif" ];
-    sansSerif = [ "Noto Sans" ];
-    monospace = [ "FiraCode" ];
+    serif = ["Noto Serif"];
+    sansSerif = ["Noto Sans"];
+    monospace = ["FiraCode"];
   };
 
   fonts.packages = with pkgs; [
     fira-code
     noto-fonts
+    jetbrains-mono
     noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    (nerdfonts.override {fonts = ["FiraCode"];})
     ubuntu_font_family
     cantarell-fonts
     roboto
     roboto-serif
   ];
-
 }
