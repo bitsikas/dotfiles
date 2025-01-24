@@ -41,7 +41,9 @@ in
       }
 
       # Allow unfree packages.
-      {nixpkgs.config.allowUnfree = true;}
+      {
+        nixpkgs.config.allowUnfree = true;
+      }
       #{ nixpkgs.config.permittedInsecurePackages = [ "nodejs-16.20.2" ]; }
       (
         if withDisko

@@ -38,7 +38,7 @@
     "kvm-intel"
     "coretemp"
   ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
   boot.kernelParams = [
     "i8042.nopnp=1"
     "i8042.dumbkbd=1"
