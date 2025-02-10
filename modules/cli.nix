@@ -25,9 +25,9 @@
 
   programs.ssh = {
     enable = true;
-    # controlMaster = "yes";
-    # controlPersist = "yes";
-    # controlPath = "~/.c-%r@%n";
+    controlMaster = "auto";
+    controlPersist = "60m";
+    controlPath = "~/.c-%r@%n";
     forwardAgent = true;
     compression = true;
     includes = ["config.d/*"];

@@ -14,6 +14,7 @@ require'lspconfig'.tailwindcss.setup({})
 require'lspconfig'.htmx.setup{}
 require'lspconfig'.superhtml.setup{}
 require'lspconfig'.gopls.setup{}
+require'lspconfig'.ccls.setup{}
 
 EOF
 

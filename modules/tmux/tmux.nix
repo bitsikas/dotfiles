@@ -2,6 +2,7 @@
   programs.tmux = {
     enable = true;
     extraConfig = ''
+      set -g default-command "${pkgs.fish}/bin/fish"
       set -g mouse  on
       set-window-option -g mode-keys vi
     '';
@@ -11,7 +12,15 @@
         plugin = pkgs.tmuxPlugins.catppuccin;
         extraConfig = "set -g @catppuccin_flavour 'frappe'";
       }
-      pkgs.tmuxPlugins.vim-tmux-navigator
+      {
+        plugin = pkgs.tmuxPlugins.vim-tmux-navigator;
+        extraConfig = ''
+          set -g @vim_navigator_mapping_left "Super_L-Left Super_L-h"  # use Super_L-h and Super_L-Left
+          set -g @vim_navigator_mapping_right "Super_L-Right Super_L-l"
+          set -g @vim_navigator_mapping_up "Super_L-k"
+          set -g @vim_navigator_mapping_down "Super_L-j"
+        '';
+      }
       pkgs.tmuxPlugins.yank
       {
         plugin = pkgs.tmuxPlugins.tilish;
