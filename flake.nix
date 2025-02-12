@@ -53,6 +53,23 @@
         pkgs = import nixpkgs {inherit system;};
         unstable-pkgs = import nixpkgs-unstable {inherit system;};
       in {
+        mkHome = import ./lib/mkHome.nix {
+          inherit
+            nixpkgs
+            inputs
+            nixpkgs-unstable
+            home-manager
+            ;
+        };
+        mkSystem = import ./lib/mkSystem.nix {
+          inherit
+            nixpkgs
+            inputs
+            nixpkgs-unstable
+            nixos-hardware
+            disko
+            ;
+        };
         devShells.default = pkgs.mkShell {
           buildInputs = [
             pkgs.openssh
