@@ -102,6 +102,7 @@
           darwin = true;
         };
         "linuxcli" = mkHome "kp" {system = "x86_64-linux";};
+        "aarch64cli" = mkHome "kp" {system = "aarch64-linux";};
       };
 
       nixosConfigurations = let
