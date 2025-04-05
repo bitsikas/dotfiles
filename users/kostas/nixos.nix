@@ -32,7 +32,7 @@
       "video"
       "wheel"
     ];
-    shell = pkgs.fish;
+    shell = pkgs.nushell;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
     ];
