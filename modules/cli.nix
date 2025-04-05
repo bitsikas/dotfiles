@@ -47,7 +47,6 @@
     ffmpeg
     gnupg
     htop
-    httpie
     eza
     pass
     ranger
@@ -55,6 +54,8 @@
     rq
     tmux
     wget
+    ruff
+    pyright
     (pkgs.writeShellApplication {
       name = "lights";
       runtimeInputs = with pkgs; [neovim-remote];

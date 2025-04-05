@@ -15,6 +15,8 @@
       experimental-features = nix-command flakes
     '';
   };
+  # this takes a lot of time sometimes
+  documentation.man.generateCaches = false;
 
   environment.sessionVariables = {
     QT_QPA_PLATFORM = "wayland-egl";
@@ -56,6 +58,7 @@
     firefox-wayland
     dconf
     inkscape
+    gimp
     imv
     vlc
     krita

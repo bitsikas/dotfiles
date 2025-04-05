@@ -15,6 +15,7 @@ require'lspconfig'.htmx.setup{}
 require'lspconfig'.superhtml.setup{}
 require'lspconfig'.gopls.setup{}
 require'lspconfig'.ccls.setup{}
+require'lspconfig'.nixd.setup{}
 
 EOF
 

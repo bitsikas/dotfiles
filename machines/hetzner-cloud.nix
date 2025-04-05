@@ -21,6 +21,8 @@
     device = "/dev/sdb";
     fsType = "ext4";
   };
+  # this takes a lot of time sometimes
+  documentation.man.generateCaches = false;
 
   services.cron = {
     enable = true;

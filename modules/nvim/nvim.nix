@@ -94,6 +94,7 @@ in {
       pkgs.vimPlugins.flutter-tools-nvim
       pkgs.vimPlugins.undotree
       pkgs.vimPlugins.conform-nvim
+      pkgs.vimPlugins.snacks-nvim
       # pkgs.vimPlugins.neorg
     ];
   };

@@ -68,6 +68,7 @@
     allowedTCPPorts = [
       51413
       22
+      80
     ];
     allowedUDPPorts = [
       51413
@@ -127,6 +128,7 @@
   };
 
   services.openssh.enable = true;
+  services.mullvad-vpn.enable = true;
 
   users.users.root = {
     openssh.authorizedKeys.keys = [
