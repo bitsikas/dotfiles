@@ -13,11 +13,14 @@
     ./ranger/ranger.nix
     ./starship/starship.nix
     ./tmux/tmux.nix
+    ./nushell/nushell.nix
   ];
 
   programs.home-manager.enable = true;
   programs.fzf.enable = true;
   programs.gh.enable = true;
+  programs.zoxide.enable = true;
+  programs.zoxide.enableNushellIntegration = true;
   programs.gh.settings = {
     git_protocol = "ssh";
     prompt = "enabled";
@@ -56,6 +59,7 @@
     wget
     ruff
     pyright
+    zoxide
     (pkgs.writeShellApplication {
       name = "lights";
       runtimeInputs = with pkgs; [neovim-remote];
