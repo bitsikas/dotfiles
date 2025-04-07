@@ -2,7 +2,7 @@
   programs.tmux = {
     enable = true;
     extraConfig = ''
-      set -g default-command "${pkgs.fish}/bin/fish"
+      set -g default-command "${pkgs.nushell}/bin/nu"
       set -g mouse  on
       set-window-option -g mode-keys vi
     '';

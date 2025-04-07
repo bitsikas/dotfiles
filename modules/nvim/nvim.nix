@@ -41,7 +41,8 @@ in {
       ]
     );
     plugins = [
-      nixpkgs-unstable.vimPlugins.nvim-treesitter.withAllGrammars
+      # nixpkgs-unstable.vimPlugins.nvim-treesitter.withAllGrammars
+      (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [p.c p.java p.python p.zig p.rust p.php p.javascript p.html p.nu p.json p.make p.markdown p.markdown-inline p.lua p.http p.go p.dockerfile p.css p.comment p.cmake p.bash p.yaml p.vim p.typescript p.toml p.sql p.perl]))
       pkgs.vimPlugins.editorconfig-vim
       pkgs.vimPlugins.bracey-vim
       pkgs.vimPlugins.lualine-nvim

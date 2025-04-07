@@ -31,14 +31,14 @@
         }
         $env.PATH = ($env.PATH |
         split row (char esep) |
-        prepend /home/myuser/.apps |
-        append /usr/bin/env
+        prepend /nix/var/nix/profiles/default/bin/ |
+        prepend ${config.home.homeDirectory}/.nix-profile/bin/ |
+        prepend ${config.home.homeDirectory}/.nix-profile/sbin/
         )
       '';
       shellAliases = {
-        vi = "hx";
-        vim = "hx";
-        nano = "hx";
+        vi = "nvim";
+        vim = "nvim";
       };
     };
     carapace.enable = true;
