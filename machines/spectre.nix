@@ -53,7 +53,7 @@
     vanilla-dmz
     wireguard-tools
     wl-clipboard
-
+    bottles
     chiaki
     firefox-wayland
     dconf
@@ -134,6 +134,16 @@
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
   system.stateVersion = "22.05";
+  systemd.services = {
+    audio-fixer = {
+      path = [pkgs.alsa-tools];
+      script = builtins.readFile ../utils/fixhpspeaker.sh;
+      serviceConfig = {
+        Type = "oneshot";
+        User = "root";
+      };
+    };
+  };
 
   # systemd.tmpfiles.rules =
   # let

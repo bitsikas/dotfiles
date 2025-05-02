@@ -10,6 +10,7 @@
   # Set your time zone.
   time.timeZone = "Europe/Bucharest";
   i18n.defaultLocale = "en_US.UTF-8";
+  i18n.supportedLocales = ["all"];
 
   # Add ~/.local/bin to PATH
   environment.localBinInPath = true;
@@ -32,7 +33,7 @@
       "video"
       "wheel"
     ];
-    shell = pkgs.nushell;
+    shell = pkgs.fish;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
     ];

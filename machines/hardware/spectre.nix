@@ -45,6 +45,9 @@
   ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
+  boot.extraModprobeConfig = ''
+    options snd_hda_intel powers-save=0
+    ''
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
@@ -66,6 +69,7 @@
   hardware.enableAllFirmware = true;
   hardware.intelgpu.driver = "xe";
   hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
   hardware.pulseaudio.enable = false;
   hardware.sensor.iio.enable = true;
   hardware.steam-hardware.enable = true;
