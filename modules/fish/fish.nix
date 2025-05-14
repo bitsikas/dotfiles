@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  nixpkgs-unstable,
   ...
 }: let
   catppuccin-fish = pkgs.fetchFromGitHub {
@@ -14,6 +15,7 @@ in {
   xdg.configFile."fish/themes/Catppuccin Frappe.theme".source = "${catppuccin-fish}/themes/Catppuccin Frappe.theme";
   programs.fish = {
     enable = true;
+    package = nixpkgs-unstable.fish;
     plugins = [
       {
         name = "foreign-env";
