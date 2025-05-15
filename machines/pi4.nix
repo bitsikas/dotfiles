@@ -123,6 +123,18 @@
           # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
           allowedIPs = ["10.100.0.3/32"];
         }
+        {
+          # google tv.1.c
+          publicKey = "ajr3fQ8BCQlJlvxh6Uj8nx7f76USfpf3JvbC6/I2TkA=";
+          # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
+          allowedIPs = ["10.100.0.4/32"];
+        }
+        {
+          # google tv.2.c
+          publicKey = "JL9trlL3GpTdsd/2DeA45wkNaUTXVnWu7mRKNdebH1A=";
+          # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
+          allowedIPs = ["10.100.0.5/32"];
+        }
       ];
     };
   };
@@ -147,6 +159,7 @@
     yt-dlp
     sqlite
     qrencode
+    wireproxy
   ];
 
   services.avahi = {
@@ -203,5 +216,18 @@
       seed-queue-size = 5;
     };
   };
+  systemd.services.wireproxy = {
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      Type = "simple";
+      User = "root";
+      ExecStart = "${pkgs.wireproxy}/bin/wireproxy -c /etc/wireproxy.conf";
+      Restart = "on-failure";
+      RestartSec = "30s";
+    };
+  };
+
   systemd.services.transmission.serviceConfig.BindPaths = ["/mnt"];
 }

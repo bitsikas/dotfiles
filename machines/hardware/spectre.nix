@@ -32,22 +32,25 @@
   ];
   boot.initrd.kernelModules = [];
 
-  boot.blacklistedKernelModules = ["snd-soc-skl"];
+  # boot.blacklistedKernelModules = ["snd-soc-skl"];
   boot.extraModulePackages = [];
   boot.kernelModules = [
     "kvm-intel"
     "coretemp"
   ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelParams = [
-    "i8042.nopnp=1"
-    "i8042.dumbkbd=1"
+    # "i8042.nopnp=1"
+    # "i8042.dumbkbd=1"
   ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
-  boot.extraModprobeConfig = ''
-    options snd_hda_intel powers-save=0
-    ''
+  # boot.extraModprobeConfig = ''
+  #   options snd_hda_intel  dmic_detect=0 power-save=0
+  # '';
+  # boot.extraModprobeConfig = ''
+  #   options snd_hda_intel dsp_driver=0  power-save=0
+  # '';
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";

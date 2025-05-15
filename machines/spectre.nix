@@ -54,7 +54,7 @@
     wireguard-tools
     wl-clipboard
     bottles
-    chiaki
+    chiaki-ng
     firefox-wayland
     dconf
     inkscape
@@ -73,8 +73,8 @@
   security.rtkit.enable = true;
   security.sudo.enable = true;
 
-  networking.firewall.allowedTCPPorts = [8000];
-  networking.firewall.allowedUDPPorts = [];
+  # networking.firewall.allowedTCPPorts = [8000];
+  # networking.firewall.allowedUDPPorts = [];
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = false; # Open ports in the firewall for Steam Remote Play
@@ -134,16 +134,16 @@
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
   system.stateVersion = "22.05";
-  systemd.services = {
-    audio-fixer = {
-      path = [pkgs.alsa-tools];
-      script = builtins.readFile ../utils/fixhpspeaker.sh;
-      serviceConfig = {
-        Type = "oneshot";
-        User = "root";
-      };
-    };
-  };
+  # systemd.services = {
+  #   audio-fixer = {
+  #     path = [pkgs.alsa-tools];
+  #     script = (builtins.readFile ../utils/fixhpspeaker.sh);
+  #     serviceConfig = {
+  #       Type = "oneshot";
+  #       User = "root";
+  #     };
+  #   };
+  # };
 
   # systemd.tmpfiles.rules =
   # let
@@ -157,20 +157,60 @@
   # [ "L+ /var/lib/qemu/firmware - - - - ${firmware}" ];
 
   # Add firewall exception for VirtualBox provider
-  networking.firewall.extraCommands = ''
-    ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
-    ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 33306 -j ACCEPT
-  '';
+  # networking.firewall.extraCommands = ''
+  #   ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
+  #   ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 33306 -j ACCEPT
+  # '';
 
   # Add firewall exception for libvirt provider when using NFSv4
-  networking.firewall.interfaces."virbr1" = {
-    allowedTCPPorts = [
-      2049
-      33306
-    ];
-    allowedUDPPorts = [
-      2049
-      33306
-    ];
-  };
+  # networking.firewall.interfaces."virbr1" = {
+  #   allowedTCPPorts = [
+  #     2049
+  #     33306
+  #   ];
+  #   allowedUDPPorts = [
+  #     2049
+  #     33306
+  #   ];
+  # };
+
+  #services.samba = {
+  #  enable = true;
+  #  securityType = "user";
+  #  openFirewall = true;
+  #  settings = {
+  #    global = {
+  #      "workgroup" = "WORKGROUP";
+  #      "server string" = "spectre";
+  #      "netbios name" = "spectre";
+  #      "security" = "user";
+  #      #"use sendfile" = "yes";
+  #      #"max protocol" = "smb2";
+  #      # note: localhost is the ipv6 localhost ::1
+  #      "hosts allow" = "192.168.0. 127.0.0.1 localhost";
+  #      "hosts deny" = "0.0.0.0/0";
+  #      "guest account" = "nobody";
+  #      "map to guest" = "bad user";
+  #    };
+  #    "public" = {
+  #    };
+  #    "private" = {
+  #      "path" = "/mnt/Shares/Private";
+  #      "browseable" = "yes";
+  #      "read only" = "no";
+  #      "guest ok" = "no";
+  #      "create mask" = "0644";
+  #      "directory mask" = "0755";
+  #      "force user" = "kostas";
+  #    };
+  #  };
+  #};
+
+  #services.samba-wsdd = {
+  #  enable = true;
+  #  openFirewall = true;
+  #};
+
+  networking.firewall.enable = true;
+  networking.firewall.allowPing = true;
 }
