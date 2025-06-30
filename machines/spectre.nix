@@ -19,10 +19,12 @@
   documentation.man.generateCaches = false;
 
   environment.sessionVariables = {
-    QT_QPA_PLATFORM = "wayland-egl";
+    # QT_QPA_PLATFORM = "wayland-egl";
+    QT_QPA_PLATFORM = "wayland";
     KWIN_IM_SHOW_ALWAYS = "1";
   };
   networking.networkmanager.enable = true;
+  services.pulseaudio.enable = false;
   services.printing.enable = true;
   services.printing.drivers = [
     pkgs.cnijfilter2
@@ -43,6 +45,7 @@
     # gnome-boxes
     gnome-tweaks
     gnomeExtensions.gsconnect
+    gnomeExtensions.user-themes
     libinput-gestures
     libwacom
     mangal
@@ -61,7 +64,10 @@
     gimp
     imv
     vlc
-    krita
+    nixpkgs-unstable.krita
+    minikube
+    skaffold
+    kubectl
     libreoffice
     thunderbird
     inputs.ghostty.packages.x86_64-linux.default
@@ -69,7 +75,7 @@
   programs.light.enable = true;
   programs.kdeconnect.enable = true;
   programs.ssh.askPassword = lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/kssaskpass";
-  programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
+  # programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
   security.rtkit.enable = true;
   security.sudo.enable = true;
 
@@ -122,12 +128,13 @@
   };
   #  services.displayManager.ly.enable = true;
 
-  # services.desktopManager.plasma6.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   services.displayManager = {
     defaultSession = "gnome";
   };
-  virtualisation.podman.enable = true;
+  # virtualisation.podman.enable = true;
+  virtualisation.docker.enable = true;
   # virtualisation.libvirtd.enable = true;
   # programs.virt-manager.enable = true;
 
@@ -213,4 +220,5 @@
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
+  networking.firewall.checkReversePath = false;
 }

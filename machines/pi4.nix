@@ -133,6 +133,12 @@
           # google tv.2.c
           publicKey = "JL9trlL3GpTdsd/2DeA45wkNaUTXVnWu7mRKNdebH1A=";
           # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
+          allowedIPs = ["10.100.0.6/32"];
+        }
+        {
+          # google tv.1.calinesti
+          publicKey = "shEwpX6UYga8K3rncTWzamh+DBSelwa3QiZ+xa5YBwY=";
+          # List of IPs assigned to this peer within the tunnel subnet. Used to configure routing.
           allowedIPs = ["10.100.0.5/32"];
         }
       ];

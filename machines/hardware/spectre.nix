@@ -32,7 +32,7 @@
   ];
   boot.initrd.kernelModules = [];
 
-  # boot.blacklistedKernelModules = ["snd-soc-skl"];
+  boot.blacklistedKernelModules = ["snd-soc-skl"];
   boot.extraModulePackages = [];
   boot.kernelModules = [
     "kvm-intel"
@@ -40,8 +40,8 @@
   ];
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelParams = [
-    # "i8042.nopnp=1"
-    # "i8042.dumbkbd=1"
+    "i8042.nopnp=1"
+    "i8042.dumbkbd=1"
   ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
@@ -73,7 +73,6 @@
   hardware.intelgpu.driver = "xe";
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
-  hardware.pulseaudio.enable = false;
   hardware.sensor.iio.enable = true;
   hardware.steam-hardware.enable = true;
   # hardware.opentabletdriver.enable = true;

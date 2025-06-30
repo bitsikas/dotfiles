@@ -60,7 +60,7 @@
     noto-fonts
     jetbrains-mono
     noto-fonts-emoji
-    (nerdfonts.override {fonts = ["FiraCode"];})
+    nerd-fonts.fira-code
     ubuntu_font_family
     cantarell-fonts
     roboto
