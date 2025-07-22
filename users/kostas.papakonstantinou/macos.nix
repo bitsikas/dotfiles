@@ -13,5 +13,5 @@
     command = ${pkgs.fish}/bin/fish
   '';
   # programs.kitty.settings.text_composition_strategy = "4 30";
-  imports = [../../modules/kitty/kitty.nix];
+  # imports = [../../modules/kitty/kitty.nix];
 }

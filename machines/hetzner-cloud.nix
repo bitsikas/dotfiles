@@ -11,6 +11,9 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
+  nix = {
+    settings.auto-optimise-store = true;
+  };
   boot.loader.grub = {
     # no need to set devices, disko will add all devices that have a EF02 partition to the list already
     # devices = [ ];
@@ -28,11 +31,24 @@
     enable = true;
     systemCronJobs = ["0 0 * * * root rsync -avz /var/lib/unifi/data/backup /mnt/backups/unifi"];
   };
-  services.artframe.enable = true;
+  services.arthome.enable = true;
+  services.arthome.letsencrypt = true;
   services.fittrack.enable = true;
-  services.pdfblancs.enable = true;
+  services.fittrack.letsencrypt = true;
+  networking.nameservers = ["1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one"];
+
+  services.resolved = {
+    enable = true;
+    dnssec = "true";
+    domains = ["~."];
+    fallbackDns = ["1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one"];
+    dnsovertls = "true";
+  };
+  # services.pdfblancs.enable = true;
   services.ihasb33r.enable = true;
+  services.ihasb33r.letsencrypt = true;
   services.miliacaffe.enable = true;
+  services.miliacaffe.letsencrypt = true;
 
   security.sudo.enable = true;
   services.openssh = {
@@ -43,8 +59,49 @@
 
   services.unifi.enable = true;
   services.unifi.openFirewall = true;
-  services.unifi.unifiPackage = pkgs.unifi8;
+  services.unifi.unifiPackage = pkgs.unifi;
   services.unifi.mongodbPackage = nixpkgs-unstable.mongodb-ce;
+  services.headscale = {
+    enable = true;
+    address = "0.0.0.0";
+    port = 51720;
+    settings = {
+      logtail.enabled = false;
+      server_url = "https://headscale.bitsikas.dev";
+
+      dns = {
+        base_domain = "bitsikas.home";
+        extra_records = [
+          {
+            name = "jellyfin.bitsikas.home";
+            type = "A";
+            value = "100.64.0.1";
+          }
+          {
+            name = "sonarr.bitsikas.home";
+            type = "A";
+            value = "100.64.0.1";
+          }
+          {
+            name = "radarr.bitsikas.home";
+            type = "A";
+            value = "100.64.0.1";
+          }
+          {
+            name = "prowlarr.bitsikas.home";
+            type = "A";
+            value = "100.64.0.1";
+          }
+          {
+            name = "transmission.bitsikas.home";
+            type = "A";
+            value = "100.64.0.1";
+          }
+        ];
+      };
+    };
+  };
+
   services.nginx = {
     enable = true;
 
@@ -63,6 +120,14 @@
         extraConfig = ''
           default_type text/html;
         '';
+      };
+    };
+    virtualHosts."headscale.bitsikas.dev" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://localhost:51720";
+        proxyWebsockets = true;
       };
     };
     virtualHosts."piftel.bitsikas.dev" = {
@@ -154,6 +219,5 @@
       80
       443
     ];
-    allowedUDPPorts = [];
   };
 }

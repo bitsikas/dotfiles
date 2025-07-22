@@ -59,6 +59,7 @@
 
   # avoid building zfs
   disabledModules = ["profiles/base.nix"];
+  services.resolved.enable = true;
 
   networking.hostName = "beershot"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -73,6 +74,7 @@
     allowedUDPPorts = [
       51413
       51820
+      config.services.tailscale.port
     ];
   };
 
@@ -81,6 +83,8 @@
   networking.nat.enable = true;
   networking.nat.externalInterface = "end0";
   networking.nat.internalInterfaces = ["wg0"];
+
+  networking.nftables.enable = true;
 
   networking.wireguard.interfaces = {
     # "wg0" is the network interface name. You can name the interface arbitrarily.
@@ -94,12 +98,18 @@
       # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
       # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
       postSetup = ''
-        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o end0 -j MASQUERADE
+        ${pkgs.nftables}/bin/nft add rule ip nat POSTROUTING ip saddr 10.100.0.0/24 oifname "end0" masquerade
       '';
+      # postSetup = ''
+      #   ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o end0 -j MASQUERADE
+      # '';
 
       # This undoes the above command
+      # postShutdown = ''
+      #   ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o end0 -j MASQUERADE
+      # '';
       postShutdown = ''
-        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o end0 -j MASQUERADE
+        ${pkgs.nftables}/bin/nft delete rule ip nat POSTROUTING ip saddr 10.100.0.0/24 oifname "end0" masquerade
       '';
 
       # Path to the private key file.
@@ -147,6 +157,7 @@
 
   services.openssh.enable = true;
   services.mullvad-vpn.enable = true;
+  services.tailscale.enable = true;
 
   users.users.root = {
     openssh.authorizedKeys.keys = [
@@ -217,7 +228,7 @@
       download-dir = "/mnt/Downloads";
       incomplete-dir = "/mnt/.incomplete";
       rpc-bind-address = "0.0.0.0"; # Bind to own IP
-      rpc-whitelist = "127.0.0.1,192.168.*.*,10.*.*.*"; # Whitelist your remote machine (10.0.0.1 in this example)
+      rpc-whitelist = "127.0.0.1,192.168.*.*,10.*.*.*,100.64.0.*"; # Whitelist your remote machine (10.0.0.1 in this example)
       seed-queue-enabled = true;
       seed-queue-size = 5;
     };
@@ -235,5 +246,61 @@
     };
   };
 
+  services.nginx = {
+    enable = true;
+
+    # Use recommended settings
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    # recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+
+    # Only allow PFS-enabled ciphers with AES256
+    sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+
+    virtualHosts.localhost = {
+      locations."/" = {
+        return = "200 '<html><body>It works</body></html>'";
+        extraConfig = ''
+          default_type text/html;
+        '';
+      };
+    };
+    virtualHosts."jellyfin.bitsikas.home" = {
+      forceSSL = false;
+      enableACME = false;
+      locations."/" = {
+        proxyPass = "http://localhost:8096";
+        proxyWebsockets = true;
+      };
+    };
+    virtualHosts."radarr.bitsikas.home" = {
+      forceSSL = false;
+      enableACME = false;
+      locations."/" = {
+        proxyPass = "http://localhost:7878";
+        proxyWebsockets = true;
+      };
+    };
+    virtualHosts."sonarr.bitsikas.home" = {
+      forceSSL = false;
+      enableACME = false;
+      locations."/" = {
+        proxyPass = "http://localhost:8989";
+        proxyWebsockets = true;
+      };
+    };
+    virtualHosts."prowlarr.bitsikas.home" = {
+      forceSSL = false;
+      enableACME = false;
+      locations."/" = {
+        proxyPass = "http://localhost:9696";
+        proxyWebsockets = true;
+      };
+    };
+  };
+
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = 1;
   systemd.services.transmission.serviceConfig.BindPaths = ["/mnt"];
 }

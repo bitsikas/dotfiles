@@ -26,7 +26,7 @@ in
         home.homeDirectory = homedir;
         home.sessionVariables = {
           "EDITOR" = "nvim";
-          "TERMINAL" = "kitty";
+          "TERMINAL" = "ghostty";
         };
       }
       {fonts.fontconfig.enable = true;}

@@ -32,11 +32,11 @@ in
       # the overlays are available globally.
       {
         nixpkgs.overlays = [
-          inputs.pdfblancs.overlays.${system}.default
-          inputs.artframe.overlays.${system}.default
-          inputs.fittrack.overlays.${system}.default
-          inputs.ihasb33r.overlays.${system}.default
-          inputs.milia.overlays.${system}.default
+          # inputs.pdfblancs.overlays.${system}.default
+          # inputs.artframe.overlays.${system}.default
+          # inputs.fittrack.overlays.${system}.default
+          # inputs.ihasb33r.overlays.${system}.default
+          # inputs.milia.overlays.${system}.default
         ];
       }
 
@@ -55,11 +55,13 @@ in
         then diskoConfig
         else {}
       )
-      inputs.pdfblancs.nixosModules.default
+      # inputs.pdfblancs.nixosModules.default
       inputs.artframe.nixosModules.default
       inputs.fittrack.nixosModules.default
       inputs.ihasb33r.nixosModules.default
       inputs.milia.nixosModules.default
+
+      inputs.nix-index-database.nixosModules.nix-index
 
       machineConfig
       userOSConfig

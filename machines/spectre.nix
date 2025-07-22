@@ -26,6 +26,7 @@
   networking.networkmanager.enable = true;
   services.pulseaudio.enable = false;
   services.printing.enable = true;
+  services.resolved.enable = true;
   services.printing.drivers = [
     pkgs.cnijfilter2
     pkgs.gutenprint
@@ -36,6 +37,8 @@
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
   environment.systemPackages = with pkgs; [
+    ghostty
+    headscale
     _1password-cli
     bat
     cifs-utils
@@ -44,7 +47,7 @@
     ffmpeg
     # gnome-boxes
     gnome-tweaks
-    gnomeExtensions.gsconnect
+    gnomeExtensions.tailscale-qs
     gnomeExtensions.user-themes
     libinput-gestures
     libwacom
@@ -64,22 +67,43 @@
     gimp
     imv
     vlc
-    nixpkgs-unstable.krita
+    krita
     minikube
     skaffold
     kubectl
     libreoffice
     thunderbird
-    inputs.ghostty.packages.x86_64-linux.default
+    # inputs.ghostty.packages.x86_64-linux.default
+    nix-index
   ];
   programs.light.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    libraries = [
+      pkgs.gtk3
+      pkgs.cairo
+      pkgs.pango
+      pkgs.harfbuzz
+      pkgs.atk
+      pkgs.gdk-pixbuf
+      pkgs.glib
+      pkgs.libepoxy
+      pkgs.fontconfig
+    ];
+  };
   programs.kdeconnect.enable = true;
   programs.ssh.askPassword = lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/kssaskpass";
-  # programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
+  programs.kdeconnect.package = lib.mkDefault pkgs.gnomeExtensions.gsconnect;
   security.rtkit.enable = true;
   security.sudo.enable = true;
 
-  # networking.firewall.allowedTCPPorts = [8000];
+  networking.nftables.enable = true;
+  networking.firewall.allowedTCPPorts = [80 8080 8551];
+  networking.firewall.allowedUDPPorts = [config.services.tailscale.port];
+  networking.firewall.trustedInterfaces = ["tailscale0"];
+  networking.hosts = {
+    "127.0.0.1" = ["art.spectre.local" "fit.spectre.local" "miliacafe.spectre.local" "artframe.spectre.local"];
+  };
   # networking.firewall.allowedUDPPorts = [];
   programs.steam = {
     enable = true;
@@ -87,6 +111,19 @@
     dedicatedServer.openFirewall = false; # Open ports in the firewall for Source Dedicated Server
     localNetworkGameTransfers.openFirewall = false; # Open ports in the firewall for Steam Local Network Game Transfers
   };
+
+  services.miliacaffe.enable = true;
+  services.miliacaffe.hostnames = ["miliacafe.spectre.local"];
+
+  services.arthome.enable = true;
+  services.arthome.debug = "1";
+  services.arthome.hostnames = ["artframe.spectre.local"];
+
+  services.fittrack.enable = true;
+  services.fittrack.hostnames = ["fit.spectre.local"];
+
+  services.ihasb33r.enable = true;
+  services.ihasb33r.hostnames = ["art.spectre.local"];
 
   services.mullvad-vpn.enable = true;
   services.blueman.enable = true;
@@ -128,7 +165,7 @@
   };
   #  services.displayManager.ly.enable = true;
 
-  services.desktopManager.plasma6.enable = true;
+  services.desktopManager.plasma6.enable = false;
 
   services.displayManager = {
     defaultSession = "gnome";
@@ -220,5 +257,39 @@
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
-  networking.firewall.checkReversePath = false;
+  # networking.firewall.checkReversePath = false;
+
+  services = {
+    tailscale.enable = true;
+    tailscale.useRoutingFeatures = "client";
+    headscale = {
+      enable = true;
+      address = "0.0.0.0";
+      port = 8080;
+      settings = {
+        logtail.enabled = false;
+        server_url = "https://ihasb33r.duckdns.org";
+
+        dns = {base_domain = "ihasb33r.duckdns.org";};
+      };
+    };
+
+    nginx.virtualHosts."ihasb33r.duckdns.org" = {
+      forceSSL = false;
+      enableACME = false;
+      locations."/" = {
+        proxyPass = "http://localhost:${toString config.services.headscale.port}";
+        proxyWebsockets = true;
+      };
+    };
+  };
+  programs.command-not-found.enable = false;
+  # for home-manager, use programs.bash.initExtra instead
+  # programs.bash.interactiveShellInit = ''
+  #   source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+  # '';
+
+  programs.nix-index-database.comma.enable = true;
+  programs.nix-index.enableFishIntegration = true;
+  # networking.firewall.checkReversePath = "loose"
 }

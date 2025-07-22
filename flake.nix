@@ -8,14 +8,16 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-    pdfblancs.url = "git+ssh://git@github.com/bitsikas/pdfblanks";
-    pdfblancs.inputs.nixpkgs.follows = "nixpkgs";
+    # pdfblancs.url = "git+ssh://git@github.com/bitsikas/pdfblanks";
+    # pdfblancs.inputs.nixpkgs.follows = "nixpkgs";
     artframe.url = "git+ssh://git@github.com/bitsikas/artframe";
     artframe.inputs.nixpkgs.follows = "nixpkgs";
     fittrack.url = "git+ssh://git@github.com/bitsikas/fittrack";
     fittrack.inputs.nixpkgs.follows = "nixpkgs";
     milia.url = "git+ssh://git@github.com/bitsikas/milia";
     milia.inputs.nixpkgs.follows = "nixpkgs";
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     ihasb33r = {
       url = "git+ssh://git@github.com/bitsikas/ihasb33r";
@@ -31,9 +33,9 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
+    # ghostty = {
+    #   url = "github:ghostty-org/ghostty/v1.1.3";
+    # };
   };
 
   outputs = {
@@ -45,7 +47,7 @@
     nixos-hardware,
     nixos-generators,
     disko,
-    ghostty,
+    # ghostty,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (

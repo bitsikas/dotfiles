@@ -51,6 +51,10 @@
   # boot.extraModprobeConfig = ''
   #   options snd_hda_intel dsp_driver=0  power-save=0
   # '';
+  boot.extraModprobeConfig = ''
+    options snd_hda_intel power_save=0
+    options snd_intel_dspcfg dsp_driver=1
+  '';
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
@@ -70,6 +74,7 @@
   hardware.bluetooth.enable = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.enableAllFirmware = true;
+  hardware.alsa.enablePersistence = true;
   hardware.intelgpu.driver = "xe";
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
