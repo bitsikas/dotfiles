@@ -1,3 +1,3 @@
-nvim/.config/nvim/plugged
-nvim/.local/share/nvim/shada/
-ssh/.ssh/config.d/
+.envrc
+.direnv
+result
