@@ -13,7 +13,7 @@
     ./ranger/ranger.nix
     ./starship/starship.nix
     ./tmux/tmux.nix
-    ./nushell/nushell.nix
+    # ./nushell/nushell.nix
   ];
 
   programs.home-manager.enable = true;
@@ -60,10 +60,10 @@
     ruff
     pyright
     zoxide
-    (pkgs.writeShellApplication {
-      name = "lights";
-      runtimeInputs = with pkgs; [neovim-remote];
-      text = builtins.readFile ../utils/lights.sh;
-    })
+    # (pkgs.writeShellApplication {
+    #   name = "lights";
+    #   runtimeInputs = with pkgs; [neovim-remote];
+    #   text = builtins.readFile ../utils/lights.sh;
+    # })
   ];
 }
