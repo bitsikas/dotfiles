@@ -45,6 +45,7 @@
   home.packages = with pkgs; [
     _7zz
     alejandra
+    nixpkgs-unstable.d2
     nixfmt-rfc-style
     dnsutils
     ffmpeg
@@ -60,6 +61,8 @@
     ruff
     pyright
     zoxide
+    presenterm
+    glow
     # (pkgs.writeShellApplication {
     #   name = "lights";
     #   runtimeInputs = with pkgs; [neovim-remote];
