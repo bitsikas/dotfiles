@@ -24,6 +24,7 @@
     KWIN_IM_SHOW_ALWAYS = "1";
   };
   networking.networkmanager.enable = true;
+  services.fwupd.enable = true;
   services.pulseaudio.enable = false;
   services.printing.enable = true;
   services.resolved.enable = true;
@@ -37,6 +38,7 @@
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
   environment.systemPackages = with pkgs; [
+    inetutils
     ghostty
     headscale
     _1password-cli
@@ -68,6 +70,7 @@
     imv
     vlc
     krita
+    mypaint
     minikube
     skaffold
     kubectl
@@ -114,6 +117,9 @@
 
   services.miliacaffe.enable = true;
   services.miliacaffe.hostnames = ["miliacafe.spectre.local"];
+
+  services.liverecord.enable = true;
+  services.liverecord.hostnames = ["liverecord.spectre.local"];
 
   services.arthome.enable = true;
   services.arthome.debug = "1";

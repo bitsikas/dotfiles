@@ -60,6 +60,7 @@ in
       inputs.fittrack.nixosModules.default
       inputs.ihasb33r.nixosModules.default
       inputs.milia.nixosModules.default
+      inputs.liverecord.nixosModules.default
 
       inputs.nix-index-database.nixosModules.nix-index
 

@@ -16,6 +16,8 @@
     fittrack.inputs.nixpkgs.follows = "nixpkgs";
     milia.url = "git+ssh://git@github.com/bitsikas/milia";
     milia.inputs.nixpkgs.follows = "nixpkgs";
+    liverecord.url = "git+ssh://git@github.com/bitsikas/liverecord";
+    liverecord.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 

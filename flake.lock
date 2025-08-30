@@ -128,7 +128,7 @@
         "url": "ssh://git@github.com/bitsikas/ihasb33r"
       }
     },
-    "milia": {
+    "liverecord": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -136,6 +136,29 @@
         "pyproject-build-systems": "pyproject-build-systems_4",
         "pyproject-nix": "pyproject-nix_4",
         "uv2nix": "uv2nix_4"
+      },
+      "locked": {
+        "lastModified": 1756398848,
+        "narHash": "sha256-V1EHoOCZ/oEWJWbpRHarnYm7MPWtSri21Z6g+hMP3PI=",
+        "ref": "refs/heads/main",
+        "rev": "003a4dee76159dd14a5be231cdba130d010b97b1",
+        "revCount": 105,
+        "type": "git",
+        "url": "ssh://git@github.com/bitsikas/liverecord"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/bitsikas/liverecord"
+      }
+    },
+    "milia": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "pyproject-build-systems": "pyproject-build-systems_5",
+        "pyproject-nix": "pyproject-nix_5",
+        "uv2nix": "uv2nix_5"
       },
       "locked": {
         "lastModified": 1752864985,
@@ -344,6 +367,35 @@
     "pyproject-build-systems_4": {
       "inputs": {
         "nixpkgs": [
+          "liverecord",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "liverecord",
+          "pyproject-nix"
+        ],
+        "uv2nix": [
+          "liverecord",
+          "uv2nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1753063383,
+        "narHash": "sha256-H+gLv6424OjJSD+l1OU1ejxkN/v0U+yaoQdh2huCXYI=",
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "rev": "45888b7fd4bf36c57acc55f07917bdf49ec89ec9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "type": "github"
+      }
+    },
+    "pyproject-build-systems_5": {
+      "inputs": {
+        "nixpkgs": [
           "milia",
           "nixpkgs"
         ],
@@ -436,6 +488,27 @@
     "pyproject-nix_4": {
       "inputs": {
         "nixpkgs": [
+          "liverecord",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1753063596,
+        "narHash": "sha256-el1vFxDk6DR2hKGYnMfQHR7+K4aMiJDKQRMP3gdh+ZI=",
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "rev": "cac90713492f23be5f1072bae88406890b9c68f6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "type": "github"
+      }
+    },
+    "pyproject-nix_5": {
+      "inputs": {
+        "nixpkgs": [
           "milia",
           "nixpkgs"
         ]
@@ -462,6 +535,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "ihasb33r": "ihasb33r",
+        "liverecord": "liverecord",
         "milia": "milia",
         "nix-index-database": "nix-index-database",
         "nixos-generators": "nixos-generators",
@@ -561,6 +635,31 @@
       }
     },
     "uv2nix_4": {
+      "inputs": {
+        "nixpkgs": [
+          "liverecord",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "liverecord",
+          "pyproject-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1753067819,
+        "narHash": "sha256-vjLTZCgMWvfep8eKZL25T8pBb4MyBjswfyAlHTyJaoY=",
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "rev": "5b7b7a8808c031fa8e13d8e949a2af3c2c12a1c6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "uv2nix_5": {
       "inputs": {
         "nixpkgs": [
           "milia",

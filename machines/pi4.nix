@@ -67,11 +67,13 @@
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   networking.firewall = {
     allowedTCPPorts = [
+      25344
       51413
       22
       80
     ];
     allowedUDPPorts = [
+      25344
       51413
       51820
       config.services.tailscale.port
@@ -167,6 +169,7 @@
 
   environment.enableAllTerminfo = true;
   environment.systemPackages = with pkgs; [
+    inetutils
     libraspberrypi
     raspberrypi-eeprom
     jellyfin
@@ -245,6 +248,9 @@
       RestartSec = "30s";
     };
   };
+  services.liverecord.enable = true;
+  services.liverecord.destination = "/mnt/random";
+  services.liverecord.hostnames = ["liverecord.bitsikas.home"];
 
   services.nginx = {
     enable = true;

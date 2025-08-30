@@ -93,6 +93,11 @@
             value = "100.64.0.1";
           }
           {
+            name = "liverecord.bitsikas.home";
+            type = "A";
+            value = "100.64.0.1";
+          }
+          {
             name = "transmission.bitsikas.home";
             type = "A";
             value = "100.64.0.1";
@@ -202,6 +207,7 @@
   security.acme.defaults.email = "piftel@bitsikas.dev";
 
   environment.systemPackages = map lib.lowPrio [
+    pkgs.inetutils
     pkgs.curl
     pkgs.gitMinimal
     pkgs.vim
