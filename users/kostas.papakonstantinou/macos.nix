@@ -6,7 +6,7 @@
 }: {
   home.packages = with pkgs; [
     reattach-to-user-namespace
-    (nerdfonts.override {fonts = ["FiraCode"];})
+    nerd-fonts.fira-code
   ];
   home.file."${config.xdg.configHome}/ghostty/config".text = ''
     theme = catppuccin-frappe
