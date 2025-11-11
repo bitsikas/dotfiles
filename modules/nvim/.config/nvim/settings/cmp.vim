@@ -5,12 +5,11 @@ local cmp_action = require('lsp-zero').cmp_action()
 
 cmp.setup({
 sources = {
-	{name = 'buffer'},
-	{name = 'path'},
-	{name = 'nvim_lsp'},
-	{name = 'luasnip'},
-	{name = 'copilot'},
-	{name = 'buffer'},
+	{name = 'nvim_lsp', priority=100 },
+	{name = 'buffer', priority=100},
+	{name = 'copilot', priority=80},
+	{name = 'path', priority=50},
+	{name = 'luasnip', priority=25},
 },
 mapping = {
 
