@@ -60,7 +60,67 @@
   # avoid building zfs
   disabledModules = ["profiles/base.nix"];
   services.resolved.enable = true;
+  services.grocy = {
+    enable = true;
+    nginx.enableSSL = false;
+    hostName = "grocy.bitsikas.home";
+    settings = {
+      currency = "RON";
+    };
+  };
+  services.cockpit = {
+    enable = true;
+    port = 9090;
+    openFirewall = true;
+    allowed-origins = ["https://cockpit.bitsikas.home" "http://cockpit.bitsikas.home"];
+    settings = {
+      WebService = {
+        AllowUnencrypted = true;
+      };
+    };
+  };
 
+  services.printing = {
+    enable = true;
+    listenAddresses = ["*:631"];
+    allowFrom = ["all"];
+    browsing = true;
+    defaultShared = true;
+    openFirewall = true;
+  };
+  services.printing.drivers = [
+    pkgs.gutenprint
+    # pkgs.brlaser
+    # pkgs.brgenml1lpr
+    # pkgs.brgenml1cupswrapper
+  ];
+
+  services.samba = {
+    enable = true;
+    package = pkgs.sambaFull;
+    openFirewall = true;
+    settings = {
+      global = {
+        "load printers" = "yes";
+        "printing" = "cups";
+        "printcap name" = "cups";
+      };
+      "printers" = {
+        "comment" = "All Printers";
+        "path" = "/var/spool/samba";
+        "public" = "yes";
+        "browseable" = "yes";
+        # to allow user 'guest account' to print.
+        "guest ok" = "yes";
+        "writable" = "no";
+        "printable" = "yes";
+        "create mode" = 0700;
+      };
+    };
+  };
+  systemd.tmpfiles.rules = [
+    "d /var/spool/samba 1777 root root -"
+  ];
   networking.hostName = "beershot"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -69,6 +129,7 @@
     allowedTCPPorts = [
       25344
       51413
+      5055
       22
       80
     ];
@@ -182,6 +243,8 @@
     wireproxy
   ];
 
+  services.jellyseerr.enable = true;
+
   services.avahi = {
     publish = {
       enable = true;
@@ -230,10 +293,16 @@
       # Override default settings
       download-dir = "/mnt/Downloads";
       incomplete-dir = "/mnt/.incomplete";
+      ratio-limit = 2;
+      ratio-limit-enabled = true;
       rpc-bind-address = "0.0.0.0"; # Bind to own IP
       rpc-whitelist = "127.0.0.1,192.168.*.*,10.*.*.*,100.64.0.*"; # Whitelist your remote machine (10.0.0.1 in this example)
       seed-queue-enabled = true;
       seed-queue-size = 5;
+      speed-limit-down = 20000;
+      speed-limit-down-enabled = true;
+      speed-limit-up = 2000;
+      speed-limit-up-enabled = true;
     };
   };
   systemd.services.wireproxy = {
@@ -296,6 +365,22 @@
         proxyWebsockets = true;
       };
     };
+    virtualHosts."cockpit.bitsikas.home" = {
+      forceSSL = false;
+      enableACME = false;
+      locations."/" = {
+        proxyPass = "http://localhost:9090";
+        proxyWebsockets = true;
+      };
+    };
+    virtualHosts."jellyseer.bitsikas.home" = {
+      forceSSL = false;
+      enableACME = false;
+      locations."/" = {
+        proxyPass = "http://localhost:5055";
+        proxyWebsockets = true;
+      };
+    };
     virtualHosts."prowlarr.bitsikas.home" = {
       forceSSL = false;
       enableACME = false;
@@ -309,4 +394,8 @@
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = 1;
   systemd.services.transmission.serviceConfig.BindPaths = ["/mnt"];
+  services.cron = {
+    enable = true;
+    systemCronJobs = ["0 4 * * * root find /mnt/random/ -type f -mtime +2 -delete"];
+  };
 }

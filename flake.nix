@@ -141,6 +141,10 @@
           users = ["kostas"];
           usedisko = true;
         };
+        asus = mkSystem "asus" {
+          system = "x86_64-linux";
+          user = "kostas";
+        };
         hetzner-cloud = mkSystem "hetzner-cloud" {
           system = "x86_64-linux";
           users = ["kostas"];

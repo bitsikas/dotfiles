@@ -6,7 +6,7 @@
   programs.tmux = {
     enable = true;
     extraConfig = ''
-      set -g default-command "${nixpkgs-unstable.fish}/bin/fish"
+      set -g default-command "${pkgs.fish}/bin/fish"
       set -g mouse  on
       set-window-option -g mode-keys vi
     '';

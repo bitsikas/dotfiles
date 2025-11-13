@@ -73,6 +73,11 @@
         base_domain = "bitsikas.home";
         extra_records = [
           {
+            name = "jellyseer.bitsikas.home";
+            type = "A";
+            value = "100.64.0.1";
+          }
+          {
             name = "jellyfin.bitsikas.home";
             type = "A";
             value = "100.64.0.1";
@@ -94,6 +99,16 @@
           }
           {
             name = "liverecord.bitsikas.home";
+            type = "A";
+            value = "100.64.0.1";
+          }
+          {
+            name = "cockpit.bitsikas.home";
+            type = "A";
+            value = "100.64.0.1";
+          }
+          {
+            name = "grocy.bitsikas.home";
             type = "A";
             value = "100.64.0.1";
           }

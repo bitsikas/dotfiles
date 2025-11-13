@@ -6,7 +6,7 @@
   inputs,
   ...
 }: {
-  imports = [./hardware/spectre.nix];
+  imports = [./hardware/asus.nix];
 
   nix = {
     settings.auto-optimise-store = true;
@@ -24,6 +24,7 @@
     KWIN_IM_SHOW_ALWAYS = "1";
   };
   networking.networkmanager.enable = true;
+  services.openssh.enable = true;
   services.fwupd.enable = true;
   services.pulseaudio.enable = false;
   services.printing.enable = true;
@@ -57,23 +58,23 @@
     pavucontrol
     qt5.qtwayland
     sof-firmware
-    transmission-remote-gtk
+    # transmission-remote-gtk
     vanilla-dmz
     wireguard-tools
     wl-clipboard
-    bottles
-    chiaki-ng
+    # bottles
+    # chiaki-ng
     firefox-wayland
     dconf
     inkscape
     gimp
     imv
     vlc
-    krita
-    mypaint
-    minikube
-    skaffold
-    kubectl
+    # krita
+    # mypaint
+    # minikube
+    # skaffold
+    # kubectl
     libreoffice
     thunderbird
     # inputs.ghostty.packages.x86_64-linux.default
@@ -94,46 +95,46 @@
       pkgs.fontconfig
     ];
   };
-  programs.kdeconnect.enable = true;
-  programs.ssh.askPassword = lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/kssaskpass";
-  programs.kdeconnect.package = lib.mkDefault pkgs.gnomeExtensions.gsconnect;
+  programs.kdeconnect.enable = false;
+  # programs.ssh.askPassword = lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/kssaskpass";
+  # programs.kdeconnect.package = lib.mkDefault pkgs.gnomeExtensions.gsconnect;
   security.rtkit.enable = true;
   security.sudo.enable = true;
 
   networking.nftables.enable = true;
-  networking.firewall.allowedTCPPorts = [80 8080 8551];
-  networking.firewall.allowedUDPPorts = [config.services.tailscale.port];
+  networking.firewall.allowedTCPPorts = [22 80 8080 8551];
+  networking.firewall.allowedUDPPorts = [22 config.services.tailscale.port];
   networking.firewall.trustedInterfaces = ["tailscale0"];
-  networking.hosts = {
-    "127.0.0.1" = ["art.spectre.local" "fit.spectre.local" "miliacafe.spectre.local" "artframe.spectre.local"];
-    "100.64.0.1" = ["cockpit.bitsikas.home"];
-  };
+  # networking.hosts = {
+  #   "127.0.0.1" = ["art.spectre.local" "fit.spectre.local" "miliacafe.spectre.local" "artframe.spectre.local"];
+  #   "100.64.0.1" = ["cockpit.bitsikas.home"];
+  # };
   # networking.firewall.allowedUDPPorts = [];
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = false; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = false; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = false; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
+  # programs.steam = {
+  #   enable = true;
+  #   remotePlay.openFirewall = false; # Open ports in the firewall for Steam Remote Play
+  #   dedicatedServer.openFirewall = false; # Open ports in the firewall for Source Dedicated Server
+  #   localNetworkGameTransfers.openFirewall = false; # Open ports in the firewall for Steam Local Network Game Transfers
+  # };
 
-  services.miliacaffe.enable = true;
-  services.miliacaffe.hostnames = ["miliacafe.spectre.local"];
+  # services.miliacaffe.enable = true;
+  # services.miliacaffe.hostnames = ["miliacafe.spectre.local"];
 
-  services.liverecord.enable = true;
-  services.liverecord.hostnames = ["liverecord.spectre.local"];
+  # services.liverecord.enable = true;
+  # services.liverecord.hostnames = ["liverecord.spectre.local"];
 
-  services.arthome.enable = true;
-  services.arthome.debug = "1";
-  services.arthome.hostnames = ["artframe.spectre.local"];
+  # services.arthome.enable = true;
+  # services.arthome.debug = "1";
+  # services.arthome.hostnames = ["artframe.spectre.local"];
 
-  services.fittrack.enable = true;
-  services.fittrack.hostnames = ["fit.spectre.local"];
+  # services.fittrack.enable = true;
+  # services.fittrack.hostnames = ["fit.spectre.local"];
 
-  services.ihasb33r.enable = true;
-  services.ihasb33r.hostnames = ["art.spectre.local"];
+  # services.ihasb33r.enable = true;
+  # services.ihasb33r.hostnames = ["art.spectre.local"];
 
-  services.mullvad-vpn.enable = true;
-  services.blueman.enable = true;
+  # services.mullvad-vpn.enable = true;
+  # services.blueman.enable = true;
   services.dbus = {
     enable = true;
     packages = with pkgs; [pkgs.dconf];
@@ -178,13 +179,13 @@
     defaultSession = "gnome";
   };
   # virtualisation.podman.enable = true;
-  virtualisation.docker.enable = true;
+  virtualisation.docker.enable = false;
   # virtualisation.libvirtd.enable = true;
   # programs.virt-manager.enable = true;
 
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true;
-  system.stateVersion = "22.05";
+  system.stateVersion = "21.11";
   # systemd.services = {
   #   audio-fixer = {
   #     path = [pkgs.alsa-tools];
