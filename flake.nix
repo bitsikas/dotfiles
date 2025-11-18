@@ -136,6 +136,11 @@
           system = "aarch64-linux";
           user = "kostas";
         };
+        devserver = mkSystem "devserver" {
+          system = "x86_64-linux";
+          user = "kostas";
+          usedisko = true;
+        };
         hetzner-cloud = mkSystem "hetzner-cloud" {
           system = "x86_64-linux";
           user = "kostas";
