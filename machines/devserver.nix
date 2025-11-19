@@ -10,9 +10,6 @@
   nixpkgs-unstable,
   ...
 }: {
-  nixpkgs.config.permittedInsecurePackages = [
-  ];
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   # building sd image failes with missing sun4i-drm
@@ -58,6 +55,32 @@
   services.resolved.enable = true;
   services.exim = {
     enable = true;
+    package = import ../packages/exim.nix {
+      inherit lib;
+      coreutils = pkgs.coreutils;
+      db = pkgs.db;
+      fetchurl = pkgs.fetchurl;
+      openssl = pkgs.openssl;
+      pcre = pkgs.pcre;
+      pcre2 = pkgs.pcre2;
+      perl = pkgs.perl;
+      pkg-config = pkgs.pkg-config;
+      stdenv = pkgs.stdenv;
+      libxcrypt = pkgs.libxcrypt;
+      procps = pkgs.procps;
+      killall = pkgs.killall;
+      openldap = pkgs.openldap;
+      libmysqlclient = pkgs.libmysqlclient;
+      zlib = pkgs.zlib;
+      libpq = pkgs.libpq;
+      sqlite = pkgs.sqlite;
+      dovecot = pkgs.dovecot;
+      pam = pkgs.pam;
+      libspf2 = pkgs.libspf2;
+      opendmarc = pkgs.opendmarc;
+      hiredis = pkgs.hiredis;
+      jansson = pkgs.jansson;
+    };
     config = builtins.readFile ../modules/exim/exim.conf;
   };
   services.haproxy = {
