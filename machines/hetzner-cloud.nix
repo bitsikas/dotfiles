@@ -71,53 +71,23 @@
 
       dns = {
         base_domain = "bitsikas.home";
-        extra_records = [
-          {
-            name = "jellyseer.bitsikas.home";
+        extra_records =
+          builtins.map (subdomain: {
+            name = "${subdomain}.bitsikas.home";
             type = "A";
             value = "100.64.0.1";
-          }
-          {
-            name = "jellyfin.bitsikas.home";
-            type = "A";
-            value = "100.64.0.1";
-          }
-          {
-            name = "sonarr.bitsikas.home";
-            type = "A";
-            value = "100.64.0.1";
-          }
-          {
-            name = "radarr.bitsikas.home";
-            type = "A";
-            value = "100.64.0.1";
-          }
-          {
-            name = "prowlarr.bitsikas.home";
-            type = "A";
-            value = "100.64.0.1";
-          }
-          {
-            name = "liverecord.bitsikas.home";
-            type = "A";
-            value = "100.64.0.1";
-          }
-          {
-            name = "cockpit.bitsikas.home";
-            type = "A";
-            value = "100.64.0.1";
-          }
-          {
-            name = "grocy.bitsikas.home";
-            type = "A";
-            value = "100.64.0.1";
-          }
-          {
-            name = "transmission.bitsikas.home";
-            type = "A";
-            value = "100.64.0.1";
-          }
-        ];
+          }) [
+            "transmission"
+            "jellyseer"
+            "jellyfin"
+            "sonarr"
+            "radarr"
+            "prowlarr"
+            "liverecord"
+            "cockpit"
+            "grocy"
+            "transmission"
+          ];
       };
     };
   };

@@ -297,6 +297,8 @@
       ratio-limit-enabled = true;
       rpc-bind-address = "0.0.0.0"; # Bind to own IP
       rpc-whitelist = "127.0.0.1,192.168.*.*,10.*.*.*,100.64.0.*"; # Whitelist your remote machine (10.0.0.1 in this example)
+      rpc-host-whitelist = "transmission.bitsikas.home";
+      rpc-host-whitelist-enabled = true;
       seed-queue-enabled = true;
       seed-queue-size = 5;
       speed-limit-down = 20000;
@@ -304,6 +306,86 @@
       speed-limit-up = 2000;
       speed-limit-up-enabled = true;
     };
+  };
+
+  services.qbittorrent = {
+    enable = true; # Enable qBittorrent daemon (qbittorrent-nox)
+    openFirewall = true; # Open firewall for Web UI and torrenting port
+
+    # Note: NixOS qBittorrent module uses 'torrentingPort' and 'webuiPort'
+    # for the systemd service command line arguments and firewall.
+    # The defaults are typically 6881 for torrenting and 8080 for webui.
+    # You can override them if needed, e.g.:
+    torrentingPort = 6881;
+    webuiPort = 9093;
+
+    # Most of the specific settings are passed through to the
+    # qBittorrent configuration file (qBittorrent.conf) using serverConfig.
+    # This option is a free-form attribute set.
+    # Be aware that qBittorrent configuration uses [Sections] for its settings.
+    serverConfig = {
+      LegalNotice.Accepted = true; # Required to use the service
+
+      # [Preferences] section equivalent settings
+      Preferences = {
+        # download-dir = "/mnt/Downloads"; -> mapped to "Downloads\\SavePath"
+        "Downloads\\SavePath" = "/mnt/Downloads";
+
+        # incomplete-dir = "/mnt/.incomplete"; -> mapped to "Downloads\\IncompleteSavePath"
+        "Downloads\\IncompleteSavePath" = "/mnt/.incomplete";
+        "Downloads\\TempPath" = true; # incomplete-dir-enabled
+
+        # speed-limit-down = 20000; (kB/s) -> mapped to "Speed\\GlobalDLRateLimit" (KiB/s)
+        # 20000 kB/s is 20480 KiB/s (qBittorrent uses KiB/s)
+        "Speed\\GlobalDLRateLimit" = 20480;
+
+        # speed-limit-down-enabled = true; -> mapped to "Speed\\GlobalDLRateLimitEnabled"
+        "Speed\\GlobalDLRateLimitEnabled" = true;
+
+        # speed-limit-up = 2000; (kB/s) -> mapped to "Speed\\GlobalULRateLimit" (KiB/s)
+        # 2000 kB/s is 2048 KiB/s (qBittorrent uses KiB/s)
+        "Speed\\GlobalULRateLimit" = 2048;
+
+        # speed-limit-up-enabled = true; -> mapped to "Speed\\GlobalULRateLimitEnabled"
+        "Speed\\GlobalULRateLimitEnabled" = true;
+
+        # ratio-limit = 2; -> mapped to "Bittorrent\\RatioLimit"
+        "Bittorrent\\RatioLimit" = 2.0;
+
+        # ratio-limit-enabled = true; -> mapped to "Bittorrent\\RatioLimitEnabled"
+        "Bittorrent\\RatioLimitEnabled" = true;
+
+        # seed-queue-enabled = true; -> mapped to "Queueing\\MaxActiveTorrents" (active torrents = downloads + seeds)
+        # Transmission's 'seed-queue-enabled' is closer to qBittorrent's "Max active torrents" option
+        "Queueing\\MaxActiveTorrents" = 5; # Active = Downloading + Seeding
+
+        # seed-queue-size = 5; -> mapped to "Queueing\\MaxActiveUploads"
+        "Queueing\\MaxActiveUploads" = 5; # Max active seeds
+      };
+
+      # [WebUI] section equivalent settings
+      WebUI = {
+        # rpc-bind-address = "0.0.0.0"; -> qBittorrent binds to all interfaces by default
+        # You can try "WebUI\\Address" but it's often more complex in qBittorrent.
+
+        # rpc-whitelist and rpc-host-whitelist are roughly equivalent to
+        # enabling LocalHostAuth and then relying on a reverse proxy's access control
+        # or a separate VPN/firewall setup, as qBittorrent's webui access control is simpler.
+        # You might set:
+        LocalHostAuth = false; # To allow remote access without specific IP whitelisting
+
+        # You should set a User/Password here for security, but note that
+        # qBittorrent's service configuration is **tricky** with passwords,
+        # which often need to be set in the WebUI first or provided as a PBKDF2 hash.
+        # Username = "youruser";
+        # Password_PBKDF2 = "<your_password_hash>";
+      };
+    };
+
+    # For the rpc-bind-address and whitelist logic, in NixOS,
+    # it's usually better to rely on system-level firewall rules or network
+    # configuration (like a VPN/Tailscale/WireGuard) for access control.
+    # The `openFirewall = true` above handles basic port opening.
   };
   systemd.services.wireproxy = {
     wants = ["network-online.target"];
@@ -338,6 +420,25 @@
         return = "200 '<html><body>It works</body></html>'";
         extraConfig = ''
           default_type text/html;
+        '';
+      };
+    };
+    virtualHosts."transmission.bitsikas.home" = {
+      forceSSL = false;
+      enableACME = false;
+      locations."/" = {
+        proxyPass = "http://localhost:9091";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_read_timeout  300;
+          proxy_set_header    Host                 $host;
+          proxy_set_header    X-Forwarded-Proto    $scheme;
+          proxy_set_header    X-Forwarded-Protocol $scheme;
+          proxy_set_header    X-Real-IP            $remote_addr;
+          proxy_pass_header   X-Transmission-Session-Id;
+          proxy_set_header    X-Forwarded-Host     $host;
+          proxy_set_header    X-Forwarded-Server   $host;
+          proxy_set_header    X-Forwarded-For      $proxy_add_x_forwarded_for;
         '';
       };
     };

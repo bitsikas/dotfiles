@@ -39,7 +39,7 @@
 
   environment.systemPackages = with pkgs; [
     inetutils
-    ghostty
+    nixpkgs-unstable.ghostty
     headscale
     _1password-cli
     bat

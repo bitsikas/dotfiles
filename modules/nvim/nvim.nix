@@ -50,7 +50,7 @@ in {
       pkgs.vimPlugins.gitsigns-nvim
       # pkgs.vimPlugins.solarized-nvim
       pkgs.vimPlugins.NeoSolarized
-      nixpkgs-unstable.vimPlugins.catppuccin-nvim
+      pkgs.vimPlugins.catppuccin-nvim
       # pkgs.vimPlugins.indentLine
       # pkgs.vimPlugins.nord-vim
       pkgs.vimPlugins.nvim-cmp
