@@ -56,49 +56,27 @@
   # avoid building zfs
   disabledModules = ["profiles/base.nix"];
   services.resolved.enable = true;
+  services.exim = {
+    enable = true;
+    config = builtins.readFile ../modules/exim/exim.conf;
+  };
   services.haproxy = {
     enable = true;
-    config = ''
-      # ---------------------------------------------------------------------
-      # GLOBAL CONFIGURATION
-      # ---------------------------------------------------------------------
-      global
-          log /dev/log    len 4096 local0
-          # Define the user and group HAProxy runs as
-          user haproxy
-          group haproxy
-          # Set the maximum number of concurrent connections
-          maxconn 2000
-
-      # ---------------------------------------------------------------------
-      # FRONTEND (Listens for incoming SMTP connections)
-      # ---------------------------------------------------------------------
-      frontend fe_smtp
-          # Use TCP mode for SMTP
-          mode tcp
-          # Listen on the standard SMTP port (25) on all interfaces
-          bind *:587
-          # Default action is to forward traffic to the backend mail servers
-          default_backend be_smtp_servers
-
-      # ---------------------------------------------------------------------
-      # BACKEND (Defines the actual mail servers)
-      # ---------------------------------------------------------------------
-      backend be_smtp_servers
-          # Use TCP mode
-          mode tcp
-          # Use a simple round-robin load balancing algorithm
-          balance roundrobin
-          # Connection timeout should be generous for SMTP
-          timeout connect 5s
-          timeout server 50s
-
-          # Define your mail server(s) here.
-          # Replace the IP addresses/names with your actual backend servers.
-          server mail_server_1 someserver.test:587
-          # Add more servers as needed
-    '';
+    config = builtins.readFile ../modules/haproxy/haproxy.conf;
   };
+  systemd.tmpfiles.settings = {
+    exim = {
+      "/var/spool/exim/" = {
+        d = {
+          mode = "0700";
+          user = "exim";
+          group = "exim";
+        };
+      };
+    };
+  };
+  # systemd.services.exim.preStart = "";
+  # systemd.services.exim.serviceConfig.ExecStartPre = "+${pkgs.coreutils}/bin/install --group=exim --owner=exim --mode=0700 --directory /var/spool/exim4";
 
   networking.hostName = "devserver"; # Define your hostname.
   # Pick only one of the below networking options.
