@@ -122,28 +122,28 @@
       in {
         qemu-aarch64 = mkSystem "vm-qemu-aarch64" {
           system = "aarch64-linux";
-          user = "kostas";
+          users = ["kostas"];
         };
         qemu-x86_64 = mkSystem "vm-qemu-x86_64" {
           system = "aarch64-linux";
-          user = "kostas";
+          users = ["kostas"];
         };
         spectre = mkSystem "spectre" {
           system = "x86_64-linux";
-          user = "kostas";
+          users = ["kostas" "guest"];
         };
         beershot = mkSystem "pi4" {
           system = "aarch64-linux";
-          user = "kostas";
+          users = ["kostas"];
         };
         devserver = mkSystem "devserver" {
           system = "x86_64-linux";
-          user = "kostas";
+          users = ["kostas"];
           usedisko = true;
         };
         hetzner-cloud = mkSystem "hetzner-cloud" {
           system = "x86_64-linux";
-          user = "kostas";
+          users = ["kostas"];
           usedisko = true;
         };
       };
