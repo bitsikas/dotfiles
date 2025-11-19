@@ -24,6 +24,26 @@
   # Enables the generation of /boot/extlinux/extlinux.conf
   # boot.loader.generic-extlinux-compatible.enable = true;
   imports = [./hardware/devserver.nix];
+  time.timeZone = "Europe/Bucharest";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.supportedLocales = ["all"];
+
+  # Add ~/.local/bin to PATH
+  environment.localBinInPath = true;
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.mutableUsers = true;
+
+  time.timeZone = "Europe/Bucharest";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.supportedLocales = ["all"];
+
+  # Add ~/.local/bin to PATH
+  environment.localBinInPath = true;
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.mutableUsers = true;
+  environment.pathsToLink = ["/libexec"];
+
+  programs.fish.enable = true;
 
   # systemd.timers."dyndns" = {
   #   wantedBy = ["timers.target"];
@@ -128,6 +148,7 @@
   services.openssh.enable = true;
 
   users.users.root = {
+    shell = pkgs.fish;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/LlyXIrquF9XO6MAx95yrwFdnr7JZCbWzjCt1qPcMd "

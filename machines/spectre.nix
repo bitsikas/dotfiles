@@ -17,6 +17,14 @@
   };
   # this takes a lot of time sometimes
   documentation.man.generateCaches = false;
+  time.timeZone = "Europe/Bucharest";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.supportedLocales = ["all"];
+
+  # Add ~/.local/bin to PATH
+  environment.localBinInPath = true;
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.mutableUsers = true;
 
   environment.sessionVariables = {
     # QT_QPA_PLATFORM = "wayland-egl";
@@ -299,4 +307,32 @@
   programs.nix-index-database.comma.enable = true;
   programs.nix-index.enableFishIntegration = true;
   # networking.firewall.checkReversePath = "loose"
+
+  environment.pathsToLink = ["/libexec"];
+
+  programs.fish.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
+  fonts.fontconfig.enable = true;
+  fonts.enableDefaultPackages = true;
+  fonts.fontconfig.defaultFonts = {
+    serif = ["Noto Serif"];
+    sansSerif = ["Noto Sans"];
+    monospace = ["FiraCode"];
+  };
+
+  fonts.packages = with pkgs; [
+    fira-code
+    noto-fonts
+    jetbrains-mono
+    noto-fonts-emoji
+    nerd-fonts.fira-code
+    ubuntu_font_family
+    cantarell-fonts
+    roboto
+    roboto-serif
+  ];
 }

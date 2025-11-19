@@ -38,32 +38,4 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
     ];
   };
-
-  environment.pathsToLink = ["/libexec"];
-
-  programs.fish.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  fonts.fontconfig.enable = true;
-  fonts.enableDefaultPackages = true;
-  fonts.fontconfig.defaultFonts = {
-    serif = ["Noto Serif"];
-    sansSerif = ["Noto Sans"];
-    monospace = ["FiraCode"];
-  };
-
-  fonts.packages = with pkgs; [
-    fira-code
-    noto-fonts
-    jetbrains-mono
-    noto-fonts-emoji
-    nerd-fonts.fira-code
-    ubuntu_font_family
-    cantarell-fonts
-    roboto
-    roboto-serif
-  ];
 }

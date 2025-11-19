@@ -130,24 +130,24 @@
         };
         spectre = mkSystem "spectre" {
           system = "x86_64-linux";
-          users = ["kostas" "guest"];
+          users = ["kostas" "guest" "root"];
         };
         beershot = mkSystem "pi4" {
           system = "aarch64-linux";
-          users = ["kostas"];
+          users = ["kostas" "root"];
         };
         devserver = mkSystem "devserver" {
           system = "x86_64-linux";
-          users = ["kostas"];
+          users = ["kostas" "root"];
           usedisko = true;
         };
         asus = mkSystem "asus" {
           system = "x86_64-linux";
-          user = "kostas";
+          users = ["kostas" "root"];
         };
         hetzner-cloud = mkSystem "hetzner-cloud" {
           system = "x86_64-linux";
-          users = ["kostas"];
+          users = ["kostas" "root"];
           usedisko = true;
         };
       };
