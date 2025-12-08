@@ -26,7 +26,7 @@
     prompt = "enabled";
   };
 
-  programs.ssh = {
+  programs.ssh.matchBlocks."*" = {
     enable = true;
     controlMaster = "auto";
     controlPersist = "60m";

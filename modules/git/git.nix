@@ -5,9 +5,11 @@
 }: {
   programs.git = {
     enable = true;
-    userName = "Kostas Papakonstantinou";
-    userEmail = "kostas@bitsikas.dev";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Kostas Papakonstantinou";
+        email = "kostas@bitsikas.dev";
+      };
       rerere = {
         enabled = true;
       };
