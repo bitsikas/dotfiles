@@ -8,14 +8,14 @@ lsp_zero.on_attach(function(client, bufnr)
 			require('nvim-navic').attach(client, bufnr)
 		end
 end)
-require'lspconfig'.ruff.setup({})
-require'lspconfig'.pyright.setup({})
-require'lspconfig'.tailwindcss.setup({})
-require'lspconfig'.htmx.setup{}
-require'lspconfig'.superhtml.setup{}
-require'lspconfig'.gopls.setup{}
-require'lspconfig'.ccls.setup{}
-require'lspconfig'.nixd.setup{}
+vim.lsp.enable('ruff')
+vim.lsp.enable('pyright')
+vim.lsp.enable('tailwindcss')
+vim.lsp.enable('htmx')
+vim.lsp.enable('superhtml')
+vim.lsp.enable('gopls')
+vim.lsp.enable('ccls')
+vim.lsp.enable('nixd')
 
 EOF
 
