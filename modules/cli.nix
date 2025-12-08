@@ -26,14 +26,24 @@
     prompt = "enabled";
   };
 
-  programs.ssh.matchBlocks."*" = {
+  programs.ssh = {
     enable = true;
-    controlMaster = "auto";
-    controlPersist = "60m";
-    controlPath = "~/.c-%r@%n";
-    forwardAgent = true;
-    compression = true;
     includes = ["config.d/*"];
+    enableDefaultConfig = false;
+    matchBlocks = {
+      "*" = {
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+        addKeysToAgent = "no";
+        hashKnownHosts = false;
+        userKnownHostsFile = "~/.ssh/known_hosts";
+        controlMaster = "auto";
+        controlPersist = "60m";
+        controlPath = "~/.c-%r@%n";
+        forwardAgent = true;
+        compression = true;
+      };
+    };
   };
 
   programs.git.package = nixpkgs-unstable.git;
