@@ -71,7 +71,7 @@
     wl-clipboard
     bottles
     chiaki-ng
-    firefox-wayland
+    firefox
     dconf
     inkscape
     gimp
@@ -103,7 +103,7 @@
     ];
   };
   programs.kdeconnect.enable = true;
-  programs.ssh.askPassword = lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/kssaskpass";
+  # programs.ssh.askPassword = lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/kssaskpass";
   programs.kdeconnect.package = lib.mkDefault pkgs.gnomeExtensions.gsconnect;
   security.rtkit.enable = true;
   security.sudo.enable = true;
@@ -328,9 +328,9 @@
     fira-code
     noto-fonts
     jetbrains-mono
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     nerd-fonts.fira-code
-    ubuntu_font_family
+    ubuntu-classic
     cantarell-fonts
     roboto
     roboto-serif

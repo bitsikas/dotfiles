@@ -79,6 +79,11 @@
       currency = "RON";
     };
   };
+  services.immich = {
+    enable = true;
+    mediaLocation = "/mnt/immich";
+    machine-learning.enable = false;
+  };
   services.cockpit = {
     enable = true;
     port = 9090;
@@ -131,6 +136,7 @@
   };
   systemd.tmpfiles.rules = [
     "d /var/spool/samba 1777 root root -"
+    "d /mnt/immich 1700 immich immich -"
   ];
   networking.hostName = "beershot"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -230,7 +236,7 @@
   };
 
   services.openssh.enable = true;
-  services.mullvad-vpn.enable = true;
+  # services.mullvad-vpn.enable = true;
   services.tailscale.enable = true;
 
   users.users.root = {
@@ -247,8 +253,8 @@
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
-    mullvad
-    yt-dlp
+    # mullvad
+    # yt-dlp
     sqlite
     qrencode
     wireproxy
@@ -299,6 +305,7 @@
   };
   services.transmission = {
     enable = true; # Enable transmission daemon
+    package = pkgs.transmission_4;
     openRPCPort = true; # Open firewall for RPC
     settings = {
       # Override default settings
@@ -410,7 +417,7 @@
       RestartSec = "30s";
     };
   };
-  services.liverecord.enable = true;
+  services.liverecord.enable = false;
   services.liverecord.destination = "/mnt/random";
   services.liverecord.hostnames = ["liverecord.bitsikas.home"];
 
@@ -451,6 +458,14 @@
           proxy_set_header    X-Forwarded-Server   $host;
           proxy_set_header    X-Forwarded-For      $proxy_add_x_forwarded_for;
         '';
+      };
+    };
+    virtualHosts."immich.bitsikas.home" = {
+      forceSSL = false;
+      enableACME = false;
+      locations."/" = {
+        proxyPass = "http://localhost:2283";
+        proxyWebsockets = true;
       };
     };
     virtualHosts."jellyfin.bitsikas.home" = {

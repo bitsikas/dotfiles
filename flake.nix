@@ -3,7 +3,7 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     disko.url = "github:nix-community/disko";
@@ -32,7 +32,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # ghostty = {
@@ -134,7 +134,7 @@
         };
         beershot = mkSystem "pi4" {
           system = "aarch64-linux";
-          users = ["kostas" "root"];
+          users = ["root"];
         };
         devserver = mkSystem "devserver" {
           system = "x86_64-linux";

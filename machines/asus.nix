@@ -40,9 +40,9 @@
     fira-code
     noto-fonts
     jetbrains-mono
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     nerd-fonts.fira-code
-    ubuntu_font_family
+    ubuntu-classic
     cantarell-fonts
     roboto
     roboto-serif
@@ -94,7 +94,7 @@
     wl-clipboard
     # bottles
     # chiaki-ng
-    firefox-wayland
+    firefox
     dconf
     inkscape
     gimp
