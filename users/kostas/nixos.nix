@@ -8,14 +8,14 @@
   ...
 }: {
   # Set your time zone.
-  time.timeZone = "Europe/Bucharest";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.supportedLocales = ["all"];
+  # time.timeZone = "Europe/Bucharest";
+  # i18n.defaultLocale = "en_US.UTF-8";
+  # i18n.supportedLocales = ["all"];
 
-  # Add ~/.local/bin to PATH
-  environment.localBinInPath = true;
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.mutableUsers = true;
+  # # Add ~/.local/bin to PATH
+  # environment.localBinInPath = true;
+  # # Define a user account. Don't forget to set a password with ‘passwd’.
+  # users.mutableUsers = true;
   users.users.kostas = {
     isNormalUser = true;
     home = "/home/kostas";

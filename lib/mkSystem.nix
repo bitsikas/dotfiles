@@ -19,6 +19,7 @@
       user: {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
+        home-manager.backupFileExtension = ".nixbak";
         home-manager.extraSpecialArgs = {
           nixpkgs-unstable = import nixpkgs-unstable {
             inherit system;
