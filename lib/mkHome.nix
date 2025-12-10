@@ -33,6 +33,12 @@ in
       {programs.home-manager.enable = true;}
       {nixpkgs.config.allowUnfree = true;}
       {
+        nixpkgs.overlays = [
+          inputs.neorg-overlay.overlays.default
+        ];
+      }
+
+      {
         nixpkgs.config.permittedInsecurePackages = [
           "nodejs-16.20.0"
           "nodejs-16.20.2"

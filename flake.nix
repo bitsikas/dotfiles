@@ -20,6 +20,7 @@
     liverecord.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+    neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
 
     ihasb33r = {
       url = "git+ssh://git@github.com/bitsikas/ihasb33r";
@@ -147,7 +148,7 @@
         };
         hetzner-cloud = mkSystem "hetzner-cloud" {
           system = "x86_64-linux";
-          users = ["kostas" "root"];
+          users = ["root"];
           usedisko = true;
         };
       };

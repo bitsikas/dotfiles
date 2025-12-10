@@ -37,7 +37,7 @@ in {
         (builtins.readFile .config/nvim/settings/conform.vim)
         # (builtins.readFile .config/nvim/settings/navic.vim)
         (builtins.readFile .config/nvim/settings/styling.vim)
-        # (builtins.readFile .config/nvim/settings/neorg.vim)
+        (builtins.readFile .config/nvim/settings/neorg.vim)
       ]
     );
     plugins = [
@@ -98,7 +98,7 @@ in {
       pkgs.vimPlugins.snacks-nvim
       pkgs.vimPlugins.snacks-nvim
       pkgs.vimPlugins.vim-oscyank
-      # pkgs.vimPlugins.neorg
+      pkgs.vimPlugins.neorg
     ];
   };
   home.packages = [
