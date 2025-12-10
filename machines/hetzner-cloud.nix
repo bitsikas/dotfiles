@@ -71,6 +71,11 @@
       server_url = "https://headscale.bitsikas.dev";
 
       dns = {
+        nameservers.global = [
+          "1.1.1.1"
+          "8.8.8.8"
+        ];
+
         base_domain = "bitsikas.home";
         extra_records =
           builtins.map (subdomain: {
@@ -89,6 +94,7 @@
             "grocy"
             "transmission"
             "immich"
+            "nzbget"
           ];
       };
     };

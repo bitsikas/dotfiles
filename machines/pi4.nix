@@ -420,6 +420,7 @@
   services.liverecord.enable = false;
   services.liverecord.destination = "/mnt/random";
   services.liverecord.hostnames = ["liverecord.bitsikas.home"];
+  services.sabnzbd.enable = true;
 
   services.nginx = {
     enable = true;
@@ -465,6 +466,17 @@
       enableACME = false;
       locations."/" = {
         proxyPass = "http://localhost:2283";
+        proxyWebsockets = true;
+        extraConfig = ''
+          client_max_body_size 1000M;
+        '';
+      };
+    };
+    virtualHosts."nzbget.bitsikas.home" = {
+      forceSSL = false;
+      enableACME = false;
+      locations."/" = {
+        proxyPass = "http://localhost:6789";
         proxyWebsockets = true;
       };
     };

@@ -164,20 +164,16 @@
     enable = true;
     nssmdns4 = true;
   };
-  services.xserver = {
-    enable = true;
-    displayManager = {
-      lightdm.enable = false;
-      gdm.enable = true;
-      gdm.wayland = true;
-      gdm.debug = false;
-    };
-    desktopManager = {
-      gnome.enable = true;
-      gnome.debug = false;
-    };
-    # wacom.enable = true;
+  services.displayManager = {
+    gdm.enable = true;
+    gdm.wayland = true;
+    gdm.debug = false;
   };
+  services.desktopManager = {
+    gnome.enable = true;
+    gnome.debug = false;
+  };
+  # wacom.enable = true;
   #  services.displayManager.ly.enable = true;
 
   services.desktopManager.plasma6.enable = false;
@@ -282,6 +278,10 @@
       address = "0.0.0.0";
       port = 8080;
       settings = {
+        dns.nameservers.global = [
+          "1.1.1.1"
+          "8.8.8.8"
+        ];
         logtail.enabled = false;
         server_url = "https://ihasb33r.duckdns.org";
 
