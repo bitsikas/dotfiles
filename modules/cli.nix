@@ -74,6 +74,9 @@
     presenterm
     glow
     todo-txt-cli
+    jupyter
+    uv
+    visidata
     # (pkgs.writeShellApplication {
     #   name = "lights";
     #   runtimeInputs = with pkgs; [neovim-remote];

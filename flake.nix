@@ -83,6 +83,7 @@
             pkgs.nixVersions.stable
             pkgs.home-manager
             unstable-pkgs.git
+            pkgs.docker
           ];
         };
       }
