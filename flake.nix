@@ -27,6 +27,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    smtping = {
+      url = "git+ssh://git@github.com/bitsikas/smtping";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -138,6 +143,10 @@
           system = "aarch64-linux";
           users = ["root"];
         };
+        gmktec = mkSystem "gmktec" {
+          system = "x86_64-linux";
+          users = ["kostas" "root" "guest" "alexandra"];
+        };
         devserver = mkSystem "devserver" {
           system = "x86_64-linux";
           users = ["kostas" "root"];
@@ -145,7 +154,7 @@
         };
         asus = mkSystem "asus" {
           system = "x86_64-linux";
-          users = ["kostas" "root"];
+          users = ["kostas" "root" "guest" "alexandra"];
         };
         hetzner-cloud = mkSystem "hetzner-cloud" {
           system = "x86_64-linux";

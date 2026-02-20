@@ -76,6 +76,7 @@ in
         inputs.artframe.nixosModules.default
         inputs.fittrack.nixosModules.default
         inputs.ihasb33r.nixosModules.default
+        inputs.smtping.nixosModules.default
         inputs.milia.nixosModules.default
         inputs.liverecord.nixosModules.default
 

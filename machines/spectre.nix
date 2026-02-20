@@ -28,10 +28,17 @@
 
   environment.sessionVariables = {
     # QT_QPA_PLATFORM = "wayland-egl";
-    QT_QPA_PLATFORM = "wayland";
     KWIN_IM_SHOW_ALWAYS = "1";
+
+    # Force Firefox to use Wayland
+    MOZ_ENABLE_WAYLAND = "1";
+
+    # Force Qt apps to use Wayland and the IBus input module
+    QT_QPA_PLATFORM = "wayland;xcb";
+    QT_IM_MODULE = "ibus";
   };
   networking.networkmanager.enable = true;
+  services.pcscd.enable = true;
   services.fwupd.enable = true;
   services.pulseaudio.enable = false;
   services.printing.enable = true;
@@ -46,47 +53,57 @@
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
   environment.systemPackages = with pkgs; [
-    inetutils
-    nixpkgs-unstable.ghostty
-    headscale
+    # gnome-boxes
+    # inputs.ghostty.packages.x86_64-linux.default
     _1password-cli
     bat
+    bottles
+    chiaki-ng
     cifs-utils
     coreutils
+    dconf
     fd
     ffmpeg
-    # gnome-boxes
+    firefox
+    gimp
     gnome-tweaks
     gnomeExtensions.tailscale-qs
     gnomeExtensions.user-themes
+    gst_all_1.gst-libav
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gst-vaapi
+    gst_all_1.gstreamer
+    headscale
+    imv
+    inetutils
+    inkscape
+    krita
+    kubectl
     libinput-gestures
+    libreoffice
     libwacom
     mangal
+    minikube
+    mypaint
+    nix-index
+    nixpkgs-unstable.ghostty
     pavucontrol
     qt5.qtwayland
+    qt5.qtwayland
+    qt6.qtwayland
+    skaffold
     sof-firmware
+    thunderbird
     transmission-remote-gtk
     vanilla-dmz
+    vlc
     wireguard-tools
     wl-clipboard
-    bottles
-    chiaki-ng
-    firefox
-    dconf
-    inkscape
-    gimp
-    imv
-    vlc
-    krita
-    mypaint
-    minikube
-    skaffold
-    kubectl
-    libreoffice
-    thunderbird
-    # inputs.ghostty.packages.x86_64-linux.default
-    nix-index
   ];
+
   programs.light.enable = true;
   programs.nix-ld = {
     enable = true;
@@ -100,6 +117,18 @@
       pkgs.glib
       pkgs.libepoxy
       pkgs.fontconfig
+
+      pkgs.gst_all_1.gstreamer
+      # Common plugins like "filesrc" to combine within e.g. gst-launch
+      pkgs.gst_all_1.gst-plugins-base
+      # Specialized plugins separated by quality
+      pkgs.gst_all_1.gst-plugins-good
+      pkgs.gst_all_1.gst-plugins-bad
+      pkgs.gst_all_1.gst-plugins-ugly
+      # Plugins to reuse ffmpeg to play almost every video format
+      pkgs.gst_all_1.gst-libav
+      # Support the Video Audio (Hardware) Acceleration API
+      pkgs.gst_all_1.gst-vaapi
     ];
   };
   programs.kdeconnect.enable = true;
@@ -108,12 +137,25 @@
   security.rtkit.enable = true;
   security.sudo.enable = true;
 
+  programs.firefox.nativeMessagingHosts.euwebid = true;
+  programs.firefox.nativeMessagingHosts.packages = [pkgs.web-eid-app];
+  programs.firefox.policies.SecurityDevices.p11-kit-proxy = "${pkgs.p11-kit}/lib/p11-kit-proxy.so";
   networking.nftables.enable = true;
-  networking.firewall.allowedTCPPorts = [80 8080 8551];
+  networking.firewall.allowedTCPPorts = [80 8080 8551 47984 47989 47990 48010];
   networking.firewall.allowedUDPPorts = [config.services.tailscale.port];
+  networking.firewall.allowedUDPPortRanges = [
+    {
+      from = 47998;
+      to = 48000;
+    }
+    {
+      from = 8000;
+      to = 8010;
+    }
+  ];
   networking.firewall.trustedInterfaces = ["tailscale0"];
   networking.hosts = {
-    "127.0.0.1" = ["art.spectre.local" "fit.spectre.local" "miliacafe.spectre.local" "artframe.spectre.local"];
+    "127.0.0.1" = ["art.spectre.local" "fit.spectre.local" "miliacafe.spectre.local" "artframe.spectre.local" "liverecord.spectre.local"];
     "100.64.0.1" = ["cockpit.bitsikas.home"];
   };
   # networking.firewall.allowedUDPPorts = [];
@@ -124,21 +166,15 @@
     localNetworkGameTransfers.openFirewall = false; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
-  services.miliacaffe.enable = true;
-  services.miliacaffe.hostnames = ["miliacafe.spectre.local"];
-
-  services.liverecord.enable = true;
-  services.liverecord.hostnames = ["liverecord.spectre.local"];
-
-  services.arthome.enable = true;
-  services.arthome.debug = "1";
-  services.arthome.hostnames = ["artframe.spectre.local"];
-
-  services.fittrack.enable = true;
-  services.fittrack.hostnames = ["fit.spectre.local"];
-
-  services.ihasb33r.enable = true;
-  services.ihasb33r.hostnames = ["art.spectre.local"];
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+    settings.port = 47989;
+    settings.file_apps = "/var/lib/sunshine-apps.json";
+    # applications.apps = [];
+  };
 
   services.mullvad-vpn.enable = true;
   services.blueman.enable = true;
@@ -169,14 +205,14 @@
     gdm.wayland = true;
     gdm.debug = false;
   };
+
   services.desktopManager = {
     gnome.enable = true;
+    plasma6.enable = true;
     gnome.debug = false;
   };
   # wacom.enable = true;
   #  services.displayManager.ly.enable = true;
-
-  services.desktopManager.plasma6.enable = false;
 
   services.displayManager = {
     defaultSession = "gnome";
@@ -273,21 +309,6 @@
   services = {
     tailscale.enable = true;
     tailscale.useRoutingFeatures = "client";
-    headscale = {
-      enable = true;
-      address = "0.0.0.0";
-      port = 8080;
-      settings = {
-        dns.nameservers.global = [
-          "1.1.1.1"
-          "8.8.8.8"
-        ];
-        logtail.enabled = false;
-        server_url = "https://ihasb33r.duckdns.org";
-
-        dns = {base_domain = "ihasb33r.duckdns.org";};
-      };
-    };
 
     nginx.virtualHosts."ihasb33r.duckdns.org" = {
       forceSSL = false;
@@ -335,4 +356,5 @@
     roboto
     roboto-serif
   ];
+  boot.kernel.sysctl."vm.swappiness" = 10;
 }

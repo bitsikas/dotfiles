@@ -99,6 +99,8 @@ in {
       pkgs.vimPlugins.snacks-nvim
       pkgs.vimPlugins.vim-oscyank
       pkgs.vimPlugins.neorg
+      pkgs.vimPlugins.neotest
+      pkgs.vimPlugins.neotest-python
     ];
   };
   home.packages = [

@@ -70,9 +70,34 @@
 
   # avoid building zfs
   disabledModules = ["profiles/base.nix"];
-  services.resolved.enable = true;
-  services.grocy = {
+  services.resolved.enable = false;
+  services.resolved.extraConfig = ''
+    DNSStubListener=no
+  '';
+  services.pihole-web.enable = true;
+  services.pihole-web.ports = ["31480r" "31443s"];
+  services.pihole-ftl = {
     enable = true;
+    lists = [
+      {
+        url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
+      }
+      {
+        url = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt";
+      }
+      {
+        url = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/doh-vpn-proxy-bypass.txt";
+      }
+    ];
+
+    settings = builtins.fromTOML ''
+      [dns]
+      upstreams = ["1.1.1.1", "1.0.0.1"]
+      listeningMode = "ALL"
+    '';
+  };
+  services.grocy = {
+    enable = false;
     nginx.enableSSL = false;
     hostName = "grocy.bitsikas.home";
     settings = {
@@ -80,12 +105,12 @@
     };
   };
   services.immich = {
-    enable = true;
+    enable = false;
     mediaLocation = "/mnt/immich";
     machine-learning.enable = false;
   };
   services.cockpit = {
-    enable = true;
+    enable = false;
     port = 9090;
     openFirewall = true;
     allowed-origins = ["https://cockpit.bitsikas.home" "http://cockpit.bitsikas.home"];
@@ -106,7 +131,7 @@
   };
   services.printing.drivers = [
     pkgs.gutenprint
-    # pkgs.brlaser
+    pkgs.brlaser
     # pkgs.brgenml1lpr
     # pkgs.brgenml1cupswrapper
   ];
@@ -146,14 +171,19 @@
     allowedTCPPorts = [
       25344
       51413
+      31480
+      31443
       5055
       22
       80
+      53
     ];
     allowedUDPPorts = [
       25344
       51413
       51820
+      53
+      5353
       config.services.tailscale.port
     ];
   };
@@ -242,6 +272,7 @@
   users.users.root = {
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEVFkTvNHsjNJdXRWT9CIu7XSOtQyG6lZTyaq3XN5f6Z "
     ];
   };
 
@@ -260,7 +291,7 @@
     wireproxy
   ];
 
-  services.jellyseerr.enable = true;
+  services.jellyseerr.enable = false;
 
   services.avahi = {
     publish = {
@@ -273,38 +304,42 @@
   };
   services.prowlarr = {
     package = nixpkgs-unstable.prowlarr;
-    enable = true;
+    enable = false;
     openFirewall = true;
   };
   services.jellyfin = {
-    enable = true;
+    enable = false;
     openFirewall = true;
     dataDir = "/mnt/services/jellyfin";
   };
+  systemd.services.jellyfin.serviceConfig.Environment = [
+    "JELLYFIN_FFmpeg__probesize=100M"
+    "JELLYFIN_FFmpeg__analyzeduration=2M"
+  ];
   services.bazarr = {
-    enable = true;
+    enable = false;
     openFirewall = true;
   };
   services.sonarr = {
     package = import ../packages/sonarr.nix {
       inherit pkgs;
     };
-    enable = true;
+    enable = false;
     openFirewall = true;
     dataDir = "/mnt/services/sonarr";
   };
   services.radarr = {
-    enable = true;
+    enable = false;
     openFirewall = true;
     dataDir = "/mnt/services/radarr";
   };
   services.readarr = {
-    enable = true;
+    enable = false;
     openFirewall = true;
     dataDir = "/mnt/services/readarr";
   };
   services.transmission = {
-    enable = true; # Enable transmission daemon
+    enable = false; # Enable transmission daemon
     package = pkgs.transmission_4;
     openRPCPort = true; # Open firewall for RPC
     settings = {
@@ -420,7 +455,7 @@
   services.liverecord.enable = false;
   services.liverecord.destination = "/mnt/random";
   services.liverecord.hostnames = ["liverecord.bitsikas.home"];
-  services.sabnzbd.enable = true;
+  services.sabnzbd.enable = false;
 
   services.nginx = {
     enable = true;
@@ -535,6 +570,6 @@
   systemd.services.transmission.serviceConfig.BindPaths = ["/mnt"];
   services.cron = {
     enable = true;
-    systemCronJobs = ["0 4 * * * root find /mnt/random/ -type f -mtime +2 -delete"];
+    systemCronJobs = ["0 4 * * * root find /mnt/random/ -type f -mtime +3 -delete"];
   };
 }

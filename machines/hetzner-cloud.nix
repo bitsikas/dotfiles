@@ -6,7 +6,18 @@
   inputs,
   currentSystem,
   ...
-}: {
+}: let
+  # Manually defining the 7.0.x version
+  mongo7 = pkgs.mongodb-ce.overrideAttrs (oldAttrs: rec {
+    version = "7.0.12"; # Use the latest stable 7.0 release
+    src = pkgs.fetchurl {
+      url = "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-${version}.tgz";
+      # You will likely get a hash mismatch first;
+      # replace this with the hash Nix suggests in the error message.
+      hash = "sha256-Kgq66rOBKgNIVw6bvzNrpnGRxyoBCP0AWnfzs9ReVVk=";
+    };
+  });
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -28,6 +39,10 @@
   documentation.man.generateCaches = false;
   programs.fish.enable = true;
 
+  services.smtping = {
+    enable = true;
+    port = 2525;
+  };
   services.cron = {
     enable = true;
     systemCronJobs = ["0 0 * * * root rsync -avz /var/lib/unifi/data/backup /mnt/backups/unifi"];
@@ -61,7 +76,7 @@
   services.unifi.enable = true;
   services.unifi.openFirewall = true;
   services.unifi.unifiPackage = pkgs.unifi;
-  services.unifi.mongodbPackage = nixpkgs-unstable.mongodb-ce;
+  services.unifi.mongodbPackage = mongo7;
   services.headscale = {
     enable = true;
     address = "0.0.0.0";
@@ -72,8 +87,10 @@
 
       dns = {
         nameservers.global = [
-          "1.1.1.1"
-          "8.8.8.8"
+          "100.64.0.8"
+          # "100.64.0.1"
+          "fd7a:115c:a1e0::8"
+          # "fd7a:115c:a1e0::1"
         ];
 
         base_domain = "bitsikas.home";
@@ -81,7 +98,7 @@
           builtins.map (subdomain: {
             name = "${subdomain}.bitsikas.home";
             type = "A";
-            value = "100.64.0.1";
+            value = "100.64.0.8";
           }) [
             "transmission"
             "jellyseer"
@@ -92,9 +109,12 @@
             "liverecord"
             "cockpit"
             "grocy"
+            "mealie"
             "transmission"
             "immich"
             "nzbget"
+            "pihole"
+            "freshrss"
           ];
       };
     };
@@ -215,6 +235,8 @@
   system.stateVersion = "24.05";
   networking.firewall = {
     allowedTCPPorts = [
+      25
+      2525
       80
       443
     ];

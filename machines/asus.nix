@@ -69,46 +69,39 @@
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
   environment.systemPackages = with pkgs; [
-    inetutils
-    ghostty
-    headscale
     _1password-cli
     bat
     cifs-utils
     coreutils
+    dconf
     fd
     ffmpeg
-    # gnome-boxes
+    firefox
+    ghostty
+    gimp
     gnome-tweaks
     gnomeExtensions.tailscale-qs
     gnomeExtensions.user-themes
-    libinput-gestures
-    libwacom
-    mangal
+    imv
+    inetutils
+    inkscape
+    libreoffice
+    nix-index
     pavucontrol
     qt5.qtwayland
     sof-firmware
-    # transmission-remote-gtk
-    vanilla-dmz
-    wireguard-tools
-    wl-clipboard
-    # bottles
-    # chiaki-ng
-    firefox
-    dconf
-    inkscape
-    gimp
-    imv
-    vlc
-    # krita
-    # mypaint
-    # minikube
-    # skaffold
-    # kubectl
-    libreoffice
     thunderbird
-    # inputs.ghostty.packages.x86_64-linux.default
-    nix-index
+    vanilla-dmz
+    vlc
+    wl-clipboard
+    blender
+    freecad
+    bottles
+    bambu-studio
+    prusa-slicer
+    super-slicer
+    orca-slicer
+    libreoffice
   ];
   programs.light.enable = true;
   programs.nix-ld = {
@@ -126,7 +119,7 @@
     ];
   };
   programs.kdeconnect.enable = false;
-  # programs.ssh.askPassword = lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/kssaskpass";
+  programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/kssaskpass";
   # programs.kdeconnect.package = lib.mkDefault pkgs.gnomeExtensions.gsconnect;
   security.rtkit.enable = true;
   security.sudo.enable = true;
@@ -203,7 +196,7 @@
   };
   #  services.displayManager.ly.enable = true;
 
-  services.desktopManager.plasma6.enable = false;
+  services.desktopManager.plasma6.enable = true;
 
   services.displayManager = {
     defaultSession = "gnome";

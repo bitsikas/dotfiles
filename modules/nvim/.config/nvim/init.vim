@@ -53,6 +53,11 @@ vim.keymap.set("n", "<leader>n", function() harpoon:list():next() end)
 require"nvim-navic".setup({highlight=true})
 require("coverage").setup()
 require'nvim-web-devicons'.setup()
+require("neotest").setup({
+  adapters = {
+    require("neotest-python")
+  }
+})
 -- require("octo").setup({ enable_builtin = true })
 -- vim.cmd([[hi OctoEditable guibg=none]])
 
