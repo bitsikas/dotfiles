@@ -122,6 +122,14 @@ in {
 
   services.nginx = {
     enable = true;
+    commonHttpConfig = ''
+      log_format vhost_combined '$remote_addr - $remote_user [$time_local] '
+                                '"$request" $status $body_bytes_sent '
+                                '"$http_referer" "$http_user_agent" $host:$server_port' ;
+    '';
+    appendHttpConfig = ''
+      access_log /var/log/nginx/access.log vhost_combined;
+    '';
 
     # Use recommended settings
     recommendedGzipSettings = true;
@@ -230,6 +238,66 @@ in {
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
   ];
   nixpkgs.hostPlatform = lib.mkDefault currentSystem;
+  services.fail2ban = {
+    enable = true;
+    # List of IPs that should NEVER be banned
+    ignoreIP = ["127.0.0.1/8" "::1" "192.168.1.0/24"];
+
+    # Global ban settings
+    bantime = "24h"; # Initial ban duration
+    maxretry = 10; # Max failures before ban
+  };
+  services.fail2ban.jails = {
+    sshd.settings.enabled = false;
+    nginx-http-auth = ''
+      enabled = true
+      filter = nginx-http-auth
+      port = http,https
+      logpath = /var/log/nginx/error.log
+      backend = auto
+      maxretry = 10
+    '';
+    nginx-4xx = ''
+      enabled = true
+      filter = nginx-4xx
+      port = http,https
+      logpath = /var/log/nginx/access.log
+      backend = auto
+      findtime = 600
+      maxretry = 3
+    '';
+
+    nginx-botsearch = ''
+      enabled = true
+      filter = nginx-botsearch
+      port = http,https
+      logpath = /var/log/nginx/access.log
+      maxretry = 10
+      backend = auto
+    '';
+    nginx-ip-direct = ''
+      enabled  = true
+      port     = http,https
+      filter   = nginx-ip-direct
+      logpath  = /var/log/nginx/access.log
+      maxretry = 1
+      bantime  = 48h
+      findtime = 600
+      backend = auto
+    '';
+  };
+  environment.etc."fail2ban/filter.d/nginx-4xx.conf".text = ''
+    [Definition]
+    failregex = ^<HOST> -.*"(GET|POST|HEAD).*HTTP.*" (404|403|400) .*$
+    ignoreregex = ^<HOST> -.*"GET /favicon.* HTTP.*".*$
+  '';
+  environment.etc."fail2ban/filter.d/nginx-ip-direct.conf".text = ''
+    [Definition]
+    # Matches the attacker IP <HOST> and looks for your Server IP at the end of the log line
+    # Adjusting for the specific log format you provided:
+    failregex = ^<HOST> -.* 95\.217\.185\.160:(80|443)\s*$
+    ignoreregex =
+  '';
 
   networking.useDHCP = lib.mkDefault true;
   system.stateVersion = "24.05";

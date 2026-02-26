@@ -8,6 +8,8 @@
 }: {
   imports = [./hardware/spectre.nix];
 
+  myFeatures.desktop = true;
+  home-manager.users.kostas.myFeatures.desktop = true;
   nix = {
     settings.auto-optimise-store = true;
     package = pkgs.nixVersions.stable; # or versioned attributes like nixVersions.nix_2_8

@@ -42,7 +42,7 @@ hetzner-switch:
 	nixos-rebuild switch --flake .#hetzner-cloud  --target-host root@piftel.bitsikas.dev
 
 gmktec-switch:
-	nixos-rebuild switch --flake .#gmktec-cloud  --target-host root@100.64.0.8
+	nixos-rebuild switch --flake .#gmktec  --target-host root@100.64.0.8
 
 pi-switch:
 	nixos-rebuild switch --flake .#beershot  --target-host root@100.64.0.1
@@ -56,7 +56,7 @@ hetzner-boot:
 	nixos-rebuild boot --flake .#hetzner-cloud  --target-host root@piftel.bitsikas.dev
 
 gmktec-boot:
-	nixos-rebuild boot --flake .#gmktec-cloud  --target-host root@100.64.0.8
+	nixos-rebuild boot --flake .#gmktec  --target-host root@100.64.0.8
 
 pi-boot:
 	nixos-rebuild boot --flake .#beershot  --target-host root@100.64.0.1

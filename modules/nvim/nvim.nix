@@ -18,7 +18,7 @@ in {
   home.file."${config.xdg.configHome}/nvim/spell/ro.utf-8.spl".source = nvim-spell-ro-utf8-dictionary;
   home.file."${config.xdg.configHome}/nvim/spell/en.utf-8.spl".source = nvim-spell-en-utf8-dictionary;
 
-  programs.neovim = {
+  programs.neovim = lib.mkIf config.myFeatures.desktop {
     package = pkgs.neovim-unwrapped;
     enable = true;
     extraConfig = (
@@ -103,7 +103,7 @@ in {
       pkgs.vimPlugins.neotest-python
     ];
   };
-  home.packages = [
+  home.packages = lib.mkIf config.myFeatures.desktop [
     pkgs.nodejs_22
     # temp disable to try them per project
     # pkgs.pyright

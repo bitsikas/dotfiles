@@ -10,11 +10,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1765121930,
-        "narHash": "sha256-GOhnANVM7qzJ+SxT94eG2O4wpjU+x5cJzABwOc9oem0=",
+        "lastModified": 1772140511,
+        "narHash": "sha256-wDgbcGOUwdQXI5djFJiQGfKeirG9j7Csycsc+4IOWeE=",
         "ref": "refs/heads/master",
-        "rev": "596ec709e3c0dea3a5f5e33ed7e2c9680446fa5f",
-        "revCount": 159,
+        "rev": "6202134a951591e845674e96274e9f1ad62b979a",
+        "revCount": 166,
         "type": "git",
         "url": "ssh://git@github.com/bitsikas/artframe"
       },
