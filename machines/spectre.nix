@@ -6,7 +6,7 @@
   inputs,
   ...
 }: {
-  imports = [./hardware/spectre.nix];
+  imports = [./hardware/spectre.nix ../modules/monitorin.nix];
 
   myFeatures.desktop = true;
   home-manager.users.kostas.myFeatures.desktop = true;
@@ -40,6 +40,11 @@
     QT_IM_MODULE = "ibus";
   };
   networking.networkmanager.enable = true;
+  services.privoxy = {
+    enable = true;
+    listenAddress = "100.64.0.5:8118";
+  };
+
   services.pcscd.enable = true;
   services.fwupd.enable = true;
   services.pulseaudio.enable = false;

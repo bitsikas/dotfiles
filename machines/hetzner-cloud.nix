@@ -21,6 +21,7 @@ in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
+    ../modules/monitorin.nix
   ];
   nix = {
     settings.auto-optimise-store = true;
@@ -115,6 +116,7 @@ in {
             "nzbget"
             "pihole"
             "freshrss"
+            "monitoring"
           ];
       };
     };
@@ -165,6 +167,19 @@ in {
           default_type text/html;
         '';
       };
+    };
+    virtualHosts."monitoring.piftel.bitsikas.dev" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:3000";
+        proxyWebsockets = true;
+      };
+      extraConfig = ''
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+      '';
     };
     virtualHosts."unifi.piftel.bitsikas.dev" = {
       enableACME = true;
@@ -223,6 +238,11 @@ in {
         '';
       };
     };
+  };
+  services.grafana.settings.server.domain = "monitoring.piftel.bitsikas.dev";
+  services.grafana.settings.server.root_url = "https://monitoring.piftel.bitsikas.dev/"; # Match your Nginx server_name
+  services.grafana.settings.security = {
+    csrf_trusted_origins = ["monitoring.piftel.bitsikas.dev"];
   };
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "piftel@bitsikas.dev";
@@ -289,7 +309,7 @@ in {
   environment.etc."fail2ban/filter.d/nginx-4xx.conf".text = ''
     [Definition]
     failregex = ^<HOST> -.*"(GET|POST|HEAD).*HTTP.*" (404|403|400) .*$
-    ignoreregex = ^<HOST> -.*"GET /favicon.* HTTP.*".*$
+    ignoreregex = ^<HOST> -.*"(GET /favicon.*|.*monitoring\.piftel\.bitsikas\.dev.*)"$
   '';
   environment.etc."fail2ban/filter.d/nginx-ip-direct.conf".text = ''
     [Definition]

@@ -46,7 +46,7 @@
   # boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
   # boot.loader.generic-extlinux-compatible.enable = true;
-  imports = [./hardware/gmktec.nix];
+  imports = [./hardware/gmktec.nix ../modules/monitorin.nix];
 
   systemd.timers."dyndns" = {
     wantedBy = ["timers.target"];
@@ -124,17 +124,17 @@
     mediaLocation = "/mnt/immich";
     machine-learning.enable = false;
   };
-  services.cockpit = {
-    enable = true;
-    port = 9090;
-    openFirewall = true;
-    allowed-origins = ["https://cockpit.bitsikas.home" "http://cockpit.bitsikas.home"];
-    settings = {
-      WebService = {
-        AllowUnencrypted = true;
-      };
-    };
-  };
+  # services.cockpit = {
+  #   enable = true;
+  #   port = 9090;
+  #   openFirewall = true;
+  #   allowed-origins = ["https://cockpit.bitsikas.home" "http://cockpit.bitsikas.home"];
+  #   settings = {
+  #     WebService = {
+  #       AllowUnencrypted = true;
+  #     };
+  #   };
+  # };
 
   services.printing = {
     enable = true;
@@ -204,11 +204,18 @@
       53
       config.services.tailscale.port
     ];
+    checkReversePath = "loose"; # <--- ADD THIS LINE
+    trustedInterfaces = ["tailscale0"];
   };
   networking.nat = {
     enable = true;
     externalInterface = "enp1s0";
     internalInterfaces = ["tailscale0"];
+  };
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+    "net.ipv6.conf.all.forwarding" = 1;
+    "vm.swappiness" = 10;
   };
 
   networking.useDHCP = lib.mkDefault true;
@@ -218,14 +225,13 @@
   services.openssh.enable = true;
   # services.mullvad-vpn.enable = true;
   services.tailscale.enable = true;
+  #services.tailscale.userRoutingFeatures = "both";
   services.networkd-dispatcher = {
     enable = true;
     rules."50-tailscale" = {
       onState = ["routable"];
       script = ''
-        NETDEV=$(ip -o route get 8.8.8.8 | cut -f 5 -d " ")
-        export NETDEV
-        ${pkgs.ethtool}/sbin/ethtool -K "$NETDEV" rx-udp-gro-forwarding on rx-gro-list off
+        ${pkgs.ethtool}/sbin/ethtool -K enp1s0 rx-udp-gro-forwarding on rx-gro-list off
       '';
     };
   };
@@ -428,12 +434,21 @@
                 proxyPass = svc.proxyPass;
                 proxyWebsockets = true;
               };
+              extraConfig = ''
+                proxy_set_header Host $host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+              '';
             };
           }
         ) [
           {
             name = "mealie.bitsikas.home";
             proxyPass = "http://localhost:9000";
+          }
+          {
+            name = "monitoring.bitsikas.home";
+            proxyPass = "http://127.0.0.1:3000";
           }
           {
             name = "jellyfin.bitsikas.home";
@@ -480,10 +495,10 @@
             proxyPass = "http://localhost:6789";
           }
 
-          {
-            name = "cockpit.gmktec.local";
-            proxyPass = "http://localhost:9090";
-          }
+          # {
+          #   name = "cockpit.gmktec.local";
+          #   proxyPass = "http://localhost:9090";
+          # }
           {
             name = "cockpit.bitsikas.home";
             proxyPass = "http://localhost:9090";
@@ -537,9 +552,12 @@
       };
   };
 
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-  boot.kernel.sysctl."vm.swappiness" = 10;
-  boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = 1;
+  services.grafana.settings.server.domain = "monitoring.bitsikas.home";
+  services.grafana.settings.server.root_url = "http://monitoring.bitsikas.home/"; # Match your Nginx server_name
+  services.grafana.settings.security = {
+    csrf_trusted_origins = ["monitoring.bitsikas.home"];
+  };
+
   systemd.services.transmission.serviceConfig.BindPaths = ["/mnt"];
   services.cron = {
     enable = true;

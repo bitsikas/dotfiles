@@ -62,7 +62,7 @@
       [
         _7zz
         dnsutils
-        ffmpeg
+        inetutils
         gnupg
         htop
         eza
@@ -71,6 +71,10 @@
         rq
         tmux
         wget
+        htop
+        btop
+        ctop
+        mtr
         # (pkgs.writeShellApplication {
         #   name = "lights";
         #   runtimeInputs = with pkgs; [neovim-remote];
@@ -91,6 +95,7 @@
         uv
         visidata
         zoxide
+        ffmpeg
       ];
   };
 }
