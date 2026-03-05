@@ -6,6 +6,12 @@
   programs.git = {
     enable = true;
     settings = {
+      alias = {
+        files = "!git diff --name-only $(git merge-base HEAD \"$REVIEW_BASE\")";
+        stat = "!git diff --stat $(git merge-base HEAD \"$REVIEW_BASE\")";
+        review = "!nvim -p $(git files) +\"tabdo Gvdiff $REVIEW_BASE\" +\"let g:gitgutter_diff_base = '$REVIEW_BASE'\"";
+        reviewone = "!nvim -p +\"tabdo Gvdiff $REVIEW_BASE\" +\"let g:gitgutter_diff_base = '$REVIEW_BASE'\"";
+      };
       user = {
         name = "Kostas Papakonstantinou";
         email = "kostas@bitsikas.dev";

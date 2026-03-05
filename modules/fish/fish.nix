@@ -70,6 +70,10 @@ in {
     interactiveShellInit =
       # Use vim bindings and cursors
       ''
+        # Guard to prevent Nix/direnv from breaking Copilot CLI sessions
+        if set -q GH_COPILOT_CLI
+          return
+        end
         fish_vi_key_bindings
         set fish_cursor_default     block      blink
         set fish_cursor_insert      line       blink
