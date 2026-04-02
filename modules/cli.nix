@@ -17,6 +17,9 @@
     ./options.nix
   ];
   config = {
+    home.file."${config.xdg.configHome}/sqlite3/sqliterc" = {
+      source = ./sqliterc;
+    };
     programs.home-manager.enable = true;
     programs.fzf = lib.mkIf config.myFeatures.desktop {
       enable = true;
@@ -96,6 +99,7 @@
         visidata
         zoxide
         ffmpeg
+        llm-agents.pi
       ];
   };
 }

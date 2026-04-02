@@ -1,0 +1,21 @@
+-- SQLite Configuration (~/.sqliterc)
+-- Applied automatically when sqlite3 starts
+
+-- Output formatting
+.mode column
+.headers on
+.separator ROW "\n"
+
+
+.timer on
+
+PRAGMA foreign_keys = ON;
+
+PRAGMA journal_mode = WAL;
+PRAGMA synchronous = NORMAL;
+PRAGMA cache_size = -64000;
+PRAGMA temp_store = MEMORY;
+PRAGMA secure_delete = ON;
+
+.width 8 20 20 40
+

@@ -40,13 +40,8 @@ in {
 
     shellInit = ''
       # nix
-         if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon
-          fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daem
-         end
-
-      # home-manager
-         if test -e /etc/bash.bashrc
-          fenv source /etc/bash.bashrc
+         if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+          fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
          end
 
        if test -e $HOME/.nix-profile/etc/profile.d/nix.fish

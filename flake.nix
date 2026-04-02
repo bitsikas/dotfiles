@@ -21,6 +21,10 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     neorg-overlay.url = "github:nvim-neorg/nixpkgs-neorg-overlay";
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     ihasb33r = {
       url = "git+ssh://git@github.com/bitsikas/ihasb33r";
@@ -55,6 +59,7 @@
     nixos-hardware,
     nixos-generators,
     disko,
+    llm-agents,
     # ghostty,
     ...
   } @ inputs:
@@ -89,6 +94,7 @@
             pkgs.home-manager
             unstable-pkgs.git
             pkgs.docker
+            pkgs.colima
           ];
         };
       }

@@ -4,6 +4,7 @@
   lib,
   ...
 }: {
+  myFeatures.desktop = true;
   home.packages = with pkgs; [
     reattach-to-user-namespace
     nerd-fonts.fira-code
