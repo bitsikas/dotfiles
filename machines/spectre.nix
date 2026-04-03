@@ -71,7 +71,6 @@
     dconf
     fd
     ffmpeg
-    firefox
     gimp
     gnome-tweaks
     gnomeExtensions.tailscale-qs
@@ -87,7 +86,16 @@
     imv
     inetutils
     inkscape
-    krita
+    nixpkgs-unstable.krita
+    # krita
+    # (krita.overrideAttrs (old: {
+    #   version = "6.0.0";
+    #   src = fetchurl {
+    #     url = "https://download.kde.org/stable/krita/6.0.0/krita-6.0.0.tar.gz";
+    #     hash = "sha256-kytodhJvfGKeQn7j0BIwDIKGsFoYQnc1S0FK9kGg8e0=";
+    #     # sha256 = "0v..."; # Replace with actual hash
+    #   };
+    # }))
     kubectl
     libinput-gestures
     libreoffice
@@ -143,7 +151,21 @@
   programs.kdeconnect.package = lib.mkDefault pkgs.gnomeExtensions.gsconnect;
   security.rtkit.enable = true;
   security.sudo.enable = true;
+  services.openssh.enable = true;
 
+  programs.firefox.package = pkgs.firefox.overrideAttrs (previousAttrs: {
+    makeWrapperArgs =
+      previousAttrs.makeWrapperArgs
+      ++ [
+        "--set"
+        "GTK_IM_MODULE"
+        "wayland"
+        "--set"
+        "MOZ_ENABLE_WAYLAND"
+        "1"
+      ];
+  });
+  programs.firefox.enable = true;
   programs.firefox.nativeMessagingHosts.euwebid = true;
   programs.firefox.nativeMessagingHosts.packages = [pkgs.web-eid-app];
   programs.firefox.policies.SecurityDevices.p11-kit-proxy = "${pkgs.p11-kit}/lib/p11-kit-proxy.so";
@@ -218,7 +240,7 @@
     plasma6.enable = true;
     gnome.debug = false;
   };
-  # wacom.enable = true;
+  services.xserver.wacom.enable = true;
   #  services.displayManager.ly.enable = true;
 
   services.displayManager = {

@@ -182,6 +182,7 @@
     "d /var/lib/services/readarr 1770 readarr streaming -"
     "d /var/lib/services/jellyfin 1770 jellyfin streaming -"
   ];
+  networking.interfaces.enp1s0.wakeOnLan.enable = true;
   networking.hostName = "gmktec"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -285,6 +286,7 @@
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
+    ethtool
     sqlite
     qrencode
     wireproxy
@@ -392,6 +394,31 @@
     };
   };
 
+  systemd.services.wireproxy-3 = {
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      Type = "simple";
+      User = "root";
+      ExecStart = "${pkgs.wireproxy}/bin/wireproxy -c /etc/wireproxy-3.conf";
+      Restart = "on-failure";
+      RestartSec = "30s";
+    };
+  };
+
+  systemd.services.wireproxy-2 = {
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      Type = "simple";
+      User = "root";
+      ExecStart = "${pkgs.wireproxy}/bin/wireproxy -c /etc/wireproxy-2.conf";
+      Restart = "on-failure";
+      RestartSec = "30s";
+    };
+  };
   systemd.services.wireproxy = {
     wants = ["network-online.target"];
     after = ["network-online.target"];

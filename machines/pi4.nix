@@ -281,9 +281,9 @@
     inetutils
     libraspberrypi
     raspberrypi-eeprom
-    jellyfin
-    jellyfin-web
-    jellyfin-ffmpeg
+    # jellyfin
+    # jellyfin-web
+    # jellyfin-ffmpeg
     # mullvad
     # yt-dlp
     sqlite

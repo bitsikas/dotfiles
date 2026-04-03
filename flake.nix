@@ -94,7 +94,7 @@
             pkgs.home-manager
             unstable-pkgs.git
             pkgs.docker
-            pkgs.colima
+            # pkgs.colima
           ];
         };
       }

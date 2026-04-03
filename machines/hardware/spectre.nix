@@ -31,6 +31,7 @@
     "xhci_pci"
   ];
   boot.initrd.kernelModules = [];
+  boot.kernelParams = ["i8042.nopnp" "i8042.reset"];
 
   # boot.blacklistedKernelModules = ["snd-soc-skl"];
   boot.extraModulePackages = [];
@@ -39,10 +40,10 @@
     "coretemp"
   ];
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.kernelParams = [
-    # "i8042.nopnp=1"
-    # "i8042.dumbkbd=1"
-  ];
+  # boot.kernelParams = [
+  # "i8042.nopnp=1"
+  # "i8042.dumbkbd=1"
+  # ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
   # boot.extraModprobeConfig = ''

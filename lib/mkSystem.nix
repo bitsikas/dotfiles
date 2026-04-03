@@ -55,6 +55,7 @@ in
             # inputs.ihasb33r.overlays.${system}.default
             # inputs.milia.overlays.${system}.default
             inputs.neorg-overlay.overlays.default
+            inputs.llm-agents.overlays.default
           ];
         }
 

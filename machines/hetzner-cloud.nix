@@ -89,9 +89,9 @@ in {
       dns = {
         nameservers.global = [
           "100.64.0.8"
-          # "100.64.0.1"
+          "100.64.0.1"
           "fd7a:115c:a1e0::8"
-          # "fd7a:115c:a1e0::1"
+          "fd7a:115c:a1e0::1"
         ];
 
         base_domain = "bitsikas.home";
