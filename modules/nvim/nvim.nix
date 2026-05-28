@@ -44,63 +44,104 @@ in {
       # nixpkgs-unstable.vimPlugins.nvim-treesitter.withAllGrammars
       (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [p.c p.java p.python p.zig p.rust p.php p.javascript p.html p.nu p.json p.make p.markdown p.markdown-inline p.lua p.http p.go p.dockerfile p.css p.comment p.cmake p.bash p.yaml p.vim p.typescript p.toml p.sql p.perl]))
       pkgs.vimPlugins.editorconfig-vim
-      pkgs.vimPlugins.bracey-vim
-      pkgs.vimPlugins.lualine-nvim
+      {
+        plugin = pkgs.vimPlugins.bracey-vim;
+        optional = true;
+      }
+
+      # pkgs.vimPlugins.NeoSolarized
+      # pkgs.vimPlugins.bufferline-nvim
       # pkgs.vimPlugins.gitgutter
-      pkgs.vimPlugins.gitsigns-nvim
-      # pkgs.vimPlugins.solarized-nvim
-      pkgs.vimPlugins.NeoSolarized
-      pkgs.vimPlugins.catppuccin-nvim
       # pkgs.vimPlugins.indentLine
       # pkgs.vimPlugins.nord-vim
-      pkgs.vimPlugins.nvim-cmp
-      pkgs.vimPlugins.nvim-web-devicons
-      pkgs.vimPlugins.cmp-nvim-lsp
-      pkgs.vimPlugins.cmp_luasnip
-      pkgs.vimPlugins.luasnip
       # pkgs.vimPlugins.nvim-lspconfig
       # pkgs.vimPlugins.nvim-lsputils
-      pkgs.vimPlugins.lsp-zero-nvim
-      pkgs.vimPlugins.vim-test
-      # pkgs.vimPlugins.toggleterm-nvim
-      pkgs.vimPlugins.trouble-nvim
-      pkgs.vimPlugins.CopilotChat-nvim
-      # pkgs.vimPlugins.octo-nvim
-      pkgs.vimPlugins.nvim-navic
-      pkgs.vimPlugins.vim-suda
-      pkgs.vimPlugins.nvim-navbuddy
-      pkgs.vimPlugins.markdown-preview-nvim
       # pkgs.vimPlugins.nvim-tree-lua
+      # pkgs.vimPlugins.octo-nvim
       # pkgs.vimPlugins.papercolor-theme
-      pkgs.vimPlugins.plenary-nvim
-      pkgs.vimPlugins.telescope-nvim
-      # pkgs.vimPlugins.bufferline-nvim
-      pkgs.vimPlugins.vim-commentary
-      pkgs.vimPlugins.nvim-coverage
-      pkgs.vimPlugins.vim-tmux-navigator
-      pkgs.vimPlugins.indent-blankline-nvim-lua
-      pkgs.vimPlugins.harpoon2
-      pkgs.vimPlugins.nvim-coverage
-
+      # pkgs.vimPlugins.solarized-nvim
+      # pkgs.vimPlugins.toggleterm-nvim
       # pkgs.vimPlugins.vim-floaterm
-      pkgs.vimPlugins.vim-fugitive
-      pkgs.vimPlugins.vim-nix
-      pkgs.vimPlugins.vim-terraform
-      pkgs.vimPlugins.vim-tmux-navigator
       # pkgs.vimPlugins.vim-python-pep8-indent
       # pkgs.vimPlugins.vim-surround
       # pkgs.vimPlugins.vimspector
-      pkgs.vimPlugins.copilot-lua
-      pkgs.vimPlugins.copilot-cmp
-      pkgs.vimPlugins.flutter-tools-nvim
-      pkgs.vimPlugins.undotree
+      {
+        plugin = pkgs.vimPlugins.CopilotChat-nvim;
+        optional = true;
+      }
+      pkgs.vimPlugins.catppuccin-nvim
+      pkgs.vimPlugins.cmp-nvim-lsp
+      pkgs.vimPlugins.cmp_luasnip
       pkgs.vimPlugins.conform-nvim
+      {
+        plugin = pkgs.vimPlugins.copilot-cmp;
+        optional = true;
+      }
+      {
+        plugin = pkgs.vimPlugins.copilot-lua;
+        optional = true;
+      }
+      {
+        plugin = pkgs.vimPlugins.flutter-tools-nvim;
+        optional = true;
+      }
+      pkgs.vimPlugins.gitsigns-nvim
+      {
+        plugin = pkgs.vimPlugins.harpoon2;
+        optional = true;
+      }
+      pkgs.vimPlugins.indent-blankline-nvim-lua
+      pkgs.vimPlugins.lsp-zero-nvim
+      pkgs.vimPlugins.lualine-nvim
+      pkgs.vimPlugins.luasnip
+      {
+        plugin = pkgs.vimPlugins.markdown-preview-nvim;
+        optional = true;
+      }
+      {
+        plugin = pkgs.vimPlugins.neorg;
+        optional = true;
+      }
+      {
+        plugin = pkgs.vimPlugins.neotest;
+        optional = true;
+      }
+      {
+        plugin = pkgs.vimPlugins.neotest-python;
+        optional = true;
+      }
+      pkgs.vimPlugins.nvim-cmp
+      {
+        plugin = pkgs.vimPlugins.nvim-coverage;
+        optional = true;
+      }
+      {
+        plugin = pkgs.vimPlugins.nvim-navbuddy;
+        optional = true;
+      }
+      pkgs.vimPlugins.nvim-navic
+      pkgs.vimPlugins.nvim-web-devicons
+      pkgs.vimPlugins.plenary-nvim
       pkgs.vimPlugins.snacks-nvim
-      pkgs.vimPlugins.snacks-nvim
+      {
+        plugin = pkgs.vimPlugins.telescope-nvim;
+        optional = true;
+      }
+      {
+        plugin = pkgs.vimPlugins.trouble-nvim;
+        optional = true;
+      }
+      {
+        plugin = pkgs.vimPlugins.undotree;
+        optional = true;
+      }
+      pkgs.vimPlugins.vim-commentary
+      pkgs.vimPlugins.vim-fugitive
+      pkgs.vimPlugins.vim-nix
       pkgs.vimPlugins.vim-oscyank
-      pkgs.vimPlugins.neorg
-      pkgs.vimPlugins.neotest
-      pkgs.vimPlugins.neotest-python
+      pkgs.vimPlugins.vim-terraform
+      # pkgs.vimPlugins.vim-test
+      pkgs.vimPlugins.vim-tmux-navigator
     ];
   };
   home.packages = lib.mkIf config.myFeatures.desktop [
