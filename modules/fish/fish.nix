@@ -41,11 +41,12 @@ in {
     shellInit = ''
       # nix
          if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-          fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+          fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh > /dev/null 2>&1
+
          end
 
        if test -e $HOME/.nix-profile/etc/profile.d/nix.fish
-          . $HOME/.nix-profile/etc/profile.d/nix.fish
+          . $HOME/.nix-profile/etc/profile.d/nix.fish > /dev/null 2>&1
        end
     '';
 

@@ -76,7 +76,8 @@ in {
 
   services.unifi.enable = true;
   services.unifi.openFirewall = true;
-  services.unifi.unifiPackage = pkgs.unifi;
+  services.unifi.unifiPackage = nixpkgs-unstable.unifi;
+  services.unifi.jrePackage = nixpkgs-unstable.openjdk25_headless;
   services.unifi.mongodbPackage = mongo7;
   services.headscale = {
     enable = true;
@@ -108,6 +109,7 @@ in {
             "radarr"
             "prowlarr"
             "liverecord"
+            "paperless"
             "cockpit"
             "grocy"
             "mealie"

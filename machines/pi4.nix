@@ -96,14 +96,14 @@
       listeningMode = "ALL"
     '';
   };
-  services.grocy = {
-    enable = false;
-    nginx.enableSSL = false;
-    hostName = "grocy.bitsikas.home";
-    settings = {
-      currency = "RON";
-    };
-  };
+  # services.grocy = {
+  #   enable = false;
+  #   nginx.enableSSL = false;
+  #   hostName = "grocy.bitsikas.home";
+  #   settings = {
+  #     currency = "RON";
+  #   };
+  # };
   services.immich = {
     enable = false;
     mediaLocation = "/mnt/immich";

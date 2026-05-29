@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  nixpkgs-unstable,
   ...
 }: {
   imports = [
@@ -55,7 +54,6 @@
       };
     };
 
-    programs.git.package = nixpkgs-unstable.git;
     programs.direnv = lib.mkIf config.myFeatures.desktop {
       enable = true;
       nix-direnv.enable = true;
@@ -91,7 +89,7 @@
         jupyter
         nixfmt-rfc-style
         presenterm
-        pyright
+        # pyright
         ranger
         ruff
         todo-txt-cli
@@ -99,7 +97,7 @@
         visidata
         zoxide
         ffmpeg
-        llm-agents.pi
+        # llm-agents.pi
       ];
   };
 }

@@ -28,16 +28,20 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = true;
 
+  #services.xserver.digimend.enable = true;
   environment.sessionVariables = {
     # QT_QPA_PLATFORM = "wayland-egl";
     KWIN_IM_SHOW_ALWAYS = "1";
+    # Make GTK3 file-chooser settings discoverable
+    # per https://github.com/NixOS/nixpkgs/issues/467783#issuecomment-3648708206
+    #    GSETTINGS_SCHEMA_DIR = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}/glib-2.0/schemas";
 
     # Force Firefox to use Wayland
     MOZ_ENABLE_WAYLAND = "1";
 
     # Force Qt apps to use Wayland and the IBus input module
-    QT_QPA_PLATFORM = "wayland;xcb";
-    QT_IM_MODULE = "ibus";
+    #QT_QPA_PLATFORM = "wayland;xcb";
+    #QT_IM_MODULE = "ibus";
   };
   networking.networkmanager.enable = true;
   services.privoxy = {
@@ -59,18 +63,31 @@
 
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
+  # mkKritaFixed = pkg:
+  #   pkgs.symlinkJoin {
+  #     name = "${lib.getName pkg}-fixed";
+  #     paths = [pkg];
+  #     nativeBuildInputs = [pkgs.makeWrapper];
+  #     postBuild = ''
+  #       wrapProgram "$out/bin/krita" \
+  #         --prefix XDG_DATA_DIRS : "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}" \
+  #         --prefix XDG_DATA_DIRS : "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}"
+  #     '';
+  #   };
   environment.systemPackages = with pkgs; [
     # gnome-boxes
     # inputs.ghostty.packages.x86_64-linux.default
     _1password-cli
     bat
     bottles
+    blender
     chiaki-ng
     cifs-utils
     coreutils
     dconf
     fd
     ffmpeg
+    kdePackages.plasma-keyboard
     gimp
     gnome-tweaks
     gnomeExtensions.tailscale-qs
@@ -86,13 +103,15 @@
     imv
     inetutils
     inkscape
-    nixpkgs-unstable.krita
+    kdePackages.qtvirtualkeyboard
+    krita
+
     # krita
-    # (krita.overrideAttrs (old: {
-    #   version = "6.0.0";
+    # (nixpkgs-unstable.krita.overrideAttrs (old: {
+    #   version = "6.0.1";
     #   src = fetchurl {
-    #     url = "https://download.kde.org/stable/krita/6.0.0/krita-6.0.0.tar.gz";
-    #     hash = "sha256-kytodhJvfGKeQn7j0BIwDIKGsFoYQnc1S0FK9kGg8e0=";
+    #     url = "https://download.kde.org/stable/krita/6.0.1/krita-6.0.1.1.tar.gz"; #"https://download.kde.org/stable/krita/6.0.0/krita-6.0.0.tar.gz";
+    #     hash = "sha256-V8V+bwgAEqjLN8PafLfDA+ACTEcWgcgG2wqCr2x/hWw="; #"sha256-kytodhJvfGKeQn7j0BIwDIKGsFoYQnc1S0FK9kGg8e0=";
     #     # sha256 = "0v..."; # Replace with actual hash
     #   };
     # }))
@@ -104,7 +123,7 @@
     minikube
     mypaint
     nix-index
-    nixpkgs-unstable.ghostty
+    ghostty
     pavucontrol
     qt5.qtwayland
     qt5.qtwayland

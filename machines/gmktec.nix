@@ -112,7 +112,7 @@
     enable = true;
   };
   services.grocy = {
-    enable = true;
+    enable = false;
     nginx.enableSSL = false;
     hostName = "grocy.bitsikas.home";
     settings = {
@@ -294,7 +294,7 @@
     inkscape
     gimp
     krita
-    blender
+    # blender
     freecad
     bottles
     bambu-studio
@@ -327,7 +327,7 @@
       ExecStart = pkgs.writeShellScript "publish-avahi-alias" ''
         IP=$(${pkgs.hostname}/bin/hostname -I | ${pkgs.gawk}/bin/awk '{print $1}')
 
-        NAMES=("liverecord" "jellyfin" "sonarr" "radarr" "transmission" "immich" "prowlarr" "cockpit" "jellyseer")
+        NAMES=("liverecord" "jellyfin" "sonarr" "radarr" "transmission" "immich" "prowlarr" "cockpit" "jellyseer" "paperless")
 
         # Launch a background process for each name
         for NAME in "''${NAMES[@]}"; do
@@ -487,11 +487,12 @@
           }
 
           {
-            name = "sonarr.bitsikas.home";
-            proxyPass = "http://localhost:8989";
+            name = "paperless.bitsikas.home";
+            proxyPass = "http://localhost:28981";
           }
+
           {
-            name = "sonarr.gmktec.local";
+            name = "sonarr.bitsikas.home";
             proxyPass = "http://localhost:8989";
           }
 
@@ -577,6 +578,23 @@
           };
         };
       };
+  };
+  services.paperless = {
+    enable = true;
+    consumptionDirIsPublic = true;
+    # address = "100.64.0.8";
+    settings = {
+      PAPERLESS_CONSUMER_IGNORE_PATTERN = [
+        ".DS_STORE/*"
+        "desktop.ini"
+      ];
+      PAPERLESS_OCR_LANGUAGE = "deu+eng";
+      PAPERLESS_OCR_USER_ARGS = {
+        optimize = 1;
+        pdfa_image_compression = "lossless";
+      };
+      PAPERLESS_URL = "http://paperless.bitsikas.home";
+    };
   };
 
   services.grafana.settings.server.domain = "monitoring.bitsikas.home";
