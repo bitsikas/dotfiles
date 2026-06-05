@@ -39,6 +39,7 @@ in {
   # this takes a lot of time sometimes
   documentation.man.generateCaches = false;
   programs.fish.enable = true;
+  programs.tcpdump.enable = true;
 
   services.smtping = {
     enable = true;
