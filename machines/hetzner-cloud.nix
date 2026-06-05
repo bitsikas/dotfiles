@@ -266,7 +266,7 @@ in {
   ];
   nixpkgs.hostPlatform = lib.mkDefault currentSystem;
   services.fail2ban = {
-    enable = true;
+    enable = false;
     # List of IPs that should NEVER be banned
     ignoreIP = ["127.0.0.1/8" "::1" "192.168.1.0/24"];
 
