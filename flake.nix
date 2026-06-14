@@ -3,7 +3,7 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     disko.url = "github:nix-community/disko";
@@ -30,6 +30,10 @@
       url = "git+ssh://git@github.com/bitsikas/ihasb33r";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    microvm = {
+      url = "github:microvm-nix/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     smtping = {
       url = "git+ssh://git@github.com/bitsikas/smtping";
@@ -42,12 +46,9 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # ghostty = {
-    #   url = "github:ghostty-org/ghostty/v1.1.3";
-    # };
   };
 
   outputs = {
@@ -59,6 +60,7 @@
     nixos-hardware,
     nixos-generators,
     disko,
+    microvm,
     llm-agents,
     # ghostty,
     ...
@@ -85,16 +87,20 @@
             disko
             ;
         };
+        formatter = pkgs.alejandra;
+        packages = {
+          default = self.packages.${system}.mvm;
+          mvm = self.nixosConfigurations.mvm.config.microvm.declaredRunner;
+        };
+
         devShells.default = pkgs.mkShell {
           buildInputs = [
             pkgs.openssh
-            pkgs.rsync # Included by default on NixOS
-            # pkgs.nixFlakes
+            pkgs.rsync
             pkgs.nixVersions.stable
             pkgs.home-manager
             unstable-pkgs.git
             pkgs.docker
-            # pkgs.colima
           ];
         };
       }
@@ -130,6 +136,7 @@
             nixpkgs-unstable
             nixos-hardware
             disko
+            microvm
             ;
         };
       in {
@@ -166,6 +173,11 @@
           system = "x86_64-linux";
           users = ["root"];
           usedisko = true;
+        };
+        mvm = mkSystem "qvm" {
+          system = "x86_64-linux";
+          users = ["root" "kostas"];
+          vm = true;
         };
       };
     };

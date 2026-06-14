@@ -101,7 +101,6 @@
     prusa-slicer
     super-slicer
     orca-slicer
-    libreoffice
   ];
   programs.light.enable = true;
   programs.nix-ld = {
@@ -119,7 +118,7 @@
     ];
   };
   programs.kdeconnect.enable = false;
-  programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/kssaskpass";
+  programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
   # programs.kdeconnect.package = lib.mkDefault pkgs.gnomeExtensions.gsconnect;
   security.rtkit.enable = true;
   security.sudo.enable = true;
@@ -128,36 +127,7 @@
   networking.firewall.allowedTCPPorts = [22 80 8080 8551];
   networking.firewall.allowedUDPPorts = [22 config.services.tailscale.port];
   networking.firewall.trustedInterfaces = ["tailscale0"];
-  # networking.hosts = {
-  #   "127.0.0.1" = ["art.spectre.local" "fit.spectre.local" "miliacafe.spectre.local" "artframe.spectre.local"];
-  #   "100.64.0.1" = ["cockpit.bitsikas.home"];
-  # };
-  # networking.firewall.allowedUDPPorts = [];
-  # programs.steam = {
-  #   enable = true;
-  #   remotePlay.openFirewall = false; # Open ports in the firewall for Steam Remote Play
-  #   dedicatedServer.openFirewall = false; # Open ports in the firewall for Source Dedicated Server
-  #   localNetworkGameTransfers.openFirewall = false; # Open ports in the firewall for Steam Local Network Game Transfers
-  # };
 
-  # services.miliacaffe.enable = true;
-  # services.miliacaffe.hostnames = ["miliacafe.spectre.local"];
-
-  # services.liverecord.enable = true;
-  # services.liverecord.hostnames = ["liverecord.spectre.local"];
-
-  # services.arthome.enable = true;
-  # services.arthome.debug = "1";
-  # services.arthome.hostnames = ["artframe.spectre.local"];
-
-  # services.fittrack.enable = true;
-  # services.fittrack.hostnames = ["fit.spectre.local"];
-
-  # services.ihasb33r.enable = true;
-  # services.ihasb33r.hostnames = ["art.spectre.local"];
-
-  # services.mullvad-vpn.enable = true;
-  # services.blueman.enable = true;
   services.dbus = {
     enable = true;
     packages = with pkgs; [pkgs.dconf];
@@ -192,103 +162,18 @@
       gnome.enable = true;
       gnome.debug = false;
     };
-    # wacom.enable = true;
   };
-  #  services.displayManager.ly.enable = true;
 
   services.desktopManager.plasma6.enable = true;
 
   services.displayManager = {
     defaultSession = "gnome";
   };
-  # virtualisation.podman.enable = true;
   virtualisation.docker.enable = false;
-  # virtualisation.libvirtd.enable = true;
-  # programs.virt-manager.enable = true;
-
-  # virtualisation.virtualbox.host.enable = true;
-  # virtualisation.virtualbox.host.enableExtensionPack = true;
   system.stateVersion = "21.11";
-  # systemd.services = {
-  #   audio-fixer = {
-  #     path = [pkgs.alsa-tools];
-  #     script = (builtins.readFile ../utils/fixhpspeaker.sh);
-  #     serviceConfig = {
-  #       Type = "oneshot";
-  #       User = "root";
-  #     };
-  #   };
-  # };
-
-  # systemd.tmpfiles.rules =
-  # let
-  #   firmware =
-  #     pkgs.runCommandLocal "qemu-firmware" { } ''
-  #       mkdir $out
-  #       cp ${pkgs.qemu}/share/qemu/firmware/*.json $out
-  #       substituteInPlace $out/*.json --replace ${pkgs.qemu} /run/current-system/sw
-  #     '';
-  # in
-  # [ "L+ /var/lib/qemu/firmware - - - - ${firmware}" ];
-
-  # Add firewall exception for VirtualBox provider
-  # networking.firewall.extraCommands = ''
-  #   ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
-  #   ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 33306 -j ACCEPT
-  # '';
-
-  # Add firewall exception for libvirt provider when using NFSv4
-  # networking.firewall.interfaces."virbr1" = {
-  #   allowedTCPPorts = [
-  #     2049
-  #     33306
-  #   ];
-  #   allowedUDPPorts = [
-  #     2049
-  #     33306
-  #   ];
-  # };
-
-  #services.samba = {
-  #  enable = true;
-  #  securityType = "user";
-  #  openFirewall = true;
-  #  settings = {
-  #    global = {
-  #      "workgroup" = "WORKGROUP";
-  #      "server string" = "spectre";
-  #      "netbios name" = "spectre";
-  #      "security" = "user";
-  #      #"use sendfile" = "yes";
-  #      #"max protocol" = "smb2";
-  #      # note: localhost is the ipv6 localhost ::1
-  #      "hosts allow" = "192.168.0. 127.0.0.1 localhost";
-  #      "hosts deny" = "0.0.0.0/0";
-  #      "guest account" = "nobody";
-  #      "map to guest" = "bad user";
-  #    };
-  #    "public" = {
-  #    };
-  #    "private" = {
-  #      "path" = "/mnt/Shares/Private";
-  #      "browseable" = "yes";
-  #      "read only" = "no";
-  #      "guest ok" = "no";
-  #      "create mask" = "0644";
-  #      "directory mask" = "0755";
-  #      "force user" = "kostas";
-  #    };
-  #  };
-  #};
-
-  #services.samba-wsdd = {
-  #  enable = true;
-  #  openFirewall = true;
-  #};
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
-  # networking.firewall.checkReversePath = false;
 
   services = {
     tailscale.enable = true;

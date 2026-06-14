@@ -63,17 +63,6 @@
 
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
-  # mkKritaFixed = pkg:
-  #   pkgs.symlinkJoin {
-  #     name = "${lib.getName pkg}-fixed";
-  #     paths = [pkg];
-  #     nativeBuildInputs = [pkgs.makeWrapper];
-  #     postBuild = ''
-  #       wrapProgram "$out/bin/krita" \
-  #         --prefix XDG_DATA_DIRS : "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}" \
-  #         --prefix XDG_DATA_DIRS : "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}"
-  #     '';
-  #   };
   environment.systemPackages = with pkgs; [
     # gnome-boxes
     # inputs.ghostty.packages.x86_64-linux.default
@@ -138,7 +127,6 @@
     wl-clipboard
   ];
 
-  programs.light.enable = true;
   programs.nix-ld = {
     enable = true;
     libraries = [
@@ -185,7 +173,6 @@
       ];
   });
   programs.firefox.enable = true;
-  programs.firefox.nativeMessagingHosts.euwebid = true;
   programs.firefox.nativeMessagingHosts.packages = [pkgs.web-eid-app];
   programs.firefox.policies.SecurityDevices.p11-kit-proxy = "${pkgs.p11-kit}/lib/p11-kit-proxy.so";
   networking.nftables.enable = true;
@@ -250,7 +237,6 @@
   };
   services.displayManager = {
     gdm.enable = true;
-    gdm.wayland = true;
     gdm.debug = false;
   };
 
@@ -265,90 +251,6 @@
   services.displayManager = {
     defaultSession = "gnome";
   };
-  # virtualisation.podman.enable = true;
-  virtualisation.docker.enable = true;
-  # virtualisation.libvirtd.enable = true;
-  # programs.virt-manager.enable = true;
-
-  # virtualisation.virtualbox.host.enable = true;
-  # virtualisation.virtualbox.host.enableExtensionPack = true;
-  system.stateVersion = "22.05";
-  # systemd.services = {
-  #   audio-fixer = {
-  #     path = [pkgs.alsa-tools];
-  #     script = (builtins.readFile ../utils/fixhpspeaker.sh);
-  #     serviceConfig = {
-  #       Type = "oneshot";
-  #       User = "root";
-  #     };
-  #   };
-  # };
-
-  # systemd.tmpfiles.rules =
-  # let
-  #   firmware =
-  #     pkgs.runCommandLocal "qemu-firmware" { } ''
-  #       mkdir $out
-  #       cp ${pkgs.qemu}/share/qemu/firmware/*.json $out
-  #       substituteInPlace $out/*.json --replace ${pkgs.qemu} /run/current-system/sw
-  #     '';
-  # in
-  # [ "L+ /var/lib/qemu/firmware - - - - ${firmware}" ];
-
-  # Add firewall exception for VirtualBox provider
-  # networking.firewall.extraCommands = ''
-  #   ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
-  #   ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 33306 -j ACCEPT
-  # '';
-
-  # Add firewall exception for libvirt provider when using NFSv4
-  # networking.firewall.interfaces."virbr1" = {
-  #   allowedTCPPorts = [
-  #     2049
-  #     33306
-  #   ];
-  #   allowedUDPPorts = [
-  #     2049
-  #     33306
-  #   ];
-  # };
-
-  #services.samba = {
-  #  enable = true;
-  #  securityType = "user";
-  #  openFirewall = true;
-  #  settings = {
-  #    global = {
-  #      "workgroup" = "WORKGROUP";
-  #      "server string" = "spectre";
-  #      "netbios name" = "spectre";
-  #      "security" = "user";
-  #      #"use sendfile" = "yes";
-  #      #"max protocol" = "smb2";
-  #      # note: localhost is the ipv6 localhost ::1
-  #      "hosts allow" = "192.168.0. 127.0.0.1 localhost";
-  #      "hosts deny" = "0.0.0.0/0";
-  #      "guest account" = "nobody";
-  #      "map to guest" = "bad user";
-  #    };
-  #    "public" = {
-  #    };
-  #    "private" = {
-  #      "path" = "/mnt/Shares/Private";
-  #      "browseable" = "yes";
-  #      "read only" = "no";
-  #      "guest ok" = "no";
-  #      "create mask" = "0644";
-  #      "directory mask" = "0755";
-  #      "force user" = "kostas";
-  #    };
-  #  };
-  #};
-
-  #services.samba-wsdd = {
-  #  enable = true;
-  #  openFirewall = true;
-  #};
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
@@ -375,7 +277,6 @@
 
   programs.nix-index-database.comma.enable = true;
   programs.nix-index.enableFishIntegration = true;
-  # networking.firewall.checkReversePath = "loose"
 
   environment.pathsToLink = ["/libexec"];
 

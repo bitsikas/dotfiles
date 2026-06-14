@@ -17,6 +17,12 @@
     else "linux";
   platformConfig = ../users/${user}/${platform}.nix;
   homeFunc = home-manager.lib.homeManagerConfiguration;
+
+  # Instantiate unstable nixpkgs once, not per module
+  unstable = import nixpkgs-unstable {
+    inherit system;
+    config.allowUnfree = true;
+  };
 in
   homeFunc rec {
     pkgs = nixpkgs.legacyPackages.${system};
@@ -24,8 +30,6 @@ in
       {
         home.username = user;
         home.homeDirectory = homedir;
-        # home.sessionVariables = {
-        # };
         home.sessionVariables = {
           "EDITOR" = "nvim";
           "TERMINAL" = "ghostty";
@@ -40,7 +44,6 @@ in
           inputs.llm-agents.overlays.default
         ];
       }
-
       {
         nixpkgs.config.permittedInsecurePackages = [
           "nodejs-16.20.0"
@@ -50,10 +53,8 @@ in
       platformConfig
       {home.stateVersion = "23.05";}
       ../modules/cli.nix
-      (
-        {pkgs, ...}: rec {
-          _module.args.nixpkgs-unstable = import nixpkgs-unstable {inherit system;};
-        }
-      )
+      {
+        _module.args.nixpkgs-unstable = unstable;
+      }
     ];
   }

@@ -82,49 +82,49 @@
       ];
     };
   };
-  users.users.promtail.extraGroups = ["adm" "nginx" "pihole" "unifi"];
+  #users.users.promtail.extraGroups = ["adm" "nginx" "pihole" "unifi"];
 
-  services.promtail = {
-    enable = true;
-    configuration = {
-      server = {
-        http_listen_port = 28183;
-        grpc_listen_port = 0;
-      };
-      clients = [{url = "http://127.0.0.1:3100/loki/api/v1/push";}];
-      scrape_configs = [
-        {
-          job_name = "local_system_logs";
-          static_configs = [
-            {
-              targets = ["localhost"];
-              labels = {
-                job = "varlogs";
-                host = "nixos-box";
-                __path__ = "/var/log/**/*.log";
-              };
-            }
-          ];
-        }
-        {
-          job_name = "journal";
-          journal = {
-            max_age = "12h";
-            labels = {
-              job = "systemd-journal";
-              host = "nixos-box";
-            };
-          };
-          relabel_configs = [
-            {
-              source_labels = ["__journal__systemd_unit"];
-              target_label = "unit";
-            }
-          ];
-        }
-      ];
-    };
-  };
+  # services.promtail = {
+  #   enable = true;
+  #   configuration = {
+  #     server = {
+  #       http_listen_port = 28183;
+  #       grpc_listen_port = 0;
+  #     };
+  #     clients = [{url = "http://127.0.0.1:3100/loki/api/v1/push";}];
+  #     scrape_configs = [
+  #       {
+  #         job_name = "local_system_logs";
+  #         static_configs = [
+  #           {
+  #             targets = ["localhost"];
+  #             labels = {
+  #               job = "varlogs";
+  #               host = "nixos-box";
+  #               __path__ = "/var/log/**/*.log";
+  #             };
+  #           }
+  #         ];
+  #       }
+  #       {
+  #         job_name = "journal";
+  #         journal = {
+  #           max_age = "12h";
+  #           labels = {
+  #             job = "systemd-journal";
+  #             host = "nixos-box";
+  #           };
+  #         };
+  #         relabel_configs = [
+  #           {
+  #             source_labels = ["__journal__systemd_unit"];
+  #             target_label = "unit";
+  #           }
+  #         ];
+  #       }
+  #     ];
+  #   };
+  # };
   systemd.tmpfiles.rules = [
     "L+ /etc/grafana-dashboards/node-exporter.json - - - - ${../1860_rev42.json}"
   ];
@@ -134,6 +134,7 @@
       http_addr = "127.0.0.1";
       http_port = 3000;
     };
+    settings.security.secret_key = "$__file{/var/lib/grafana/secret_key}";
     provision = {
       enable = true;
       dashboards.settings.providers = [

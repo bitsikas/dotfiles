@@ -72,15 +72,9 @@
         rq
         tmux
         wget
-        htop
         btop
         ctop
         mtr
-        # (pkgs.writeShellApplication {
-        #   name = "lights";
-        #   runtimeInputs = with pkgs; [neovim-remote];
-        #   text = builtins.readFile ../utils/lights.sh;
-        # })
       ]
       ++ lib.optionals config.myFeatures.desktop [
         alejandra

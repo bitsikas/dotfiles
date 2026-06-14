@@ -20,51 +20,30 @@ in {
 
   programs.neovim = lib.mkIf config.myFeatures.desktop {
     package = pkgs.neovim-unwrapped;
+    withRuby = true;
+    withPython3 = true;
     enable = true;
     extraConfig = (
       builtins.concatStringsSep "\n" [
         (builtins.readFile .config/nvim/init.vim)
-        # (builtins.readFile .config/nvim/settings/floatterm.vim)
         (builtins.readFile .config/nvim/settings/telescope_settings.vim)
         (builtins.readFile .config/nvim/settings/treesitter.vim)
         (builtins.readFile .config/nvim/settings/lsp.vim)
-        # (builtins.readFile .config/nvim/settings/toggleterm.vim)
-        # (builtins.readFile .config/nvim/settings/coverage.vim)
         (builtins.readFile .config/nvim/settings/lualine.vim)
         (builtins.readFile .config/nvim/settings/trouble.vim)
-        # (builtins.readFile .config/nvim/settings/nvim-compe.vim)
         (builtins.readFile .config/nvim/settings/cmp.vim)
         (builtins.readFile .config/nvim/settings/conform.vim)
-        # (builtins.readFile .config/nvim/settings/navic.vim)
         (builtins.readFile .config/nvim/settings/styling.vim)
         (builtins.readFile .config/nvim/settings/neorg.vim)
       ]
     );
     plugins = [
-      # nixpkgs-unstable.vimPlugins.nvim-treesitter.withAllGrammars
-      (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [p.c p.java p.python p.zig p.rust p.php p.javascript p.html p.nu p.json p.make p.markdown p.markdown-inline p.lua p.http p.go p.dockerfile p.css p.comment p.cmake p.bash p.yaml p.vim p.typescript p.toml p.sql p.perl]))
+      pkgs.vimPlugins.nvim-treesitter.withAllGrammars
       pkgs.vimPlugins.editorconfig-vim
       {
         plugin = pkgs.vimPlugins.bracey-vim;
         optional = true;
       }
-
-      # pkgs.vimPlugins.NeoSolarized
-      # pkgs.vimPlugins.bufferline-nvim
-      # pkgs.vimPlugins.gitgutter
-      # pkgs.vimPlugins.indentLine
-      # pkgs.vimPlugins.nord-vim
-      # pkgs.vimPlugins.nvim-lspconfig
-      # pkgs.vimPlugins.nvim-lsputils
-      # pkgs.vimPlugins.nvim-tree-lua
-      # pkgs.vimPlugins.octo-nvim
-      # pkgs.vimPlugins.papercolor-theme
-      # pkgs.vimPlugins.solarized-nvim
-      # pkgs.vimPlugins.toggleterm-nvim
-      # pkgs.vimPlugins.vim-floaterm
-      # pkgs.vimPlugins.vim-python-pep8-indent
-      # pkgs.vimPlugins.vim-surround
-      # pkgs.vimPlugins.vimspector
       {
         plugin = pkgs.vimPlugins.CopilotChat-nvim;
         optional = true;
@@ -90,7 +69,7 @@ in {
         plugin = pkgs.vimPlugins.harpoon2;
         optional = true;
       }
-      pkgs.vimPlugins.indent-blankline-nvim-lua
+      pkgs.vimPlugins.indent-blankline-nvim
       pkgs.vimPlugins.lsp-zero-nvim
       pkgs.vimPlugins.lualine-nvim
       pkgs.vimPlugins.luasnip
@@ -146,13 +125,5 @@ in {
   };
   home.packages = lib.mkIf config.myFeatures.desktop [
     pkgs.nodejs_22
-    # temp disable to try them per project
-    # pkgs.pyright
-    # nixpkgs-unstable.ruff-lsp
-    # pkgs.tailwindcss-language-server
-    # pkgs.cmake-language-server
-    # pkgs.lua-language-server
-    # pkgs.clang-tools_14
-    # pkgs.vscode-langservers-extracted
   ];
 }

@@ -49,25 +49,7 @@
 
   programs.fish.enable = true;
 
-  # systemd.timers."dyndns" = {
-  #   wantedBy = ["timers.target"];
-  #   timerConfig = {
-  #     OnBootSec = "15m";
-  #     OnUnitActiveSec = "15m";
-  #     Unit = "dynamic-dns-updater.service";
-  #   };
-  # };
   system.stateVersion = "25.05";
-  # systemd.services = {
-  #   dynamic-dns-updater = {
-  #     path = [pkgs.curl];
-  #     script = "cat /etc/dyndns | curl -k -K -";
-  #     serviceConfig = {
-  #       Type = "oneshot";
-  #       User = "root";
-  #     };
-  #   };
-  # };
   security.sudo.enable = true;
   #sdImage.compressImage = false;
 
@@ -122,8 +104,7 @@
       };
     };
   };
-  # systemd.services.exim.preStart = "";
-  # systemd.services.exim.serviceConfig.ExecStartPre = "+${pkgs.coreutils}/bin/install --group=exim --owner=exim --mode=0700 --directory /var/spool/exim4";
+
 
   networking.hostName = "devserver"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -142,10 +123,7 @@
   };
 
   networking.useDHCP = lib.mkDefault true;
-  # # enable NAT
-  # networking.nat.enable = true;
-  # networking.nat.externalInterface = "end0";
-  # networking.nat.internalInterfaces = ["wg0"];
+
 
   networking.nftables.enable = true;
 
