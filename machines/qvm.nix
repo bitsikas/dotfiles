@@ -58,9 +58,17 @@
   };
 
   networking.hostName = "my-microvm";
+  networking.useDHCP = true;
   users.users.root.password = "root"; # Don't use in production!
   services.getty.autologinUser = "root";
   microvm = {
+    interfaces = [
+      {
+        type = "user";
+        id = "usernet";
+        mac = "02:00:00:01:00:01";
+      }
+    ];
     volumes = [
       {
         mountPoint = "/var";
@@ -70,18 +78,28 @@
     ];
     shares = [
       {
-        # use proto = "virtiofs" for MicroVMs that are started by systemd
+        proto = "9p";
+        tag = "ro-pi";
+        source = "/home/kostas/.pi";
+        mountPoint = "/root/.pi";
+        readOnly = true;
+      }
+      {
         proto = "9p";
         tag = "ro-store";
-        # a host's /nix/store will be picked up so that no
-        # squashfs/erofs will be built for it.
         source = "/nix/store";
         mountPoint = "/nix/.ro-store";
+        readOnly = true;
       }
     ];
 
     # "qemu" has 9p built-in!
     hypervisor = "qemu";
     socket = "control.socket";
+    extraArgsScript = "${pkgs.writeShellScript "extra-args" ''
+      if [ -n "''${QVM_SHARE:-}" ]; then
+        echo "-fsdev local,id=fs99,path=$QVM_SHARE,security_model=mapped -device virtio-9p-pci,fsdev=fs99,mount_tag=ondemand"
+      fi
+    ''}";
   };
 }

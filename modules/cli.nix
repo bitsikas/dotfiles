@@ -91,7 +91,7 @@
         visidata
         zoxide
         ffmpeg
-        # llm-agents.pi
+        llm-agents.pi
       ];
   };
 }

@@ -20,8 +20,8 @@ in {
 
   programs.neovim = lib.mkIf config.myFeatures.desktop {
     package = pkgs.neovim-unwrapped;
-    withRuby = true;
-    withPython3 = true;
+    withRuby = false;
+    withPython3 = false;
     enable = true;
     extraConfig = (
       builtins.concatStringsSep "\n" [

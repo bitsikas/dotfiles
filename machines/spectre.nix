@@ -293,6 +293,7 @@
     sansSerif = ["Noto Sans"];
     monospace = ["FiraCode"];
   };
+  virtualisation.docker.enable = true;
 
   fonts.packages = with pkgs; [
     fira-code
