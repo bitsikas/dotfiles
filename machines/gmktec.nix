@@ -18,7 +18,6 @@
     '';
   };
 
-
   # Add ~/.local/bin to PATH
   environment.localBinInPath = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -70,9 +69,7 @@
   # avoid building zfs
   disabledModules = ["profiles/base.nix"];
   services.resolved.enable = true;
-  services.resolved.extraConfig = ''
-    DNSStubListener=no
-  '';
+  services.resolved.settings.Resolve.DNSStubListener = false;
   services.pihole-web.enable = true;
   services.pihole-web.ports = ["31480r" "31443s"];
   services.pihole-ftl = {
@@ -224,7 +221,6 @@
 
   services.displayManager = {
     gdm.enable = true;
-    gdm.wayland = true;
     gdm.debug = false;
   };
   services.desktopManager = {
@@ -282,7 +278,7 @@
     # blender
     freecad
     bottles
-    bambu-studio
+    # bambu-studio
     prusa-slicer
     super-slicer
     orca-slicer

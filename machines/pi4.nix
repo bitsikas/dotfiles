@@ -71,9 +71,7 @@
   # avoid building zfs
   disabledModules = ["profiles/base.nix"];
   services.resolved.enable = false;
-  services.resolved.extraConfig = ''
-    DNSStubListener=no
-  '';
+  services.resolved.settings.Resolve.DNSStubListener = false;
   services.pihole-web.enable = true;
   services.pihole-web.ports = ["31480r" "31443s"];
   services.pihole-ftl = {
