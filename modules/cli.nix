@@ -79,6 +79,7 @@
       ++ lib.optionals config.myFeatures.desktop [
         alejandra
         d2
+        docker
         glow
         jupyter
         nixfmt-rfc-style
@@ -92,6 +93,7 @@
         zoxide
         ffmpeg
         llm-agents.pi
+        openssh
       ];
   };
 }
