@@ -19,6 +19,10 @@
     home.file."${config.xdg.configHome}/sqlite3/sqliterc" = {
       source = ./sqliterc;
     };
+    home.file.".pi/agent/extensions" = {
+      source = ./pi/extensions;
+      recursive = true;
+    };
     programs.home-manager.enable = true;
     programs.fzf = lib.mkIf config.myFeatures.desktop {
       enable = true;
