@@ -16,7 +16,7 @@
     ../../modules/linux.nix
   ];
   home.file."${config.xdg.configHome}/ghostty/config".text = ''
-    theme = Catppuccin Frappe
+    theme = iTerm2 Solarized Light
     shell-integration-features = sudo,title,ssh-env,ssh-terminfo
     command = ${pkgs.fish}/bin/fish
 

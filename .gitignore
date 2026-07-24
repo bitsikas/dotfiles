@@ -1,3 +1,5 @@
 .envrc
 .direnv
 result
+qt.result
+packages/result

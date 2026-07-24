@@ -69,30 +69,6 @@
   # avoid building zfs
   disabledModules = ["profiles/base.nix"];
   services.resolved.enable = true;
-  services.resolved.settings.Resolve.DNSStubListener = false;
-  services.pihole-web.enable = true;
-  services.pihole-web.ports = ["31480r" "31443s"];
-  services.pihole-ftl = {
-    package = nixpkgs-unstable.pihole-ftl;
-    enable = true;
-    lists = [
-      {
-        url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
-      }
-      {
-        url = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt";
-      }
-      {
-        url = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/doh-vpn-proxy-bypass.txt";
-      }
-    ];
-
-    settings = builtins.fromTOML ''
-      [dns]
-      upstreams = ["1.1.1.1", "1.0.0.1", "8.8.8.8"]
-      listeningMode = "ALL"
-    '';
-  };
   services.freshrss = {
     enable = true;
     # authType = "none";
@@ -173,8 +149,6 @@
     allowedTCPPorts = [
       25344
       51413
-      31480
-      31443
       5055
       22
       80
@@ -225,7 +199,7 @@
   };
   services.desktopManager = {
     gnome.enable = true;
-    plasma6.enable = true;
+    plasma6.enable = false;
     gnome.debug = false;
   };
 

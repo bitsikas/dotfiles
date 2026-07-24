@@ -43,7 +43,7 @@ in {
 
   services.smtping = {
     enable = true;
-    port = 2525;
+    port = 25;
   };
   services.cron = {
     enable = true;
@@ -63,7 +63,7 @@ in {
     dnsovertls = "true";
   };
   services.exim = {
-    enable = true;
+    enable = false;
     config = builtins.readFile ../modules/exim/exim.conf;
   };
   # services.pdfblancs.enable = true;
@@ -94,10 +94,12 @@ in {
 
       dns = {
         nameservers.global = [
-          "100.64.0.8"
-          "100.64.0.1"
-          "fd7a:115c:a1e0::8"
-          "fd7a:115c:a1e0::1"
+          "1.1.1.1"
+          "1.0.0.1"
+          # "100.64.0.8"
+          # "100.64.0.1"
+          # "fd7a:115c:a1e0::8"
+          # "fd7a:115c:a1e0::1"
         ];
 
         base_domain = "bitsikas.home";
@@ -105,7 +107,7 @@ in {
           builtins.map (subdomain: {
             name = "${subdomain}.bitsikas.home";
             type = "A";
-            value = "100.64.0.8";
+            value = "100.64.0.2";
           }) [
             "transmission"
             "jellyseer"

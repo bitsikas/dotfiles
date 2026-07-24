@@ -77,6 +77,7 @@
     fd
     ffmpeg
     kdePackages.plasma-keyboard
+    mongodb-tools
     gimp
     gnome-tweaks
     gnomeExtensions.tailscale-qs
@@ -88,7 +89,6 @@
     gst_all_1.gst-plugins-ugly
     gst_all_1.gst-vaapi
     gst_all_1.gstreamer
-    headscale
     imv
     inetutils
     inkscape
@@ -242,7 +242,7 @@
 
   services.desktopManager = {
     gnome.enable = true;
-    plasma6.enable = true;
+    plasma6.enable = false;
     gnome.debug = false;
   };
   services.xserver.wacom.enable = true;
@@ -307,4 +307,6 @@
     roboto-serif
   ];
   boot.kernel.sysctl."vm.swappiness" = 10;
+  services.mongodb.enable = true;
+  services.mongodb.package = pkgs.mongodb-ce;
 }
