@@ -18,6 +18,7 @@
     '';
   };
 
+  myFeatures.desktop = true;
   # Add ~/.local/bin to PATH
   environment.localBinInPath = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -66,6 +67,7 @@
   # this takes a lot of time sometimes
   documentation.man.generateCaches = false;
 
+  home-manager.users.kostas.myFeatures.desktop = true;
   # avoid building zfs
   disabledModules = ["profiles/base.nix"];
   services.resolved.enable = true;
@@ -152,6 +154,7 @@
       5055
       22
       80
+      8000
       53
     ];
     allowedUDPPorts = [
@@ -332,8 +335,8 @@
     openRPCPort = true; # Open firewall for RPC
     settings = {
       # Override default settings
-      download-dir = "/var/tmp/Downloads";
-      incomplete-dir = "/var/tmp/.incomplete";
+      download-dir = "/var/lib/Downloads";
+      incomplete-dir = "/var/lib/.incomplete";
       ratio-limit = 2;
       ratio-limit-enabled = true;
       rpc-bind-address = "0.0.0.0"; # Bind to own IP
@@ -346,6 +349,7 @@
       speed-limit-down-enabled = true;
       speed-limit-up = 2000;
       speed-limit-up-enabled = true;
+      umask = 2;
     };
   };
 

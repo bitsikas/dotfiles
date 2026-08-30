@@ -57,7 +57,7 @@ in
         {
           nixpkgs.overlays = [
             inputs.neorg-overlay.overlays.default
-            inputs.llm-agents.overlays.default
+            inputs.llm-agents.overlays.shared-nixpkgs
           ];
         }
 
