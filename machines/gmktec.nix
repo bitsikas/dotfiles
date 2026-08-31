@@ -70,7 +70,6 @@
   home-manager.users.kostas.myFeatures.desktop = true;
   # avoid building zfs
   disabledModules = ["profiles/base.nix"];
-  services.resolved.enable = true;
   services.freshrss = {
     enable = true;
     # authType = "none";
@@ -177,6 +176,8 @@
     "net.ipv6.conf.all.forwarding" = 1;
     "vm.swappiness" = 10;
   };
+  # Point system DNS at blocky (local resolver).
+  networking.nameservers = [ "127.0.0.1" ];
   services.blocky = {
     enable = true;
     settings = {

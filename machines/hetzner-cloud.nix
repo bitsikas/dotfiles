@@ -94,9 +94,9 @@ in {
 
       dns = {
         nameservers.global = [
-          "1.1.1.1"
-          "1.0.0.1"
-          # "100.64.0.8"
+          # "1.1.1.1"
+          # "1.0.0.1"
+          "100.64.0.2"
           # "100.64.0.1"
           # "fd7a:115c:a1e0::8"
           # "fd7a:115c:a1e0::1"
@@ -265,6 +265,7 @@ in {
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRASEE/kkq/U/MKRyN+3OTEofM7FgACxLzvuT/NtTWP "
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC4+WkRqHua1nRKsg2DRG+9I3CYFZbWu46XIJdOmk2L5 "
   ];
   nixpkgs.hostPlatform = lib.mkDefault currentSystem;
   services.fail2ban = {
