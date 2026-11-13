@@ -6,8 +6,12 @@
   inputs,
   ...
 }: {
-  imports = [./hardware/spectre.nix ../modules/monitorin.nix];
+  imports = [./hardware/spectre.nix];
 
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0529", ATTRS{idProduct}=="0620", TAG+="uaccess"
+  '';
+  virtualisation.spiceUSBRedirection.enable = true;
   myFeatures.desktop = true;
   home-manager.users.kostas.myFeatures.desktop = true;
   nix = {
@@ -63,12 +67,32 @@
 
   nixpkgs.config.chromium.commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
 
+  services.flatpak = {
+    enable = true;
+    #   # # Set the remotes to official flathub repo - Unecessary
+    #   # remotes = [
+    #   #   {
+    #   #     name = "flathub";
+    #   #     location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+    #   #   }
+    #   # ];
+    #   # # The packages to install
+    #   # packages = [
+    #   #   "com.github.tchx84.Flatseal"
+    #   #   "com.usebottles.bottles"
+    #   #   "org.freedesktop.Platform.VulkanLayer.vkBasalt/x86_64/25.08" # bottles # gets pinned
+    #   #   "org.freedesktop.Platform.VulkanLayer.gamescope/x86_64/25.08" # bottles # gets pinned
+    #   #   "org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/25.08" # bottles # gets pinned
+    #   #   "com.obsproject.Studio.Plugin.OBSVkCapture" # bottles # gets pinned
+    #   # ];
+  };
+
   environment.systemPackages = with pkgs; [
-    # gnome-boxes
+    gnome-boxes
+    pkgs.qemu
     # inputs.ghostty.packages.x86_64-linux.default
     _1password-cli
     bat
-    bottles
     blender
     chiaki-ng
     cifs-utils
@@ -239,6 +263,21 @@
     gdm.enable = true;
     gdm.debug = false;
   };
+  environment.gnome.excludePackages = with pkgs; [
+    # Core apps & utilities
+    epiphany # Web browser
+    geary # Email reader
+    evince # Document viewer
+    gedit # Text editor
+    gnome-characters
+    gnome-contacts
+    gnome-maps
+    gnome-music
+    gnome-photos
+    gnome-tour
+    totem # Video player
+    yelp # Help viewer
+  ];
 
   services.desktopManager = {
     gnome.enable = true;
@@ -294,6 +333,9 @@
     monospace = ["FiraCode"];
   };
   virtualisation.docker.enable = true;
+  # virtualisation.virtualbox.host.enable = true;
+  # users.extraGroups.vboxusers.members = ["kostas"];
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   fonts.packages = with pkgs; [
     fira-code
@@ -305,6 +347,7 @@
     cantarell-fonts
     roboto
     roboto-serif
+    google-fonts
   ];
   boot.kernel.sysctl."vm.swappiness" = 10;
   services.mongodb.enable = true;
