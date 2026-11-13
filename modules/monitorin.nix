@@ -5,7 +5,7 @@
   ...
 }: {
   services.prometheus = {
-    enable = true;
+    enable = false;
     port = 9090;
     exporters = {
       node = {
@@ -28,7 +28,7 @@
 
   # Loki Service (Storage)
   services.loki = {
-    enable = true;
+    enable = false;
     configuration = {
       compactor = {
         working_directory = "/var/lib/loki/compactor";
@@ -129,7 +129,7 @@
     "L+ /etc/grafana-dashboards/node-exporter.json - - - - ${../1860_rev42.json}"
   ];
   services.grafana = {
-    enable = true;
+    enable = false;
     settings.server = {
       http_addr = "127.0.0.1";
       http_port = 3000;

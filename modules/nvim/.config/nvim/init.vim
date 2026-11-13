@@ -47,29 +47,6 @@ local function packadd(name)
   loaded_plugins[name] = true
 end
 
-local copilot_loaded = false
-local function load_copilot()
-  if copilot_loaded then
-    return
-  end
-
-  packadd("copilot.lua")
-  packadd("copilot-cmp")
-
-  require("copilot").setup({
-    suggestion = { enabled = false },
-    panel = { enabled = false },
-  })
-  require("copilot_cmp").setup({})
-
-  copilot_loaded = true
-end
-
-vim.api.nvim_create_autocmd("InsertEnter", {
-  once = true,
-  callback = load_copilot,
-})
-
 local harpoon = nil
 local function get_harpoon()
   if harpoon ~= nil then
@@ -80,42 +57,6 @@ local function get_harpoon()
   harpoon = require("harpoon")
   harpoon:setup()
   return harpoon
-end
-
-local copilotchat_loaded = false
-local copilotchat_commands = {
-  "CopilotChat",
-  "CopilotChatOpen",
-  "CopilotChatClose",
-  "CopilotChatToggle",
-  "CopilotChatStop",
-  "CopilotChatReset",
-  "CopilotChatSave",
-  "CopilotChatLoad",
-  "CopilotChatDebugInfo",
-  "CopilotChatExplain",
-  "CopilotChatReview",
-  "CopilotChatFix",
-  "CopilotChatOptimize",
-  "CopilotChatDocs",
-  "CopilotChatTests",
-  "CopilotChatFixDiagnostic",
-  "CopilotChatCommit",
-  "CopilotChatCommitStaged",
-}
-
-local function ensure_copilotchat()
-  if copilotchat_loaded then
-    return
-  end
-
-  for _, cmd in ipairs(copilotchat_commands) do
-    pcall(vim.api.nvim_del_user_command, cmd)
-  end
-
-  packadd("CopilotChat.nvim")
-  require("CopilotChat").setup({})
-  copilotchat_loaded = true
 end
 
 local coverage_loaded = false
@@ -170,56 +111,6 @@ vim.keymap.set("n", "<leader>n", function()
 end)
 
 require("nvim-navic").setup({ highlight = true })
-
-vim.api.nvim_create_user_command("CopilotChat", function(args)
-  ensure_copilotchat()
-  vim.cmd("CopilotChat " .. args.args)
-end, { nargs = "*", complete = "file" })
-
-vim.api.nvim_create_user_command("CopilotChatOpen", function()
-  ensure_copilotchat()
-  vim.cmd("CopilotChatOpen")
-end, {})
-
-vim.api.nvim_create_user_command("CopilotChatClose", function()
-  ensure_copilotchat()
-  vim.cmd("CopilotChatClose")
-end, {})
-
-vim.api.nvim_create_user_command("CopilotChatToggle", function()
-  ensure_copilotchat()
-  vim.cmd("CopilotChatToggle")
-end, {})
-
-vim.api.nvim_create_user_command("CopilotChatExplain", function(args)
-  ensure_copilotchat()
-  vim.cmd("CopilotChatExplain " .. args.args)
-end, { nargs = "*" })
-
-vim.api.nvim_create_user_command("CopilotChatReview", function(args)
-  ensure_copilotchat()
-  vim.cmd("CopilotChatReview " .. args.args)
-end, { nargs = "*" })
-
-vim.api.nvim_create_user_command("CopilotChatFix", function(args)
-  ensure_copilotchat()
-  vim.cmd("CopilotChatFix " .. args.args)
-end, { nargs = "*" })
-
-vim.api.nvim_create_user_command("CopilotChatOptimize", function(args)
-  ensure_copilotchat()
-  vim.cmd("CopilotChatOptimize " .. args.args)
-end, { nargs = "*" })
-
-vim.api.nvim_create_user_command("CopilotChatDocs", function(args)
-  ensure_copilotchat()
-  vim.cmd("CopilotChatDocs " .. args.args)
-end, { nargs = "*" })
-
-vim.api.nvim_create_user_command("CopilotChatTests", function(args)
-  ensure_copilotchat()
-  vim.cmd("CopilotChatTests " .. args.args)
-end, { nargs = "*" })
 
 vim.api.nvim_create_user_command("Coverage", function()
   ensure_coverage()

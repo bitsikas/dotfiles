@@ -7,7 +7,6 @@ cmp.setup({
 sources = {
 	{name = 'nvim_lsp', priority=100 },
 	{name = 'buffer', priority=100},
-	{name = 'copilot', priority=80},
 	{name = 'path', priority=50},
 	{name = 'luasnip', priority=25},
 },

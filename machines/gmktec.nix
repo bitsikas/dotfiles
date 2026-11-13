@@ -19,6 +19,17 @@
   };
 
   myFeatures.desktop = true;
+
+  # --- Memory tuning ---
+  # Cap journald: defaults are unbounded and grow to many GB.
+  services.journald.extraConfig = ''
+    SystemMaxUse=500M
+    MaxRetentionSec=2week
+  '';
+  # Compressed swap in RAM: faster than NVMe swap, less disk wear,
+  # helps when transient jobs (e.g. liverecord-delay) spike.
+  zramSwap.enable = true;
+
   # Add ~/.local/bin to PATH
   environment.localBinInPath = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -77,6 +88,17 @@
     baseUrl = "http://freshrss.bitsikas.home/";
     passwordFile = "/var/lib/freshrss.password";
   };
+
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+    settings.port = 47989;
+    settings.file_apps = "/var/lib/sunshine-apps.json";
+    # applications.apps = [];
+  };
+
   services.mealie = {
     enable = true;
   };
@@ -88,58 +110,60 @@
       currency = "RON";
     };
   };
+  services.ollama = {
+    enable = true;
+    host = "0.0.0.0";
+    port = 11434;
+    openFirewall = true;
+    environmentVariables = {
+      OLLAMA_MODELS = "/mnt/ollama";
+    };
+  };
   services.immich = {
+    package = nixpkgs-unstable.immich;
     enable = true;
     mediaLocation = "/mnt/immich";
     machine-learning.enable = false;
-  };
-  # };
 
-  services.printing = {
-    enable = true;
-    listenAddresses = ["*:631"];
-    allowFrom = ["all"];
-    browsing = true;
-    defaultShared = true;
-    openFirewall = true;
+    # 1. Tell the Node server not to spawn a worker per core.
+    #    Default scales with CPU count; on an 8C/16T 7730U that's a lot.
+    environment = {
+      IMMICH_WORKERS = "2"; # API workers
+      IMMICH_IMAGE_PROCESSING_CONCURRENCY = "1";
+      IMMICH_VIDEO_PROCESSING_CONCURRENCY = "1";
+      IMMICH_THUMB_IMAGE_THREAD_COUNT = "1";
+      IMMICH_THUMB_VIDEO_THREAD_COUNT = "1";
+      IMMICH_THUMB_GENERATION_CONCURRENCY = "1";
+      IMMICH_METADATA_CONCURRENCY = "1";
+    };
   };
-  services.printing.drivers = [
-    pkgs.gutenprint
-    # pkgs.brlaser
-    # pkgs.brgenml1lpr
-    # pkgs.brgenml1cupswrapper
-  ];
+
+  # 2. PostgreSQL is the biggest single win. Override its memory settings
+  #    independently of the immich module — these are pure postgresql.* opts.
+  services.postgresql.settings = {
+    shared_buffers = "256MB"; # default auto-tunes too high on small boxes
+    work_mem = "8MB";
+    maintenance_work_mem = "64MB";
+    effective_cache_size = "1GB";
+    # huge_pages = "off";                # uncomment if you see numa complaints
+  };
 
   services.samba = {
     enable = true;
     package = pkgs.sambaFull;
     openFirewall = true;
     settings = {
-      global = {
-        "load printers" = "yes";
-        "printing" = "cups";
-        "printcap name" = "cups";
-      };
-      "printers" = {
-        "comment" = "All Printers";
-        "path" = "/var/spool/samba";
-        "public" = "yes";
-        "browseable" = "yes";
-        # to allow user 'guest account' to print.
-        "guest ok" = "yes";
-        "writable" = "no";
-        "printable" = "yes";
-        "create mode" = 0700;
-      };
+      global = {};
     };
   };
   systemd.tmpfiles.rules = [
-    "d /var/spool/samba 1777 root root -"
     "d /mnt/immich 1700 immich immich -"
     "d /var/lib/services/sonarr 1770 sonarr streaming -"
+    "d /var/lib/services/flaresolverr 1770 flaresolverr streaming -"
     "d /var/lib/services/radarr 1770 radarr streaming -"
     "d /var/lib/services/readarr 1770 readarr streaming -"
     "d /var/lib/services/jellyfin 1770 jellyfin streaming -"
+    "d /mnt/ollama 0750 ollama ollama -"
   ];
   networking.interfaces.enp1s0.wakeOnLan.enable = true;
   networking.hostName = "gmktec"; # Define your hostname.
@@ -148,13 +172,18 @@
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   networking.firewall = {
     allowedTCPPorts = [
-      25344
-      51413
-      5055
       22
-      80
-      8000
+      25344
+      47984
+      47989
+      47990
+      48010
+      5055
+      51413
       53
+      80
+      8080
+      8551
     ];
     allowedUDPPorts = [
       25344
@@ -166,6 +195,16 @@
     checkReversePath = "loose"; # <--- ADD THIS LINE
     trustedInterfaces = ["tailscale0"];
   };
+  networking.firewall.allowedUDPPortRanges = [
+    {
+      from = 47998;
+      to = 48000;
+    }
+    {
+      from = 8000;
+      to = 8010;
+    }
+  ];
   networking.nat = {
     enable = true;
     externalInterface = "enp1s0";
@@ -177,7 +216,7 @@
     "vm.swappiness" = 10;
   };
   # Point system DNS at blocky (local resolver).
-  networking.nameservers = [ "127.0.0.1" ];
+  networking.nameservers = ["127.0.0.1"];
   services.blocky = {
     enable = true;
     settings = {
@@ -227,11 +266,11 @@
   };
 
   services.displayManager = {
-    gdm.enable = true;
+    gdm.enable = false;
     gdm.debug = false;
   };
   services.desktopManager = {
-    gnome.enable = true;
+    gnome.enable = false;
     plasma6.enable = false;
     gnome.debug = false;
   };
@@ -239,6 +278,7 @@
   users.groups.streaming = {};
   users.users.jellyfin.extraGroups = ["streaming"];
   users.users.sonarr.extraGroups = ["streaming"];
+  # users.users.flaresolverr.extraGroups = ["streaming"];
   users.users.radarr.extraGroups = ["streaming"];
   users.users.transmission.extraGroups = ["streaming"];
 
@@ -292,7 +332,7 @@
     libreoffice
   ];
 
-  services.jellyseerr.enable = true;
+  services.jellyseerr.enable = false;
 
   services.avahi = {
     publish = {
@@ -315,7 +355,7 @@
       ExecStart = pkgs.writeShellScript "publish-avahi-alias" ''
         IP=$(${pkgs.hostname}/bin/hostname -I | ${pkgs.gawk}/bin/awk '{print $1}')
 
-        NAMES=("liverecord" "jellyfin" "sonarr" "radarr" "transmission" "immich" "prowlarr" "cockpit" "jellyseer" "paperless")
+        NAMES=("liverecord" "jellyfin" "flaresolverr" "sonarr" "radarr" "transmission" "immich" "prowlarr" "cockpit" "jellyseer" "paperless" "ollama")
 
         # Launch a background process for each name
         for NAME in "''${NAMES[@]}"; do
@@ -341,8 +381,13 @@
     dataDir = "/var/lib/services/jellyfin";
   };
   services.bazarr = {
+    enable = false;
+    openFirewall = false;
+  };
+  services.flaresolverr = {
     enable = true;
     openFirewall = true;
+    #    dataDir = "/var/lib/services/flaresolverr";
   };
   services.sonarr = {
     enable = true;
@@ -355,8 +400,8 @@
     dataDir = "/var/lib/services/radarr";
   };
   services.readarr = {
-    enable = true;
-    openFirewall = true;
+    enable = false;
+    openFirewall = false;
     dataDir = "/var/lib/services/readarr";
   };
   services.transmission = {
@@ -424,7 +469,8 @@
   services.liverecord.final_storage = "/mnt/random";
   services.liverecord.hostnames = ["liverecord.bitsikas.home" "liverecord.gmktec.local"];
   services.liverecord.proxy = "socks5://127.0.0.1:25344";
-  services.sabnzbd.enable = true;
+  services.liverecord.delay-seconds = 1.5;
+  services.sabnzbd.enable = false;
 
   services.nginx = {
     enable = true;
@@ -481,6 +527,10 @@
           }
 
           {
+            name = "flaresolverr.bitsikas.home";
+            proxyPass = "http://localhost:8191";
+          }
+          {
             name = "sonarr.bitsikas.home";
             proxyPass = "http://localhost:8989";
           }
@@ -510,6 +560,15 @@
           {
             name = "nzbget.gmktec.local";
             proxyPass = "http://localhost:6789";
+          }
+
+          {
+            name = "ollama.bitsikas.home";
+            proxyPass = "http://127.0.0.1:11434";
+          }
+          {
+            name = "ollama.gmktec.local";
+            proxyPass = "http://127.0.0.1:11434";
           }
 
           # {

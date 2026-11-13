@@ -113,6 +113,7 @@ in {
             "jellyseer"
             "jellyfin"
             "sonarr"
+            "flaresolverr"
             "radarr"
             "prowlarr"
             "liverecord"

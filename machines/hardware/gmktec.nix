@@ -17,6 +17,14 @@
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
+  # AMD Ryzen 7 7730U (Barcelo / Vega, gfx90c) — expand the GPU-addressable
+  # memory pool beyond what the BIOS carves out as UMA VRAM (currently 3G).
+  # GTT pages are allocated on demand from system RAM, so this only sets the
+  # ceiling, not a reservation. 8G leaves ~4G for the OS with 12G of RAM.
+  # To raise the actual carved-out VRAM itself, raise "UMA Frame Buffer Size"
+  # (a.k.a. "Integrated Graphics" / "Shared Memory") in the BIOS.
+  boot.kernelParams = ["amdgpu.gttsize=2048"];
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/da3cf63c-f70f-4db9-8094-25f2a17a13de";
     fsType = "ext4";

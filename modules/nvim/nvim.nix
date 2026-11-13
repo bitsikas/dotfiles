@@ -44,22 +44,10 @@ in {
         plugin = pkgs.vimPlugins.bracey-vim;
         optional = true;
       }
-      {
-        plugin = pkgs.vimPlugins.CopilotChat-nvim;
-        optional = true;
-      }
       pkgs.vimPlugins.catppuccin-nvim
       pkgs.vimPlugins.cmp-nvim-lsp
       pkgs.vimPlugins.cmp_luasnip
       pkgs.vimPlugins.conform-nvim
-      {
-        plugin = pkgs.vimPlugins.copilot-cmp;
-        optional = true;
-      }
-      {
-        plugin = pkgs.vimPlugins.copilot-lua;
-        optional = true;
-      }
       {
         plugin = pkgs.vimPlugins.flutter-tools-nvim;
         optional = true;
